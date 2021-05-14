@@ -2,7 +2,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sezapp/Screens/Login/usersAction.dart';
-import 'package:sezapp/api/api_service.dart';
+import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/inputField.dart';
 import 'package:sezapp/model/register_model.dart';

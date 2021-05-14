@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/api_service.dart';
+import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';

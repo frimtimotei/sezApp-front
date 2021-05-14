@@ -4,11 +4,12 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:sezapp/api/api_service.dart';
+import 'package:sezapp/api/seizure_api_service.dart';
+import 'package:duration_picker/duration_picker.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/whiteIconButton.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/seizureRegister_model.dart';
+import 'package:sezapp/model/seizure_add_model.dart';
 import 'package:cool_alert/cool_alert.dart';
 
 class AddSeizurePage extends StatefulWidget {
@@ -28,14 +29,16 @@ class SezAndTrigg {
 
 
 DateTime now = new DateTime.now();
-SeizureRequestModel seizureRequestModel = new SeizureRequestModel();
+SeizureRegisterModel seizureRequestModel = new SeizureRegisterModel();
 
 class _AddSeizurePageState extends State<AddSeizurePage> {
   
   DateTime _date = DateTime(now.year, now.month, now.day);
   TimeOfDay _starAt = TimeOfDay(hour: now.hour, minute: now.minute);
-  TimeOfDay _endAt = TimeOfDay(hour: now.hour, minute: now.minute);
-  
+  Duration _duration = Duration(hours: 0, minutes: 0, seconds: 00);
+  format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
+
+  String moodDropdown = "Not Selected";
   String locationDropdown = "Home";
 
   
@@ -73,18 +76,26 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     }
   }
 
-  void _selectEndTime() async {
-    final TimeOfDay newTime = await showTimePicker(
-      context: context,
-      initialTime: _endAt,
-      initialEntryMode: TimePickerEntryMode.input,
+  void _selectDuration() async {
+    var resultingDuration = await showDurationPicker(
+
+    context: context,
+    initialTime: _duration,
+
+
     );
-    if (newTime != null) {
-      setState(() {
-        _endAt = newTime;
-      });
-    }
+    if(resultingDuration!=null)
+      {
+        setState(() {
+          _duration= resultingDuration;
+        });
+      }
+
+
+
   }
+
+
 
   static List<SezAndTrigg> _possibleTriggers = [
     SezAndTrigg(id: 1, name: "Alcohol Consumption"),
@@ -140,6 +151,13 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     "Gym",
     "Outdoors",
     "Others"
+  ];
+
+  List _possibleMoods = [
+    "Not Selected",
+    "Normal",
+    "Good",
+    "Bad"
   ];
 
   List<SezAndTrigg> _selectedTriggers = [];
@@ -241,17 +259,17 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                       Column(
                         children: [
                           Text(
-                            "End at:",
+                            "Duration: ",
                             style: TextStyle(color: kPrimaryColor),
                           ),
                           WhiteIconButton(
                               height: 50,
                               width: 150,
-                              callback: _selectEndTime,
+                              callback: _selectDuration,
                               icon: Icon(LineAwesomeIcons.clock,
                                   size: 43, color: kPrimaryColor),
                               text: Text(
-                                '${_endAt.format(context)}',
+                                '${format(_duration)}',
                                 style: TextStyle(
                                   color: kPrimaryColor,
                                 ),
@@ -385,6 +403,57 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                     height: 20,
                   ),
 
+                  //////////////////////////////////////////////////////////////
+                  /// Add Mood
+
+                  Text(
+                    "Mood",
+                    style: TextStyle(color: kPrimaryColor),
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Color.fromRGBO(143, 148, 251, 0.08),
+                              blurRadius: 20.0,
+                              offset: Offset(0, 15))
+                        ]),
+                    width: 320,
+                    child: Row(
+                      children: <Widget>[
+                        SizedBox(
+                          width: 20,
+                        ),
+                        Expanded(
+                          child: DropdownButton(
+                            isExpanded: true,
+                            value: moodDropdown,
+                            underline: SizedBox(),
+                            items: _possibleMoods.map((value) {
+                              return DropdownMenuItem<String>(
+                                  value: value, child: Text(value));
+                            }).toList(),
+                            onChanged: (String newValue) {
+                              setState(() {
+                                moodDropdown = newValue;
+                              });
+                            },
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+
+                  SizedBox(height: 20,),
+
+
+
 
                   //////////////////////////////////////////////////////////////
                   ////Add location
@@ -512,9 +581,9 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
   void _seizureSubmit() async {
 
     // check if all fields are completed
-    if (_starAt.hour * 60 + _starAt.minute > _endAt.hour * 60 + _endAt.minute) {
+    if (_duration.inSeconds ==0) {
       setState(() {
-        errorMessage = "End time must be grater then start time";
+        errorMessage = "Duration must be grater then 0:00";
       });
       return;
     } else {
@@ -566,11 +635,12 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
 
     seizureRequestModel.date = formattedDate;
     seizureRequestModel.startAt = _starAt.format(context);
-    seizureRequestModel.endAt = _endAt.format(context);
+    seizureRequestModel.duration = format(_duration);
     seizureRequestModel.sezTrigger = sezTriggers;
     seizureRequestModel.type = seizuresType;
     seizureRequestModel.activity = activities;
     seizureRequestModel.location = locationDropdown;
+    seizureRequestModel.mood=moodDropdown;
     seizureRequestModel.notes = noteController.text;
 
 

@@ -1,10 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sezapp/Screens/Patient/Add/patientAdd_page.dart';
+import 'package:sezapp/Screens/Patient/Add/add_page.dart';
+import 'package:sezapp/Screens/Patient/Reports/reports_home.dart';
+import 'package:sezapp/Screens/Patient/Reports/seziuresActions.dart';
 import 'package:sezapp/Screens/Patient/patientHome_page.dart';
 import 'package:sezapp/Screens/Patient/patientUser_page.dart';
 import 'package:sezapp/constants.dart';
+import 'package:sezapp/model/Seizure.dart';
 import 'package:sezapp/model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -25,13 +28,16 @@ class _PatientHomeState extends State<PatientHome> {
   }
 
 
+
+
+
   int selectedPage=0;
   final _pageOptions=[
       PatientHomePage(),
-    PatientHomePage(),
-    PatientAddPage(),
-    PatientHomePage(),
-    PatientUser()
+      PatientHomePage(),
+      PatientAddPage(),
+      ReportsHome(seizures: getSeizures(),),
+      PatientUser()
 
   ];
   @override

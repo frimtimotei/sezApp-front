@@ -4,7 +4,7 @@ import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sezapp/Screens/Login/usersAction.dart';
-import 'package:sezapp/api/api_service.dart';
+import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/User.dart';
 import 'package:sezapp/model/login_model.dart';
