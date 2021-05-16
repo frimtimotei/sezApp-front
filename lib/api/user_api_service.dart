@@ -23,8 +23,9 @@ String baseUrl='http://10.0.2.2:8080';
       final response = await http.post(url,headers: {'Content-Type': 'application/json',"accept" : "application/json" },
           body: json.encode(loginData));
 
-      var convertDataJason= jsonDecode(response.body);
-      return convertDataJason;
+
+       return jsonDecode(response.body);
+
 }
 
 Future registerUser(RegisterRequestModel registerRequestModel) async{
@@ -56,8 +57,9 @@ Future userInfo() async {
     final response = await http.get(url,headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
 
 
-    var convertDataJason= jsonDecode(response.body);
-    return convertDataJason;
+    return jsonDecode(response.body);
+
+
 }
 
 

@@ -43,7 +43,12 @@ class Seizure {
     activity= json['activity'].toString();
     location=json['location'];
     mood= json['mood'];
-    notes= json['note'];
+    if(json['note']== null){
+      notes="No notes";
+    }
+    else{
+      notes=json['note'];
+    }
 
   }
 

@@ -6,6 +6,7 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:duration_picker/duration_picker.dart';
+import 'package:sezapp/conponents/appBar.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/whiteIconButton.dart';
 import 'package:sezapp/constants.dart';
@@ -27,21 +28,18 @@ class SezAndTrigg {
   });
 }
 
-
 DateTime now = new DateTime.now();
 SeizureRegisterModel seizureRequestModel = new SeizureRegisterModel();
 
 class _AddSeizurePageState extends State<AddSeizurePage> {
-  
   DateTime _date = DateTime(now.year, now.month, now.day);
   TimeOfDay _starAt = TimeOfDay(hour: now.hour, minute: now.minute);
   Duration _duration = Duration(hours: 0, minutes: 0, seconds: 00);
+
   format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
 
   String moodDropdown = "Not Selected";
   String locationDropdown = "Home";
-
-  
 
   final noteController = TextEditingController();
 
@@ -71,31 +69,21 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     if (newTime != null) {
       setState(() {
         _starAt = newTime;
-        
       });
     }
   }
 
   void _selectDuration() async {
     var resultingDuration = await showDurationPicker(
-
-    context: context,
-    initialTime: _duration,
-
-
+      context: context,
+      initialTime: _duration,
     );
-    if(resultingDuration!=null)
-      {
-        setState(() {
-          _duration= resultingDuration;
-        });
-      }
-
-
-
+    if (resultingDuration != null) {
+      setState(() {
+        _duration = resultingDuration;
+      });
+    }
   }
-
-
 
   static List<SezAndTrigg> _possibleTriggers = [
     SezAndTrigg(id: 1, name: "Alcohol Consumption"),
@@ -153,12 +141,7 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     "Others"
   ];
 
-  List _possibleMoods = [
-    "Not Selected",
-    "Normal",
-    "Good",
-    "Bad"
-  ];
+  List _possibleMoods = ["Not Selected", "Normal", "Good", "Bad"];
 
   List<SezAndTrigg> _selectedTriggers = [];
   List<SezAndTrigg> _selectedSeizures = [];
@@ -181,31 +164,10 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
 
     return Scaffold(
       appBar: PreferredSize(
-        preferredSize: Size.fromHeight(60.0), // here the desired height
-        child: AppBar(
-          backgroundColor: Colors.white,
-          elevation: 0.3,
-          centerTitle: true,
-          leading: IconButton(
-            icon: Icon(
-              Icons.arrow_back_ios,
-              color: kPrimaryLightColor,
-              size: 18,
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          title: Text(
-            "Add Seizure",
-            style: TextStyle(
-                fontSize: 20,
-                color: kPrimaryColor,
-                fontWeight: FontWeight.w300,
-            ),
-          ),
-        ),
-      ),
+          preferredSize: Size.fromHeight(60.0),
+          child: CustomAAppBar(
+        title: "Add Seizure",
+      )),
       body: Container(
         color: kLightColor,
         height: size.height,
@@ -220,16 +182,18 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                     height: 10,
                   ),
                   WhiteIconButton(
-                      height: 50,
-                      width: 320,
-                      icon: Icon(LineAwesomeIcons.calendar,
-                          size: 43, color: kPrimaryColor,
-                      ),
-                      text: Text(
-                        DateFormat.yMMMMd('en_US').format(_date),
-                        style: TextStyle(color: kPrimaryColor),
-                      ),
-                      callback: _selectDate,
+                    height: 50,
+                    width: 320,
+                    icon: Icon(
+                      LineAwesomeIcons.calendar,
+                      size: 43,
+                      color: kPrimaryColor,
+                    ),
+                    text: Text(
+                      DateFormat.yMMMMd('en_US').format(_date),
+                      style: TextStyle(color: kPrimaryColor),
+                    ),
+                    callback: _selectDate,
                   ),
                   SizedBox(
                     height: 20,
@@ -282,8 +246,8 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                     height: 20,
                   ),
 
-              //////////////////////////////////////////////////////
-              ////// Add possible Trigger
+                  //////////////////////////////////////////////////////
+                  ////// Add possible Trigger
                   Container(
                     alignment: Alignment.center,
                     child: Column(
@@ -291,7 +255,7 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                         MultiSelectDialogField(
                           items: _triggerItems,
                           title: Text("Add Possible Trigger"),
-                          selectedColor: Color.fromRGBO(245, 115, 115, 1),
+                          selectedColor: Color.fromRGBO(245, 115, 115, 1.0),
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.all(Radius.circular(15)),
@@ -361,7 +325,6 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                   SizedBox(
                     height: 20,
                   ),
-
 
                   //////////////////////////////////////////////////////////////
                   ////Add activity
@@ -450,10 +413,9 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                     ),
                   ),
 
-                  SizedBox(height: 20,),
-
-
-
+                  SizedBox(
+                    height: 20,
+                  ),
 
                   //////////////////////////////////////////////////////////////
                   ////Add location
@@ -506,8 +468,6 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                         height: 20,
                       ),
 
-
-
                       //////////////////////////////////////////////////////////
                       //// Other notes
                       Column(
@@ -551,11 +511,11 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                         height: 30,
                       ),
                       Align(
-                        alignment: Alignment.centerLeft,
+                          alignment: Alignment.centerLeft,
                           child: Text(
-                        errorMessage,
-                        style: TextStyle(color: Colors.red),
-                      )),
+                            errorMessage,
+                            style: TextStyle(color: Colors.red),
+                          )),
                       SizedBox(
                         height: 10,
                       ),
@@ -579,9 +539,8 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
   }
 
   void _seizureSubmit() async {
-
     // check if all fields are completed
-    if (_duration.inSeconds ==0) {
+    if (_duration.inSeconds == 0) {
       setState(() {
         errorMessage = "Duration must be grater then 0:00";
       });
@@ -640,9 +599,8 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     seizureRequestModel.type = seizuresType;
     seizureRequestModel.activity = activities;
     seizureRequestModel.location = locationDropdown;
-    seizureRequestModel.mood=moodDropdown;
+    seizureRequestModel.mood = moodDropdown;
     seizureRequestModel.notes = noteController.text;
-
 
     var response = await seizureRegister(seizureRequestModel);
     print(response);
