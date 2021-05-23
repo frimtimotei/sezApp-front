@@ -38,19 +38,13 @@ class _AllSeizuresState extends State<AllSeizures> {
           builder: (context, snapshot) {
             return RefreshIndicator(
               // ignore: missing_return
-              onRefresh: () async {
-                if (mounted)
-                  setState(() {
-                    allSez = getSeizures();
-                  });
-
-                await Future.delayed(Duration(seconds: 2));
-              },
+              onRefresh: refreshSeizureList,
               child: _listView(snapshot, languageCode),
             );
           }),
     );
   }
+
 
   Widget _listView(AsyncSnapshot snapshot, String languageCode) {
     if (snapshot.hasData) {
@@ -64,19 +58,33 @@ class _AllSeizuresState extends State<AllSeizures> {
                 borderRadius: BorderRadius.circular(20.0)),
             margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 7.0),
             child: FocusedMenuHolder(
-              menuBoxDecoration: BoxDecoration(color: Color.fromRGBO(158, 152, 152, 0.6),borderRadius: BorderRadius.all(Radius.circular(15.0))),
+              menuBoxDecoration: BoxDecoration(
+                  color: Color.fromRGBO(158, 152, 152, 0.6),
+                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
               duration: Duration(milliseconds: 50),
               animateMenuItems: true,
               menuOffset: 10.0,
               blurBackgroundColor: Color.fromRGBO(158, 152, 152, 0.6),
               blurSize: 5.0,
-
               menuItems: [
-                FocusedMenuItem(title: Text("Favorite"),trailingIcon: Icon(Icons.favorite_border) ,onPressed: (){}),
-                FocusedMenuItem(title: Text("Delete",style: TextStyle(color: Colors.redAccent),),trailingIcon: Icon(Icons.delete,color: Colors.redAccent,) ,onPressed: (){
-
-                }),],
-              onPressed: (){
+                FocusedMenuItem(
+                    title: Text("Favorite"),
+                    trailingIcon: Icon(Icons.favorite_border),
+                    onPressed: () {}),
+                FocusedMenuItem(
+                  title: Text(
+                    "Delete",
+                    style: TextStyle(color: Colors.redAccent),
+                  ),
+                  trailingIcon: Icon(
+                    Icons.delete,
+                    color: Colors.redAccent,
+                  ),
+                  onPressed: () =>
+                      showDialogAndDeleteSez(snapshot.data[index].id, context),
+                ),
+              ],
+              onPressed: () {
                 Navigator.push(
                     context,
                     new MaterialPageRoute(
@@ -122,22 +130,22 @@ class _AllSeizuresState extends State<AllSeizures> {
                                 color: kPrimaryLightColor,
                                 size: 17,
                               )),
-                          Text(
-                              snapshot.data[index].duration.inMinutes.toString() +
-                                  " minutes "),
+                          Text(snapshot.data[index].duration.inMinutes
+                                  .toString() +
+                              " minutes "),
                           SizedBox(
                             width: 7,
                           ),
-                          Text("mood: "),
-                          moodStateIcon(snapshot.data[index].mood),
+                          //Wrap(children: <Widget>[
+                            Text("mood: "),
+                            moodStateIcon(snapshot.data[index].mood)
+                         // ]),
                         ],
                       ),
                     ],
                   ),
                   trailing: Icon(Icons.keyboard_arrow_right,
                       color: kPrimaryColor, size: 25.0),
-
-
                 ),
               ),
             ),
@@ -185,5 +193,69 @@ class _AllSeizuresState extends State<AllSeizures> {
             fontWeight: FontWeight.w500, color: textColor, fontSize: 12),
       ),
     );
+  }
+
+  Future<void> refreshSeizureList() async {
+    if (mounted)
+      setState(() {
+        allSez = getSeizures();
+      });
+
+    await Future.delayed(Duration(seconds: 2));
+  }
+
+  showDialogAndDeleteSez(int id, BuildContext context) {
+    final AlertDialog errorDialog = AlertDialog(
+      title: Text(
+        'Error',
+        style: TextStyle(
+          color: kRedTextColor,
+        ),
+      ),
+      content: Text('Could not delete this item'),
+      actions: [
+        // ignore: deprecated_member_use
+        FlatButton(
+          textColor: kPrimaryColor,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('CANCEL'),
+        ),
+      ],
+    );
+
+    final AlertDialog dialog = AlertDialog(
+      title: Text('Delete Seizure'),
+      content: Text('Are you sure you want to delete this item?'),
+      actions: [
+        // ignore: deprecated_member_use
+        FlatButton(
+          textColor: kPrimaryColor,
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Text('CANCEL'),
+        ),
+        // ignore: deprecated_member_use
+        FlatButton(
+          textColor: kPrimaryColor,
+          onPressed: () async {
+            var response = await deleteSeizure(id);
+            if (!response) {
+              showDialog<void>(
+                  context: context, builder: (context) => errorDialog);
+              return;
+            } else {
+              Navigator.of(context).pop();
+              refreshSeizureList();
+            }
+          },
+          child: Text('ACCEPT'),
+        ),
+      ],
+    );
+
+    showDialog<void>(context: context, builder: (context) => dialog);
   }
 }

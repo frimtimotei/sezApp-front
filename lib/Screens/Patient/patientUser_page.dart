@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/user_api_service.dart';
+
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -19,6 +19,7 @@ class _PatientUserState extends State<PatientUser> {
   void _handleLogout() async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   prefs.remove('id');
+  prefs.remove("jwt");
 
   Navigator.pushNamedAndRemoveUntil(
   context, '/login', ModalRoute.withName('/login'));
@@ -48,6 +49,7 @@ class _PatientUserState extends State<PatientUser> {
                   Text(activeUser.sex),
 
 
+                  // ignore: deprecated_member_use
                   RaisedButton(
                     onPressed: _handleLogout,
                     child: Text("Logout"),

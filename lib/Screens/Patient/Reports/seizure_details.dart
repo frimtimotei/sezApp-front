@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:multi_select_flutter/chip_display/multi_select_chip_display.dart';
+
 import 'package:sezapp/conponents/appBar.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/Seizure.dart';
@@ -265,6 +265,7 @@ class SeizureDetails extends StatelessWidget {
 
   Widget chipFromList(List<String> strings, Color backColor, Color textColor){
 
+    // ignore: deprecated_member_use
     List<Widget> list = new List<Widget>();
     for(var i = 0; i < strings.length; i++){
       list.add(new Container(
@@ -286,6 +287,7 @@ class SeizureDetails extends StatelessWidget {
 
 Widget outlineChipFromList(List<String> strings, Color backColor, Color textColor){
 
+  // ignore: deprecated_member_use
   List<Widget> list = new List<Widget>();
   for(var i = 0; i < strings.length; i++){
     list.add(new Container(

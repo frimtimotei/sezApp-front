@@ -44,6 +44,8 @@ dependencies:
   cool_alert: ^1.1.0
   duration_picker: ^1.0.1
   focused_menu: ^1.0.5
+  fl_chart: ^0.36.1
+  font_awesome_flutter: ^9.0.0
 
 dev_dependencies:
   flutter_test:

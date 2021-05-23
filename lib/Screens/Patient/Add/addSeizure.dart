@@ -166,8 +166,8 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
           child: CustomAAppBar(
-        title: "Add Seizure",
-      )),
+            title: "Add Seizure",
+          )),
       body: Container(
         color: kLightColor,
         height: size.height,
@@ -539,41 +539,17 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
   }
 
   void _seizureSubmit() async {
+    String sezTriggers;
+    String seizuresType;
+    String activities;
     // check if all fields are completed
     if (_duration.inSeconds == 0) {
       setState(() {
         errorMessage = "Duration must be grater then 0:00";
       });
       return;
-    } else {
-      if (_selectedTriggers.isEmpty) {
-        setState(() {
-          errorMessage = "Select a possible Trigger";
-        });
-        return;
-      } else {
-        if (_selectedSeizures.isEmpty) {
-          setState(() {
-            errorMessage = "Select a Seizure Type";
-          });
-          return;
-        } else {
-          if (_selectedSeizures.isEmpty) {
-            setState(() {
-              errorMessage = "Select a Seizure Type";
-            });
-            return;
-          } else {
-            if (_selectedActivities.isEmpty) {
-              setState(() {
-                errorMessage = "Select a Activity";
-              });
-              return;
-            }
-          }
-        }
-      }
     }
+
     setState(() {
       errorMessage = "";
     });
@@ -581,16 +557,26 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     /// data for api format
     var formatter = new DateFormat('yyyy-MM-dd');
     String formattedDate = formatter.format(_date);
+    if (_selectedTriggers.isNotEmpty) {
+      sezTriggers = _selectedTriggers
+          .map((product) => product.name)
+          .reduce((value, element) => value + "," + element);
+    } else
+      sezTriggers = "No Trigger Added";
 
-    final sezTriggers = _selectedTriggers
-        .map((product) => product.name)
-        .reduce((value, element) => value + "," + element);
-    final seizuresType = _selectedSeizures
-        .map((product) => product.name)
-        .reduce((value, element) => value + "," + element);
-    final activities = _selectedActivities
-        .map((product) => product.name)
-        .reduce((value, element) => value + "," + element);
+    if (_selectedSeizures.isNotEmpty) {
+      seizuresType = _selectedSeizures
+          .map((product) => product.name)
+          .reduce((value, element) => value + "," + element);
+    } else
+      seizuresType = "No Seizure Type Added";
+
+    if (_selectedActivities.isNotEmpty) {
+      activities = _selectedActivities
+          .map((product) => product.name)
+          .reduce((value, element) => value + "," + element);
+    } else
+      activities = "No Activities Added";
 
     seizureRequestModel.date = formattedDate;
     seizureRequestModel.startAt = _starAt.format(context);

@@ -7,9 +7,9 @@ import 'package:sezapp/Screens/Patient/Reports/seziuresActions.dart';
 import 'package:sezapp/Screens/Patient/patientHome_page.dart';
 import 'package:sezapp/Screens/Patient/patientUser_page.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/Seizure.dart';
-import 'package:sezapp/model/User.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+
+
 
 class PatientHome extends StatefulWidget {
   @override
@@ -17,15 +17,7 @@ class PatientHome extends StatefulWidget {
 }
 
 class _PatientHomeState extends State<PatientHome> {
-  void _handleLogout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('id');
-    prefs.remove("roleId");
-    prefs.remove("jwt");
 
-    Navigator.pushNamedAndRemoveUntil(
-        context, '/login', ModalRoute.withName('/login'));
-  }
 
 
 
@@ -42,7 +34,7 @@ class _PatientHomeState extends State<PatientHome> {
   ];
   @override
   Widget build(BuildContext context) {
-    final User args = ModalRoute.of(context).settings.arguments;
+   // final User args = ModalRoute.of(context).settings.arguments;
 
 
     return Scaffold(

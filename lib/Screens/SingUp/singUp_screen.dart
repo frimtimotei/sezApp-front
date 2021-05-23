@@ -243,7 +243,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text(
-                        "Do you have an Acount?  ",
+                        "Do you have an Account?  ",
                         style: TextStyle(color: kPrimaryColor, fontSize: 16),
                       ),
                       GestureDetector(

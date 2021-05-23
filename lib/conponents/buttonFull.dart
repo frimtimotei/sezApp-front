@@ -22,6 +22,7 @@ class ButtonFull extends StatelessWidget {
     return Container(
       height: height,
       width: width,
+      // ignore: deprecated_member_use
       child: RaisedButton(
         onPressed: callback,
         shape: RoundedRectangleBorder(

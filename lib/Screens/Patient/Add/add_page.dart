@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:sezapp/Screens/Patient/Add/addMedication.dart';
 import 'package:sezapp/Screens/Patient/Add/addSeizure.dart';
 import 'package:sezapp/conponents/addCard.dart';
 import 'package:sezapp/constants.dart';
@@ -41,12 +42,11 @@ class _PatientAddPageState extends State<PatientAddPage> {
 
                 child: OpenContainer(
 
-
-                  closedElevation: 2,
+                  closedElevation: 1,
                   tappable: true,
                   closedColor: Colors.white,
 
-                  transitionDuration: Duration(milliseconds: 500),
+                  transitionDuration: Duration(milliseconds: 350),
 
                   closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   transitionType: ContainerTransitionType.fade,
@@ -54,6 +54,7 @@ class _PatientAddPageState extends State<PatientAddPage> {
                     return AddSeizurePage();
 
                   },
+
                   closedBuilder:
                       (BuildContext context, VoidCallback openContainer) {
                     return Container(
@@ -76,24 +77,15 @@ class _PatientAddPageState extends State<PatientAddPage> {
                 height: 50,
               ),
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(143, 148, 251, 0.1),
-                          blurRadius: 20.0,
-                          offset: Offset(0, 15))
-                    ]),
                 child: OpenContainer(
-                  openElevation: 0,
-                  closedElevation: 0,
-                  closedColor: Colors.transparent,
-                  transitionType: ContainerTransitionType.fade,
+                  closedElevation: 1,
+                  tappable: true,
+                  closedColor: Colors.white,
+                  transitionDuration: Duration(milliseconds: 350),
+                  closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   openBuilder: (BuildContext context, VoidCallback _) {
-                    return Center(
-                      child: Text("Asd"),
-                    );
+
+                    return AddMedicationPage();
                   },
                   closedBuilder:
                       (BuildContext context, VoidCallback openContainer) {

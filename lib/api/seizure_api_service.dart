@@ -50,3 +50,65 @@ import 'package:shared_preferences/shared_preferences.dart';
     return convertDataJason;
 
   }
+
+
+  Future deleteSeizure(int seizureId)async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String jwt = prefs.getString("jwt");
+    String url = '$baseUrl/seizure/delete/$seizureId' ;
+
+    final response= await http.delete(url,headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
+
+    if(response.statusCode==200)
+      {
+        return true;
+      }
+    else{
+        return false;
+    }
+
+  }
+
+Future weekSezFreq()async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/weekSezFrequency';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
+Future monthSezFreq()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/monthSezFrequency';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
+
+Future yearSezFreq()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/yearSezFrequency';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+

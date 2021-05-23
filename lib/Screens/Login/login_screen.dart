@@ -6,9 +6,9 @@ import 'package:flutter/widgets.dart';
 import 'package:sezapp/Screens/Login/usersAction.dart';
 import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/User.dart';
+
 import 'package:sezapp/model/login_model.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -21,7 +21,6 @@ class _LoginScreenState extends State<LoginScreen> {
   bool _hidePassword = true;
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-  String _message = "";
 
   GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>();
 
@@ -153,6 +152,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           Container(
                             height: 60.0,
                             width: size.width * 0.8,
+                            // ignore: deprecated_member_use
                             child: RaisedButton(
                               onPressed: () async {
                                 _loginSubmit();

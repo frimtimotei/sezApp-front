@@ -21,6 +21,7 @@ class WhiteIconButton extends StatelessWidget {
       height: height,
       width: width,
       margin: EdgeInsets.symmetric(vertical: 10),
+      // ignore: deprecated_member_use
       child: RaisedButton(
         color: Colors.white,
         onPressed: callback,
@@ -34,7 +35,7 @@ class WhiteIconButton extends StatelessWidget {
               child: Container(
 
                 child: icon,
-                padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+                padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
               ),
             ),
             Container(

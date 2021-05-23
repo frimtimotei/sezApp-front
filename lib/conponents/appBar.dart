@@ -13,7 +13,7 @@ class CustomAAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return AppBar(
         backgroundColor: Colors.white,
-        elevation: 0.5,
+        elevation: 0.8,
         centerTitle: true,
         leading: IconButton(
           icon: Icon(

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class Seizure {
-  String id;
+  int id;
   DateTime date;
   TimeOfDay startAt;
   Duration duration;
@@ -34,7 +34,7 @@ class Seizure {
   Seizure.fromJson(Map<String, dynamic> json) {
     final format = DateFormat.jm(); //"6:00 AM"
 
-    id = json['id'].toString();
+    id = json['id'];
     date = DateTime.parse(json['date']);
     startAt = TimeOfDay.fromDateTime(format.parse(json['start_at']));
     duration = parseDuration(json['duration']);

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/model/User.dart';
+
 import 'package:shared_preferences/shared_preferences.dart';
 
 class DoctorHome extends StatefulWidget {
@@ -17,7 +17,7 @@ class _DoctorHomeState extends State<DoctorHome> {
   }
   @override
   Widget build(BuildContext context) {
-    final User args = ModalRoute.of(context).settings.arguments;
+    //final User args = ModalRoute.of(context).settings.arguments;
     return Scaffold(
         body: Center(
           child: Column(
@@ -26,6 +26,7 @@ class _DoctorHomeState extends State<DoctorHome> {
             children: <Widget>[
               Text("You are a doctor"),
 
+              // ignore: deprecated_member_use
               RaisedButton(
                 onPressed: _handleLogout,
                 child: Text("Logout"),

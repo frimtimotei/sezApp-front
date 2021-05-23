@@ -24,7 +24,9 @@ class MyApp extends StatelessWidget {
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,
         fontFamily: "Ubuntu",
-        canvasColor: Colors.white.withOpacity(0.9),
+        canvasColor: Colors.white,
+        indicatorColor: kPrimaryLightColor,
+        shadowColor: kPrimaryColor,
 
 
         // This is the theme of your application.
