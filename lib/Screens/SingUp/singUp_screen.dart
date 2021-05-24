@@ -280,7 +280,6 @@ class _SingUpScreenState extends State<SingUpScreen> {
 
   void _registerSubmit() async {
     if (!globalFormKey.currentState.validate()) {
-      print("asd");
       setState(() {
         Flushbar(
           title: "Complette all fields",

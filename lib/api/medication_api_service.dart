@@ -1,26 +1,27 @@
 import 'dart:convert';
 
 import 'package:sezapp/model/medication_add_model.dart';
+import 'package:sezapp/model/reminder_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 String baseUrl='http://10.0.2.2:8080';
 
-Future medicationRegister(MedicationRegisterModel medicationRegisterModel) async {
+Future medicationRegister(MedicationRegisterModel medicationRegisterModel, List<Reminder>reminders) async {
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
 
-  final List<Map<String, dynamic>> reminders=[];
+  final List<Map<String, dynamic>> remindersData=[];
 
-  for (int i=0;i< medicationRegisterModel.reminders.length;i++)
+  for (int i=0;i< reminders.length;i++)
     {
-      final Map<String, dynamic> reminder={
-        "alarmTime": medicationRegisterModel.reminders[i].time,
-        "howOften": medicationRegisterModel.reminders[i].howOften
+      final Map<String, dynamic> reminderData={
+        "alarmTime": reminders[i].time,
+        "howOften": reminders[i].howOften
       };
 
-      reminders.add(reminder);
+      remindersData.add(reminderData);
 
     }
 
@@ -30,8 +31,10 @@ Future medicationRegister(MedicationRegisterModel medicationRegisterModel) async
     'start_date': medicationRegisterModel.startDate,
     'end_date': medicationRegisterModel.endDate,
     'set_reminder': medicationRegisterModel.setReminder,
-    'reminders':reminders
+    'reminders':remindersData
   };
+
+
 
   String url = '$baseUrl/medication/create';
   final response = await http.post(url, headers: {
