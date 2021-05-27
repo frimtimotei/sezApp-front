@@ -32,6 +32,7 @@ TimeOfDay newTimeSet;
 List<Widget> chipsTimeList;
 TimeOfDay _initialTime = TimeOfDay(hour: 9, minute: 00);
 
+
 String message="";
 
 GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>(); //form key
@@ -326,7 +327,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                       SizedBox(
                         width: 320,
                         child: Wrap(
-                          spacing: 8.0,
+                          spacing: 6.0,
                           runSpacing: 6.0,
                           children: List.generate(remindersTimes.length, (index) {
                             return RawChip(
@@ -340,7 +341,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                                 ),
                               ),
                               labelPadding: EdgeInsets.symmetric(
-                                  vertical: 7, horizontal: 2),
+                                  vertical: 5, horizontal: 2),
                               backgroundColor: kGreenBackColor,
                               label: Text(
                                 remindersTimes[index].format(context),
@@ -417,6 +418,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       medicationRegisterModel.dose = doseController.text;
       medicationRegisterModel.startDate = formatter.format(_startDate);
       medicationRegisterModel.endDate = formatter.format(_endDate);
+      medicationRegisterModel.howOften=oftenDropdown;
       if (remindersTimes.isEmpty) {
         medicationRegisterModel.setReminder = false;
       }
@@ -427,7 +429,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       for (int i = 0; i < remindersTimes.length; i++) {
         final Reminder reminder = new Reminder();
 
-        reminder.time = remindersTimes[i].toString();
+        reminder.time = remindersTimes[i].format(context);
         reminder.howOften = oftenDropdown;
 
         reminders.add(reminder);
@@ -448,6 +450,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
               Navigator.pop(context);
               nameController.text="";
               doseController.text="";
+              remindersTimes=[];
 
             });
       } else {

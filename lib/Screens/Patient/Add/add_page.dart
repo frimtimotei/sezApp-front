@@ -13,8 +13,7 @@ class PatientAddPage extends StatefulWidget {
 }
 
 class _PatientAddPageState extends State<PatientAddPage> {
-
-
+  
   @override
   Widget build(BuildContext context) {
     return Container(

@@ -31,6 +31,7 @@ Future medicationRegister(MedicationRegisterModel medicationRegisterModel, List<
     'start_date': medicationRegisterModel.startDate,
     'end_date': medicationRegisterModel.endDate,
     'set_reminder': medicationRegisterModel.setReminder,
+    'howOften':medicationRegisterModel.howOften,
     'reminders':remindersData
   };
 
@@ -46,4 +47,36 @@ Future medicationRegister(MedicationRegisterModel medicationRegisterModel, List<
 
   var convertDataJason = jsonDecode(response.body);
   return convertDataJason;
+}
+
+
+Future getAllMedications() async{
+
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/medication/userMedication';
+  final response = await http.get(url,headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
+
+
+  var convertDataJason= jsonDecode(response.body);
+  return convertDataJason;
+
+}
+
+
+Future deleteMedication(int seizureId)async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/medication/delete/$seizureId' ;
+
+  final response= await http.delete(url,headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
+
+  if(response.statusCode==200)
+  {
+    return true;
+  }
+  else{
+    return false;
+  }
+
 }

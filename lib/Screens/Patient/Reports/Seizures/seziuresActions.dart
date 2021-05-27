@@ -4,7 +4,7 @@ import 'package:sezapp/model/Seizure.dart';
 
 Future<List<Seizure>> getSeizures() async{
 
-  var data= await getAllSeizures();
+  var data= await apiGetAllSeizures();
   List<Seizure> seizures=[];
   for(var i in data)
   {

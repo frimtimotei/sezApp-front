@@ -8,8 +8,8 @@ class MedicationRegisterModel{
   String startDate;
   String endDate;
   bool setReminder;
-
+  String howOften;
 
   MedicationRegisterModel({this.id, this.name, this.dose, this.startDate,
-      this.endDate, this.setReminder});
+      this.endDate, this.setReminder, this.howOften});
 }

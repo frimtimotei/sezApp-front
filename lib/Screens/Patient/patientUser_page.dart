@@ -29,8 +29,6 @@ class _PatientUserState extends State<PatientUser> {
 
 
 
-
-
   @override
   Widget build(BuildContext context) {
     final User activeUser = ModalRoute.of(context).settings.arguments;

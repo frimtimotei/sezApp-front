@@ -56,6 +56,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
           children: [
             SizedBox(
               height: 450,
+
               child: Card(
                 margin: EdgeInsets.all(15),
                 elevation: 0,
@@ -581,7 +582,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
   }
 
   Future<List> getWeekSezData() async {
-    var response = await weekSezFreq();
+    var response = await apiWeekSezFreq();
 
     if (response.statusCode == 200) {
       var convertDataJason = jsonDecode(response.body);
@@ -593,7 +594,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
   }
 
   Future<List> getMonthSezData() async {
-    var response = await monthSezFreq();
+    var response = await apiMonthSezFreq();
 
     if (response.statusCode == 200) {
       var convertDataJason = jsonDecode(response.body);
@@ -605,7 +606,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
   }
 
   Future<List> getYearSezData() async {
-    var response = await yearSezFreq();
+    var response = await apiYearSezFreq();
 
     if (response.statusCode == 200) {
       var convertDataJason = jsonDecode(response.body);

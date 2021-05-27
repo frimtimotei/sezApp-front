@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/Screens/Patient/Add/add_page.dart';
 import 'package:sezapp/Screens/Patient/Reports/reports_home.dart';
-import 'package:sezapp/Screens/Patient/Reports/seziuresActions.dart';
-import 'package:sezapp/Screens/Patient/patientHome_page.dart';
+import 'package:sezapp/Screens/Patient/Reports/Seizures/seziuresActions.dart';
+import 'package:sezapp/Screens/Patient/Home/patientHome_page.dart';
 import 'package:sezapp/Screens/Patient/patientUser_page.dart';
 import 'package:sezapp/constants.dart';
 
@@ -26,7 +26,7 @@ class _PatientHomeState extends State<PatientHome> {
   int selectedPage=0;
   final _pageOptions=[
       PatientHomePage(),
-      PatientHomePage(),
+      PatientUser(),
       PatientAddPage(),
       ReportsHome(seizures: getSeizures(),),
       PatientUser()

@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sezapp/Screens/Patient/Reports/seizure_details.dart';
-import 'package:sezapp/Screens/Patient/Reports/seziuresActions.dart';
+import 'package:sezapp/Screens/Patient/Reports/Seizures/seizure_details.dart';
+import 'package:sezapp/Screens/Patient/Reports/Seizures/seziuresActions.dart';
 import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/Seizure.dart';
@@ -241,7 +241,7 @@ class _AllSeizuresState extends State<AllSeizures> {
         FlatButton(
           textColor: kPrimaryColor,
           onPressed: () async {
-            var response = await deleteSeizure(id);
+            var response = await apiDeleteSeizure(id);
             if (!response) {
               showDialog<void>(
                   context: context, builder: (context) => errorDialog);

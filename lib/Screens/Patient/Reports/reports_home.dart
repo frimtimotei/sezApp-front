@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sezapp/Screens/Patient/Reports/chart_seizures.dart';
-import 'package:sezapp/Screens/Patient/Reports/list_seizures.dart';
+import 'package:sezapp/Screens/Patient/Reports/Medication/list_medication.dart';
+import 'package:sezapp/Screens/Patient/Reports/Seizures/list_seizures.dart';
 import 'package:sezapp/model/Seizure.dart';
 
 import '../../../constants.dart';
@@ -49,7 +50,7 @@ class _ReportsHomeState extends State<ReportsHome> {
         body: TabBarView(children: [
           WeekSeizureFrequency(),
           AllSeizures(),
-          Text("aaaaSd"),
+          AllMedication(),
 
         ],
 

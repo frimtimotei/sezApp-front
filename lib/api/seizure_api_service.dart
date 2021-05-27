@@ -38,7 +38,7 @@ import 'package:shared_preferences/shared_preferences.dart';
     return convertDataJason;
   }
 
-  Future getAllSeizures() async{
+  Future apiGetAllSeizures() async{
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString("jwt");
@@ -52,7 +52,7 @@ import 'package:shared_preferences/shared_preferences.dart';
   }
 
 
-  Future deleteSeizure(int seizureId)async{
+  Future apiDeleteSeizure(int seizureId)async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString("jwt");
     String url = '$baseUrl/seizure/delete/$seizureId' ;
@@ -69,7 +69,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
   }
 
-Future weekSezFreq()async {
+Future apiWeekSezFreq()async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/weekSezFrequency';
@@ -83,7 +83,7 @@ Future weekSezFreq()async {
   return response;
 }
 
-Future monthSezFreq()async{
+Future apiMonthSezFreq()async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/monthSezFrequency';
@@ -98,7 +98,7 @@ Future monthSezFreq()async{
 }
 
 
-Future yearSezFreq()async{
+Future apiYearSezFreq()async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/yearSezFrequency';
@@ -111,4 +111,62 @@ Future yearSezFreq()async{
 
   return response;
 }
+
+
+Future apiDaysFromLastSez()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/daysFromLastSez';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
+Future apiMoodSezFreq()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/moodSezFrequency';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
+Future apiTypeSezFreq()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/typeSezFrequency';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
+Future apiTrigSezFreq()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/seizure/trigSezFrequency';
+
+  final response = await http.get(url, headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
 
