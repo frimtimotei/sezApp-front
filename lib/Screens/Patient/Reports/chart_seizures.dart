@@ -55,7 +55,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
         child: Column(
           children: [
             SizedBox(
-              height: 450,
+              height: 400,
 
               child: Card(
                 margin: EdgeInsets.all(15),
@@ -92,7 +92,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
                                 borderRadius: BorderRadius.circular(10),
                                 borderWidth: 1.3,
                                 borderColor: kPrimaryLightColor,
-                                constraints: BoxConstraints(minHeight: 36.0),
+                                constraints: BoxConstraints(minHeight: 30.0),
                                 isSelected: isSelected,
                                 highlightColor: Colors.transparent,
                                 onPressed: (index) {
@@ -144,31 +144,31 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
                                 children: [
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
+                                        EdgeInsets.symmetric(horizontal: 14.0),
                                     child: Text(
                                       'Week',
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
-                                        fontSize: 14,
+                                        fontSize: 12,
                                       ),
                                     ),
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
+                                        EdgeInsets.symmetric(horizontal: 14.0),
                                     child: Text('Month',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 12,
                                         )),
                                   ),
                                   Padding(
                                     padding:
-                                        EdgeInsets.symmetric(horizontal: 16.0),
+                                        EdgeInsets.symmetric(horizontal: 14.0),
                                     child: Text('Year',
                                         style: TextStyle(
                                           fontWeight: FontWeight.bold,
-                                          fontSize: 14,
+                                          fontSize: 12,
                                         )),
                                   ),
                                 ],

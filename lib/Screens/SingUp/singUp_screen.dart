@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:sezapp/Screens/Login/usersAction.dart';
 import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
@@ -295,6 +299,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
       registerRequestModel.age = int.parse(ageController.text);
       if (sexDropdownValue == "Masculine") {
         registerRequestModel.sex = 'M';
+
       } else {
         registerRequestModel.sex = 'F';
       }
@@ -305,6 +310,12 @@ class _SingUpScreenState extends State<SingUpScreen> {
       }
 
       var response = await registerUser(registerRequestModel);
+      String path="profile_picture.jpg";
+      final byteData = await rootBundle.load('assets/images/$path');
+
+      final file = File('${(await getTemporaryDirectory()).path}/$path');
+      await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
+      apiUploadUserPicture(file.path);
       print(response);
 
       if (response["id"] == null) {
@@ -320,7 +331,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
           ).show(context);
         });
       } else
-        saveAndRedirectToHome(response, context);
+        Navigator.pushNamedAndRemoveUntil(
+            context, '/login', ModalRoute.withName('/login'));
     }
   }
 }

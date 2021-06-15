@@ -7,9 +7,10 @@ class User{
   String age;
   String sex;
   String roleId;
+  String imageUrl;
 
   User({this.id, this.firstName, this.lastName, this.email, this.age,
-      this.sex});
+      this.sex, this.imageUrl});
 
 
 
@@ -18,9 +19,9 @@ class User{
     firstName = json['firstName'];
     lastName = json['lastName'];
     email = json['email'];
-    email = json['email'];
     sex= json['sex'];
     age= json['age'].toString();
+    imageUrl=json['imageUrl'];
     roleId=json['roles'][0]['id'].toString();
 
   }

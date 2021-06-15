@@ -4,9 +4,9 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:sezapp/Screens/Patient/Home/pieChart/indicator.dart';
 import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/constants.dart';
-
 
 class PieChartType extends StatefulWidget {
   const PieChartType({Key key}) : super(key: key);
@@ -29,92 +29,117 @@ class _PieChartTypeState extends State<PieChartType> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Column(
-      children: [
-        SizedBox(
-          height: 140,
-          width: 140,
-          child: FutureBuilder(
-              future: typeSezFrequency,
-              builder: (context, snapshot) {
-                if (snapshot.hasData) {
-                  return PieChart(
-                    PieChartData(
-                      pieTouchData: PieTouchData(touchCallback: (pieTouchResponse) {
-                        if(mounted) {
-                          setState(() {
-                            final desiredTouch =
-                                pieTouchResponse
-                                    .touchInput is! PointerExitEvent &&
-                                    pieTouchResponse
-                                        .touchInput is! PointerUpEvent;
-                            if (desiredTouch &&
-                                pieTouchResponse.touchedSection != null) {
-                              touchedIndex =
-                                  pieTouchResponse.touchedSection
-                                      .touchedSectionIndex;
-                            } else {
-                              touchedIndex = -1;
+
+    return SizedBox(
+
+      width: 130,
+      child: FutureBuilder(
+          future: typeSezFrequency,
+          builder: (context, snapshot) {
+            if (snapshot.hasData) {
+              if (snapshot.data.length == 0) {
+                return Center(
+                  child: Text("No data"),
+                );
+              } else {
+                return Column(
+                  children: [
+                    SizedBox(
+                      height: 140,
+                      width: 140,
+                      child: PieChart(
+                        PieChartData(
+                          pieTouchData:
+                              PieTouchData(touchCallback: (pieTouchResponse) {
+                            if (mounted) {
+                              setState(() {
+                                final desiredTouch = pieTouchResponse.touchInput
+                                        is! PointerExitEvent &&
+                                    pieTouchResponse.touchInput
+                                        is! PointerUpEvent;
+                                if (desiredTouch &&
+                                    pieTouchResponse.touchedSection != null) {
+                                  touchedIndex = pieTouchResponse
+                                      .touchedSection.touchedSectionIndex;
+                                } else {
+                                  touchedIndex = -1;
+                                }
+                              });
                             }
-                          });
-                        }
-                      }),
-                      borderData: FlBorderData(
-                        show: false,
+                          }),
+                          borderData: FlBorderData(
+                            show: false,
+                          ),
+                          sectionsSpace: 0,
+                          startDegreeOffset: 10,
+                          centerSpaceRadius: double.infinity,
+                          sections: showingSections(snapshot, size),
+                        ),
+                        swapAnimationDuration: Duration(milliseconds: 150),
+                        swapAnimationCurve: Curves.linear,
                       ),
-                      sectionsSpace: 0,
-                      startDegreeOffset: 10,
-                      centerSpaceRadius: double.infinity,
-                      sections: showingSections(snapshot),
                     ),
-                    swapAnimationDuration: Duration(milliseconds: 150),
-                    swapAnimationCurve: Curves.linear,
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-              }),
-        ),
-
-        SizedBox(
-          height: 10,
-        ),
-
-
-      ],
+                    SizedBox(
+                      height: 7,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "Most:",
+                          style: TextStyle(
+                              color: kPrimaryColor, fontSize: size.width * 0.03),
+                        ),
+                        Indicator(
+                          color: kPrimaryLightColor,
+                          text: snapshot.data[0]["biggest"],
+                          textColor: Colors.white,
+                        )
+                      ],
+                    )
+                  ],
+                );
+              }
+            } else {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+          }),
     );
   }
 
-  List<PieChartSectionData> showingSections(AsyncSnapshot snapshot) {
+  List<PieChartSectionData> showingSections(AsyncSnapshot snapshot, Size size) {
     return List.generate(snapshot.data.length, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 18.0 : 12.0;
+      final fontSize = isTouched ? size.width * 0.035 : size.width * 0.025;
       final radius = isTouched ? 60.0 : 50.0;
-      final text= isTouched ? " " : snapshot.data[i]["freq"].toString()+" %";
-      final text2= isTouched ?  snapshot.data[i]["name"] +"\n"+ snapshot.data[i]["freq"].toString()+" %": " "  ;
-      final textColor= kListTextColors[i];
+      final text = isTouched ? "" : snapshot.data[i]["freq"].toString() + "%";
+      final text2 = isTouched
+          ? snapshot.data[i]["name"] +
+              "\n" +
+              snapshot.data[i]["freq"].toString() +
+              "%"
+          : " ";
+      final textColor = kListTextColors[i];
 
       return PieChartSectionData(
-          color: kListBackColors[i],
-          value: snapshot.data[i]["freq"],
-          title: text,
-          radius: radius,
-          titleStyle: TextStyle(
+        color: kListBackColors[i],
+        value: snapshot.data[i]["freq"],
+        title: text,
+        radius: radius,
+        titleStyle: TextStyle(
+            fontSize: fontSize,
+            fontWeight: FontWeight.bold,
+            color: kListTextColors[i]),
+        badgeWidget: Text(
+          text2,
+          style: TextStyle(
               fontSize: fontSize,
-              fontWeight: FontWeight.bold,
-              color: kListTextColors[i]),
-            badgeWidget: Text(text2, style: TextStyle(fontSize: 15,color: textColor,fontWeight: FontWeight.w800),),
-
-        );
-
-      });
-
-
-
-
-
+              color: textColor,
+              fontWeight: FontWeight.w800),
+        ),
+      );
+    });
   }
 
   Future getTypeSezFreq() async {

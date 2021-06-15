@@ -239,6 +239,7 @@ class _LoginScreenState extends State<LoginScreen> {
       loginrequestmodel.password = passwordController.text;
 
       var response = await loginUser(loginrequestmodel);
+      print(response);
 
       if (response["id"] == null) {
         setState(() {

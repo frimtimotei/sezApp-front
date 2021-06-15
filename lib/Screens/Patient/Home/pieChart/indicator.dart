@@ -18,7 +18,7 @@ class Indicator extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+      Size size=MediaQuery.of(context).size;
        return Container(
 
          decoration: BoxDecoration(
@@ -35,6 +35,6 @@ class Indicator extends StatelessWidget {
 
 
 
-       child: Text(text,style: TextStyle(fontSize:10,color: textColor),),);
+       child: Text(text,style: TextStyle(fontSize: size.width*0.026,color: textColor),),);
   }
 }

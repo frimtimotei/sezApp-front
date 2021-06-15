@@ -5,7 +5,8 @@ import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-  String baseUrl='http://10.0.2.2:8080';
+  String baseUrl=//'http://10.0.2.2:8080';
+      'https://sezapp-backend.herokuapp.com';
 
 
 
@@ -27,7 +28,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
     String url = '$baseUrl/seizure/create';
-    final response = await http.post(url, headers: {
+    final response = await http.post(Uri.parse(url), headers: {
       'Content-Type': 'application/json',
       "accept": "application/json",
       'Authorization': "Bearer " + jwt
@@ -43,7 +44,7 @@ import 'package:shared_preferences/shared_preferences.dart';
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString("jwt");
     String url = '$baseUrl/seizure/userSeizures';
-    final response = await http.get(url,headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
+    final response = await http.get(Uri.parse(url),headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
 
 
     var convertDataJason= jsonDecode(response.body);
@@ -57,7 +58,7 @@ import 'package:shared_preferences/shared_preferences.dart';
     String jwt = prefs.getString("jwt");
     String url = '$baseUrl/seizure/delete/$seizureId' ;
 
-    final response= await http.delete(url,headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
+    final response= await http.delete(Uri.parse(url),headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
 
     if(response.statusCode==200)
       {
@@ -74,7 +75,7 @@ Future apiWeekSezFreq()async {
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/weekSezFrequency';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt
@@ -88,7 +89,7 @@ Future apiMonthSezFreq()async{
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/monthSezFrequency';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt
@@ -103,7 +104,7 @@ Future apiYearSezFreq()async{
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/yearSezFrequency';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt
@@ -118,7 +119,7 @@ Future apiDaysFromLastSez()async{
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/daysFromLastSez';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt
@@ -132,7 +133,7 @@ Future apiMoodSezFreq()async{
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/moodSezFrequency';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt
@@ -146,7 +147,7 @@ Future apiTypeSezFreq()async{
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/typeSezFrequency';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt
@@ -160,7 +161,7 @@ Future apiTrigSezFreq()async{
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/seizure/trigSezFrequency';
 
-  final response = await http.get(url, headers: {
+  final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",
     'Authorization': "Bearer " + jwt

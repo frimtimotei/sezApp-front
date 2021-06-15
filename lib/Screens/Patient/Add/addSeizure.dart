@@ -33,7 +33,7 @@ SeizureRegisterModel seizureRequestModel = new SeizureRegisterModel();
 
 class _AddSeizurePageState extends State<AddSeizurePage> {
   DateTime _date = DateTime(now.year, now.month, now.day);
-  TimeOfDay _starAt = TimeOfDay(hour: now.hour, minute: now.minute);
+  TimeOfDay _starAt;
   Duration _duration = Duration(hours: 0, minutes: 0, seconds: 00);
 
   format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
@@ -157,6 +157,13 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
   final _activityItems = _possibleActivities
       .map((activity) => MultiSelectItem<SezAndTrigg>(activity, activity.name))
       .toList();
+
+  @override
+  void initState() {
+    _starAt = TimeOfDay(hour: now.hour, minute: now.minute);
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

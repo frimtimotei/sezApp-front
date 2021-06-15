@@ -40,8 +40,8 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
               boxShadow: [
                 BoxShadow(
                     color: Color.fromRGBO(143, 148, 251, 0.2),
-                    blurRadius: 50.0,
-                    offset: Offset(0, 15))
+                    blurRadius: 20.0,
+                    offset: Offset(0, 5))
               ]),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
           margin:
@@ -107,10 +107,10 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
               boxShadow: [
                 BoxShadow(
                     color: Color.fromRGBO(143, 148, 251, 0.2),
-                    blurRadius: 50.0,
-                    offset: Offset(0, 15))
+                    blurRadius: 20.0,
+                    offset: Offset(0, 5))
               ]),
-          padding: EdgeInsets.fromLTRB(15, 10, 15, 0),
+          padding: EdgeInsets.fromLTRB(13, 10, 13, 0),
           margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
           child: ContainedTabBarView(
             tabs: [...[1, 2, 3].map((e) => Container(
@@ -126,7 +126,7 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
             ],
             tabBarProperties: TabBarProperties(
               height: 32,
-              width: size.width*0.42,
+              width: size.width*0.12,
               position: TabBarPosition.bottom,
               indicator: ContainerTabIndicator(
                 width: 12.0,
@@ -160,11 +160,11 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
             SizedBox(
               width: size.width * 0.02,
             ),
-            Text("Seizure mood")
+            Text("Seizure mood", style: TextStyle(fontSize: size.width*0.03),)
           ],
         ),
         SizedBox(
-          height: size.height * 0.02,
+          height: size.height * 0.01,
         ),
         Center(child: PieChartMood()),
       ],
@@ -185,11 +185,11 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
             SizedBox(
               width: size.width * 0.02,
             ),
-            Text("Seizure type")
+            Text("Seizure type",style: TextStyle(fontSize: size.width*0.03),)
           ],
         ),
         SizedBox(
-          height: size.height * 0.02,
+          height: size.height * 0.01,
         ),
         Center(child: PieChartType()),
       ],
@@ -198,7 +198,7 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
 
   Column buildColumnTrig(Size size) {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Row(
           children: [
@@ -208,13 +208,13 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
               size: 30,
             ),
             SizedBox(
-              width: size.width * 0.02,
+              width: size.width * 0.01,
             ),
-            Text("Trigger types")
+            Text("Trigger types",style: TextStyle(fontSize: size.width*0.03),)
           ],
         ),
         SizedBox(
-          height: size.height * 0.02,
+          height: size.height * 0.01,
         ),
         Center(child: PieChartTrig()),
       ],

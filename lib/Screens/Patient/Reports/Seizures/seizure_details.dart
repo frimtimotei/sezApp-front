@@ -91,10 +91,10 @@ class SeizureDetails extends StatelessWidget {
                     width: 5,
                   ),
                   SizedBox(
-                    width: size.width*0.57,
+                    width: size.width*0.48,
                     child: chipFromList(seizure.sezTrigger.split(","),Color.fromRGBO(
                         255, 167, 167, 0.6), Color.fromRGBO(
-                        224, 109, 109, 0.8)),
+                        224, 109, 109, 0.8),size),
 
 
                     ),
@@ -131,10 +131,10 @@ class SeizureDetails extends StatelessWidget {
                         width: 20,
                       ),
                       SizedBox(
-                        width: size.width*0.57,
+                        width: size.width*0.48,
                         child: chipFromList(seizure.type.split(","),Color.fromRGBO(
                             162, 219, 184, 0.6), Color.fromRGBO(
-                            100, 172, 141, 0.8)),
+                            100, 172, 141, 0.8),size),
 
 
                       ),
@@ -173,10 +173,10 @@ class SeizureDetails extends StatelessWidget {
                         width: 5,
                       ),
                       SizedBox(
-                        width: size.width*0.57,
+                        width: size.width*0.48,
                         child: chipFromList(seizure.activity.split(","),Color.fromRGBO(
                             174, 203, 255, 0.6), Color.fromRGBO(
-                            105, 141, 208, 0.8)),
+                            105, 141, 208, 0.8),size),
 
 
                       ),
@@ -214,11 +214,11 @@ class SeizureDetails extends StatelessWidget {
                         width: 15,
                       ),
                       SizedBox(
-                        width: size.width*0.57,
+                        width: size.width*0.48,
 
                         child: outlineChipFromList(seizure.mood.split(","),Color.fromRGBO(
                             183, 155, 241, 0.6), Color.fromRGBO(
-                            107, 103, 158, 0.8)),
+                            107, 103, 158, 0.8),size),
 
 
                       ),
@@ -264,7 +264,7 @@ class SeizureDetails extends StatelessWidget {
 
 
 
-  Widget chipFromList(List<String> strings, Color backColor, Color textColor){
+  Widget chipFromList(List<String> strings, Color backColor, Color textColor,Size size){
 
     // ignore: deprecated_member_use
     List<Widget> list = new List<Widget>();
@@ -279,21 +279,21 @@ class SeizureDetails extends StatelessWidget {
           child: Text(
             strings[i],
             style: TextStyle(
-                fontWeight: FontWeight.w500, color: textColor, fontSize: 15),
+                fontWeight: FontWeight.w500, color: textColor, fontSize: size.width*0.034),
           )));
     }
     return new Wrap(children: list);
   }
 }
 
-Widget outlineChipFromList(List<String> strings, Color backColor, Color textColor){
+Widget outlineChipFromList(List<String> strings, Color backColor, Color textColor, Size size){
 
   // ignore: deprecated_member_use
   List<Widget> list = new List<Widget>();
   for(var i = 0; i < strings.length; i++){
     list.add(new Container(
         margin: EdgeInsets.symmetric(vertical: 6, horizontal: 3),
-        padding: EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+        padding: EdgeInsets.symmetric(vertical: 2, horizontal: 6),
         decoration: BoxDecoration(
           border: Border.all(color: backColor, width: 2),
           borderRadius: BorderRadius.circular(40),
@@ -301,7 +301,7 @@ Widget outlineChipFromList(List<String> strings, Color backColor, Color textColo
         child: Text(
           strings[i],
           style: TextStyle(
-              fontWeight: FontWeight.w500, color: textColor, fontSize: 15),
+              fontWeight: FontWeight.w500, color: textColor, fontSize: size.width*0.034),
         )));
   }
   return new Wrap(children: list);

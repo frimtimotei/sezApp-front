@@ -1,11 +1,13 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/Screens/Patient/Add/add_page.dart';
 import 'package:sezapp/Screens/Patient/Reports/reports_home.dart';
 import 'package:sezapp/Screens/Patient/Reports/Seizures/seziuresActions.dart';
 import 'package:sezapp/Screens/Patient/Home/patientHome_page.dart';
-import 'package:sezapp/Screens/Patient/patientUser_page.dart';
+import 'package:sezapp/Screens/Patient/Profile/patientUser_page.dart';
+import 'package:sezapp/conponents/splashScreen.dart';
 import 'package:sezapp/constants.dart';
 
 
@@ -26,7 +28,7 @@ class _PatientHomeState extends State<PatientHome> {
   int selectedPage=0;
   final _pageOptions=[
       PatientHomePage(),
-      PatientUser(),
+      SplashScreen(),
       PatientAddPage(),
       ReportsHome(seizures: getSeizures(),),
       PatientUser()
@@ -59,7 +61,7 @@ class _PatientHomeState extends State<PatientHome> {
         bottomNavigationBar: CurvedNavigationBar(
           color: Colors.white,
           backgroundColor: kLightColor,
-          height: 65,
+          height: 55,
           items: <Widget>[
             Icon(LineAwesomeIcons.home,size: 30,color: kPrimaryColor,),
             Icon(LineAwesomeIcons.envelope,size: 30,color: kPrimaryColor,),
@@ -68,8 +70,10 @@ class _PatientHomeState extends State<PatientHome> {
             Icon(LineAwesomeIcons.user,size: 30,color: kPrimaryColor,),
           ],
 
+          animationCurve: Curves.easeOutSine,
+
           animationDuration: Duration(
-            milliseconds: 200
+            milliseconds: 400
           ),
           onTap: (index){
             setState(() {

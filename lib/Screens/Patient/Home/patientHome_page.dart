@@ -20,10 +20,8 @@ class PatientHomePage extends StatefulWidget {
 }
 
 class _PatientHomePageState extends State<PatientHomePage> {
-
   @override
   void initState() {
-
     // TODO: implement initState
     super.initState();
   }
@@ -36,6 +34,29 @@ class _PatientHomePageState extends State<PatientHomePage> {
       appBar: AppBar(
         backgroundColor: kLightColor,
         elevation: 0,
+        title: Container(
+          padding: EdgeInsets.fromLTRB(5, 20, 5, 5),
+          margin: EdgeInsets.symmetric(horizontal: size.width * 0.06),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hi! " + activeUser.firstName,
+                style: TextStyle(
+                    fontSize: 25,
+                    color: kPrimaryColor,
+                    fontWeight: FontWeight.w600),
+              ),
+              Text(
+                "how are you feeling today?",
+                style: TextStyle(
+                    fontSize: 12 ,
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.normal),
+              ),
+            ],
+          ),
+        ),
       ),
       body: Container(
         height: size.height,
@@ -45,53 +66,20 @@ class _PatientHomePageState extends State<PatientHomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Container(
-                padding: EdgeInsets.all(5),
-                margin: EdgeInsets.symmetric(horizontal:size.width*0.06),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Hi! " + activeUser.firstName,
-                      style: TextStyle(
-                          fontSize: 30,
-                          color: kPrimaryColor,
-                          fontWeight: FontWeight.w600),
-                    ),
-                    Text(
-                      "how are you feeling today?",
-                      style: TextStyle(
-                          fontSize: 14,
-                          color: Colors.blueGrey,
-                          fontWeight: FontWeight.normal),
-                    ),
-                  ],
-                ),
+
+              SizedBox(
+                height: 10,
               ),
-
-              SizedBox(height: 10,),
-
               CustomCalendar(),
-
-             ReminderBox(),
-
-
-             OtherInfoBox(),
-
-
-
-
-
+              ReminderBox(),
+              OtherInfoBox(),
+              SizedBox(
+                height: 30,
+              ),
             ],
-
-
-
           ),
         ),
       ),
     );
-
   }
-
-
 }

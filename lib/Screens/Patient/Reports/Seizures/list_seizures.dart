@@ -29,6 +29,7 @@ class _AllSeizuresState extends State<AllSeizures> {
 
   @override
   Widget build(BuildContext context) {
+    Size size=MediaQuery.of(context).size;
     initializeDateFormatting();
     String languageCode = Localizations.localeOf(context).languageCode;
     return Container(
@@ -39,14 +40,14 @@ class _AllSeizuresState extends State<AllSeizures> {
             return RefreshIndicator(
               // ignore: missing_return
               onRefresh: refreshSeizureList,
-              child: _listView(snapshot, languageCode),
+              child: _listView(snapshot, languageCode,size),
             );
           }),
     );
   }
 
 
-  Widget _listView(AsyncSnapshot snapshot, String languageCode) {
+  Widget _listView(AsyncSnapshot snapshot, String languageCode,Size size) {
     if (snapshot.hasData) {
       return ListView.builder(
         itemCount: snapshot.data.length,
@@ -132,13 +133,13 @@ class _AllSeizuresState extends State<AllSeizures> {
                               )),
                           Text(snapshot.data[index].duration.inMinutes
                                   .toString() +
-                              " minutes "),
+                              " minutes ",style: TextStyle(fontSize: size.width*0.03),),
                           SizedBox(
-                            width: 7,
+                            width: size.width*0.01,
                           ),
                           //Wrap(children: <Widget>[
-                            Text("mood: "),
-                            moodStateIcon(snapshot.data[index].mood)
+                            Text("mood: ",style: TextStyle(fontSize: size.width*0.033)),
+                            moodStateIcon(snapshot.data[index].mood,size)
                          // ]),
                         ],
                       ),
@@ -161,7 +162,7 @@ class _AllSeizuresState extends State<AllSeizures> {
     }
   }
 
-  Container moodStateIcon(String moodText) {
+  Container moodStateIcon(String moodText,Size size) {
     var backColor = Color.fromRGBO(158, 152, 152, 0.6);
     var textColor = Color.fromRGBO(108, 104, 104, 0.8);
     if (moodText == "Good") {
@@ -190,7 +191,7 @@ class _AllSeizuresState extends State<AllSeizures> {
       child: Text(
         moodText,
         style: TextStyle(
-            fontWeight: FontWeight.w500, color: textColor, fontSize: 12),
+            fontWeight: FontWeight.w500, color: textColor, fontSize: size.width*0.025),
       ),
     );
   }

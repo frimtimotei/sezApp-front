@@ -40,6 +40,9 @@ class _PieChartMoodState extends State<PieChartMood> {
               future: moodSezFrequency,
               builder: (context, snapshot) {
                 if (snapshot.hasData) {
+                  if(snapshot.data['bad']=='NaN'){
+                    return Center(child: Text("No data"),);
+                  }else{
 
                   return PieChart(
                     PieChartData(
@@ -70,7 +73,7 @@ class _PieChartMoodState extends State<PieChartMood> {
                     ),
                     swapAnimationDuration: Duration(milliseconds: 150),
                     swapAnimationCurve: Curves.linear,
-                  );
+                  );}
                 } else {
                   return Center(
                     child: CircularProgressIndicator(),
@@ -80,7 +83,7 @@ class _PieChartMoodState extends State<PieChartMood> {
         ),
 
         SizedBox(
-          height: 10,
+          height: 14,
         ),
 
         Wrap(
