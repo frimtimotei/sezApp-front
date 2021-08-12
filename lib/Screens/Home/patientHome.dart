@@ -3,6 +3,8 @@ import 'package:flutter/animation.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/Screens/Patient/Add/add_page.dart';
+import 'package:sezapp/Screens/Patient/Chat/chatHome.dart';
+import 'package:sezapp/Screens/Patient/Chat/chatTest.dart';
 import 'package:sezapp/Screens/Patient/Reports/reports_home.dart';
 import 'package:sezapp/Screens/Patient/Reports/Seizures/seziuresActions.dart';
 import 'package:sezapp/Screens/Patient/Home/patientHome_page.dart';
@@ -28,9 +30,9 @@ class _PatientHomeState extends State<PatientHome> {
   int selectedPage=0;
   final _pageOptions=[
       PatientHomePage(),
-      SplashScreen(),
+      ChatHome(),
       PatientAddPage(),
-      ReportsHome(seizures: getSeizures(),),
+      ReportsHome(),
       PatientUser()
 
   ];
@@ -42,21 +44,6 @@ class _PatientHomeState extends State<PatientHome> {
     return Scaffold(
          body: _pageOptions[selectedPage],
 
-        //     child: Column(
-        //
-        //       mainAxisAlignment: MainAxisAlignment.center,
-        //       crossAxisAlignment: CrossAxisAlignment.center,
-        //       children: <Widget>[
-        //         Text("you are a patient"),
-        //         Text("Welcome back " + args.firstName + "!"),
-        //         Text("Last login was on " + args.lastName),
-        //         Text("Your Email is  " + args.email),
-        //         RaisedButton(
-        //           onPressed: _handleLogout,
-        //           child: Text("Logout"),
-        //         )
-        //       ],
-        //     ),
 
         bottomNavigationBar: CurvedNavigationBar(
           color: Colors.white,

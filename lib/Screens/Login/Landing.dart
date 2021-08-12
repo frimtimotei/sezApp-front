@@ -5,7 +5,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/conponents/splashScreen.dart';
-import 'package:sezapp/model/User.dart';
+import 'package:sezapp/model/user/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../constants.dart';

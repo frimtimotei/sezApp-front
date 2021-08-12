@@ -1,6 +1,12 @@
+import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:sezapp/Screens/Patient/Profile/patientUser_page.dart';
+import 'package:sezapp/conponents/splashScreen.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../constants.dart';
 
 class DoctorHome extends StatefulWidget {
   @override
@@ -9,30 +15,50 @@ class DoctorHome extends StatefulWidget {
 }
 
 class _DoctorHomeState extends State<DoctorHome> {
-  void _handleLogout() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.remove('id');
-    Navigator.pushNamedAndRemoveUntil(
-        context, '/login', ModalRoute.withName('/login'));
-  }
+
+
+  int selectedPage=0;
+  final _pageOptions=[
+    SplashScreen(),
+    SplashScreen(),
+    SplashScreen(),
+    SplashScreen(),
+    PatientUser()
+
+  ];
   @override
   Widget build(BuildContext context) {
     //final User args = ModalRoute.of(context).settings.arguments;
-    return Scaffold(
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text("You are a doctor"),
 
-              // ignore: deprecated_member_use
-              RaisedButton(
-                onPressed: _handleLogout,
-                child: Text("Logout"),
-              )
-            ],
-          ),
-        ));
+
+    return Scaffold(
+      body: _pageOptions[selectedPage],
+
+
+      bottomNavigationBar: CurvedNavigationBar(
+        color: Colors.white,
+        backgroundColor: kLightColor,
+        height: 55,
+        items: <Widget>[
+          Icon(LineAwesomeIcons.home,size: 30,color: kPrimaryColor,),
+          Icon(LineAwesomeIcons.envelope,size: 30,color: kPrimaryColor,),
+          Icon(LineAwesomeIcons.plus,size: 30,color: kPrimaryColor,),
+          Icon(LineAwesomeIcons.bar_chart_1,size: 30,color: kPrimaryColor,),
+          Icon(LineAwesomeIcons.user,size: 30,color: kPrimaryColor,),
+        ],
+
+        animationCurve: Curves.easeOutSine,
+
+        animationDuration: Duration(
+            milliseconds: 400
+        ),
+        onTap: (index){
+          setState(() {
+            selectedPage=index;
+          });
+        },
+      ),
+
+    );
   }
 }

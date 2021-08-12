@@ -49,4 +49,10 @@ const List<Color> kListTextColors=[
   Color.fromRGBO(121, 105, 68, 1.0),
   Color.fromRGBO(59, 113, 102, 1.0),
 
-]    ;
+]   ;
+
+// api web
+
+String baseUrl =
+    //'http://10.0.2.2:8080';
+'https://sezapp-backend.herokuapp.com';

@@ -8,7 +8,7 @@ import 'package:sezapp/Screens/Patient/Home/pieChart/pieChartMood.dart';
 import 'package:sezapp/Screens/Patient/Home/reminderBox.dart';
 import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/User.dart';
+import 'package:sezapp/model/user/User.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:sezapp/model/reminder_model.dart';
 

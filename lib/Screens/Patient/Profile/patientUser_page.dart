@@ -10,7 +10,7 @@ import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/detailsIconText.dart';
 
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/User.dart';
+import 'package:sezapp/model/user/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientUser extends StatefulWidget {
@@ -146,7 +146,7 @@ class _PatientUserState extends State<PatientUser> {
                         height: 5,
                       ),
                       DetailsIconText(
-                        mainText: "patient",
+                        mainText: getStringRole(activeUser.roleId),
                         prefix: "role: ",
                         icon: Icon(
                           LineAwesomeIcons.user_tag,
@@ -257,5 +257,13 @@ class _PatientUserState extends State<PatientUser> {
         LineAwesomeIcons.venus,
         color: kPrimaryColor,
       );
+  }
+
+  String getStringRole(String roleId) {
+    if(roleId=='2')
+      return "doctor";
+    else
+      return
+          "patient";
   }
 }

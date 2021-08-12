@@ -1,17 +1,20 @@
 import 'package:http/http.dart' as http;
-import 'package:sezapp/model/User.dart';
-import 'package:sezapp/model/login_model.dart';
+import 'package:sezapp/model/user/User.dart';
+import 'package:sezapp/model/user/userLoginResponseModel.dart';
 import 'dart:convert';
 
 import 'package:sezapp/model/register_model.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stomp_dart_client/stomp.dart';
+import 'package:stomp_dart_client/stomp_config.dart';
+import 'package:stomp_dart_client/stomp_frame.dart';
+
+import '../constants.dart';
 
 class APIService {}
 
-String baseUrl =
-//'http://10.0.2.2:8080';
-    'https://sezapp-backend.herokuapp.com';
+
 
 Future loginUser(LoginRequestModel loginRequestModel) async {
   final Map<String, dynamic> loginData = {
@@ -118,5 +121,48 @@ Future apiUpdateUserInfo(User user) async{
   var convertDataJason = jsonDecode(response.body);
   return convertDataJason;
 }
+
+
+Future apiGetAllUsersChat()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+
+  String url = '$baseUrl/users/allContactsChat';
+
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      "accept": "application/json",
+      'Authorization': "Bearer " + jwt
+    },
+  );
+
+  return jsonDecode(response.body);
+
+}
+
+
+
+Future apiGetAllRoomChat(String activeUserId)async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+
+  String url = '$baseUrl/users/allContactsRoomChat/$activeUserId';
+
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      "accept": "application/json",
+      'Authorization': "Bearer " + jwt
+    },
+  );
+
+  return jsonDecode(response.body);
+
+}
+
+
 
 

@@ -8,7 +8,7 @@ import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/conponents/loading.dart';
 import 'package:sezapp/constants.dart';
 
-import 'package:sezapp/model/login_model.dart';
+import 'package:sezapp/model/user/userLoginResponseModel.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

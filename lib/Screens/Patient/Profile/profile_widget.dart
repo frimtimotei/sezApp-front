@@ -3,7 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/User.dart';
+import 'package:sezapp/model/user/User.dart';
 
 
 class ProfileWidget extends StatelessWidget {

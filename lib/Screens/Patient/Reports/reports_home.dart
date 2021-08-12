@@ -7,8 +7,8 @@ import 'package:sezapp/model/Seizure.dart';
 import '../../../constants.dart';
 
 class ReportsHome extends StatefulWidget {
- final Future<List<Seizure>> seizures;
-  const ReportsHome({Key key, @required this.seizures}) : super(key: key);
+
+  const ReportsHome({Key key}) : super(key: key);
 
   @override
   _ReportsHomeState createState() => _ReportsHomeState();

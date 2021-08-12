@@ -14,7 +14,7 @@ import 'package:sezapp/conponents/appBar.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/inputField.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/User.dart';
+import 'package:sezapp/model/user/User.dart';
 import 'package:path/path.dart';
 
 class EditProfile extends StatefulWidget {

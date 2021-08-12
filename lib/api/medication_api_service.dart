@@ -5,8 +5,8 @@ import 'package:sezapp/model/reminder_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-String baseUrl=//'http://10.0.2.2:8080';
- 'https://sezapp-backend.herokuapp.com';
+import '../constants.dart';
+
 
 Future medicationRegister(MedicationRegisterModel medicationRegisterModel, List<Reminder>reminders) async {
 

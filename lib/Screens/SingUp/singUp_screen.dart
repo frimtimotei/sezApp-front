@@ -310,13 +310,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
       }
 
       var response = await registerUser(registerRequestModel);
-      String path="profile_picture.jpg";
-      final byteData = await rootBundle.load('assets/images/$path');
 
-      final file = File('${(await getTemporaryDirectory()).path}/$path');
-      await file.writeAsBytes(byteData.buffer.asUint8List(byteData.offsetInBytes, byteData.lengthInBytes));
-      apiUploadUserPicture(file.path);
-      print(response);
 
       if (response["id"] == null) {
         setState(() {
