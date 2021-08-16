@@ -3,7 +3,7 @@ import 'package:sezapp/model/user/User.dart';
 import 'package:sezapp/model/user/userLoginResponseModel.dart';
 import 'dart:convert';
 
-import 'package:sezapp/model/register_model.dart';
+import 'package:sezapp/model/RegisterResponseModel.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stomp_dart_client/stomp.dart';

@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:sezapp/model/seizure_add_model.dart';
+import 'package:sezapp/model/SeizureRegisterModel.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

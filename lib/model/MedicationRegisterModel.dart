@@ -1,4 +1,4 @@
-import 'package:sezapp/model/reminder_model.dart';
+import 'package:sezapp/model/Reminder.dart';
 
 class MedicationRegisterModel{
 

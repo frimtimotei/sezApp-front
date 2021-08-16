@@ -201,7 +201,7 @@ class _MessageRoomState extends State<MessageRoom> {
     String jwt = prefs.getString("jwt");
     stompClient = StompClient(
       config: StompConfig(
-        url: 'ws://sezapp-backend.herokuapp.com/ws',
+        url: 'wss://sezapp-backend.herokuapp.com/ws',
         onConnect: onConnect,
         beforeConnect: () async {
           print('waiting to connect...');

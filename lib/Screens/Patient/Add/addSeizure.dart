@@ -10,7 +10,7 @@ import 'package:sezapp/conponents/appBar.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/whiteIconButton.dart';
 import 'package:sezapp/constants.dart';
-import 'package:sezapp/model/seizure_add_model.dart';
+import 'package:sezapp/model/SeizureRegisterModel.dart';
 import 'package:cool_alert/cool_alert.dart';
 
 class AddSeizurePage extends StatefulWidget {

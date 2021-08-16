@@ -9,8 +9,8 @@ import 'package:sezapp/conponents/appBar.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/inputField.dart';
 import 'package:sezapp/conponents/whiteIconButton.dart';
-import 'package:sezapp/model/medication_add_model.dart';
-import 'package:sezapp/model/reminder_model.dart';
+import 'package:sezapp/model/MedicationRegisterModel.dart';
+import 'package:sezapp/model/Reminder.dart';
 
 import '../../../constants.dart';
 

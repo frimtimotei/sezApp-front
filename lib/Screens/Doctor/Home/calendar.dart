@@ -1,19 +1,19 @@
 import 'dart:collection';
 
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/Event.dart';
 import 'package:table_calendar/table_calendar.dart';
 
-class CustomCalendar extends StatefulWidget {
-  const CustomCalendar({Key key}) : super(key: key);
+import '../../../constants.dart';
+
+class CustomDoctorCalendar extends StatefulWidget {
+  const CustomDoctorCalendar({Key key}) : super(key: key);
 
   @override
-  _CustomCalendarState createState() => _CustomCalendarState();
+  _CustomDoctorCalendarState createState() => _CustomDoctorCalendarState();
 }
 
-class _CustomCalendarState extends State<CustomCalendar> {
+class _CustomDoctorCalendarState extends State<CustomDoctorCalendar> {
   DateTime date3 = DateTime.now();
   HashMap<DateTime, List<String>> events;
 
@@ -60,7 +60,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
     return Column(
       children: [
         Container(
-
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),

@@ -12,7 +12,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:focused_menu/focused_menu.dart';
 
 class AllSeizures extends StatefulWidget {
-  const AllSeizures({Key key}) : super(key: key);
+  final Future<List<Seizure>> apiSez;
+  const AllSeizures({Key key,this.apiSez}) : super(key: key);
 
   @override
   _AllSeizuresState createState() => _AllSeizuresState();
@@ -24,12 +25,12 @@ class _AllSeizuresState extends State<AllSeizures> {
   @override
   void initState() {
     super.initState();
-    allSez = getSeizures();
+    allSez = widget.apiSez;
   }
 
   @override
   Widget build(BuildContext context) {
-    Size size=MediaQuery.of(context).size;
+    Size size = MediaQuery.of(context).size;
     initializeDateFormatting();
     String languageCode = Localizations.localeOf(context).languageCode;
     return Container(
@@ -40,14 +41,13 @@ class _AllSeizuresState extends State<AllSeizures> {
             return RefreshIndicator(
               // ignore: missing_return
               onRefresh: refreshSeizureList,
-              child: _listView(snapshot, languageCode,size),
+              child: _listView(snapshot, languageCode, size),
             );
           }),
     );
   }
 
-
-  Widget _listView(AsyncSnapshot snapshot, String languageCode,Size size) {
+  Widget _listView(AsyncSnapshot snapshot, String languageCode, Size size) {
     if (snapshot.hasData) {
       return ListView.builder(
         itemCount: snapshot.data.length,
@@ -131,16 +131,19 @@ class _AllSeizuresState extends State<AllSeizures> {
                                 color: kPrimaryLightColor,
                                 size: 17,
                               )),
-                          Text(snapshot.data[index].duration.inMinutes
-                                  .toString() +
-                              " minutes ",style: TextStyle(fontSize: size.width*0.03),),
+                          Text(
+                            snapshot.data[index].duration.inMinutes.toString() +
+                                " minutes ",
+                            style: TextStyle(fontSize: size.width * 0.03),
+                          ),
                           SizedBox(
-                            width: size.width*0.01,
+                            width: size.width * 0.01,
                           ),
                           //Wrap(children: <Widget>[
-                            Text("mood: ",style: TextStyle(fontSize: size.width*0.033)),
-                            moodStateIcon(snapshot.data[index].mood,size)
-                         // ]),
+                          Text("mood: ",
+                              style: TextStyle(fontSize: size.width * 0.033)),
+                          moodStateIcon(snapshot.data[index].mood, size)
+                          // ]),
                         ],
                       ),
                     ],
@@ -162,7 +165,7 @@ class _AllSeizuresState extends State<AllSeizures> {
     }
   }
 
-  Container moodStateIcon(String moodText,Size size) {
+  Container moodStateIcon(String moodText, Size size) {
     var backColor = Color.fromRGBO(158, 152, 152, 0.6);
     var textColor = Color.fromRGBO(108, 104, 104, 0.8);
     if (moodText == "Good") {
@@ -191,7 +194,9 @@ class _AllSeizuresState extends State<AllSeizures> {
       child: Text(
         moodText,
         style: TextStyle(
-            fontWeight: FontWeight.w500, color: textColor, fontSize: size.width*0.025),
+            fontWeight: FontWeight.w500,
+            color: textColor,
+            fontSize: size.width * 0.025),
       ),
     );
   }

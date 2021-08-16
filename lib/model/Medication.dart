@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:sezapp/model/reminder_model.dart';
+import 'package:sezapp/model/Reminder.dart';
 
 class Medication{
 int id;

@@ -1,31 +1,18 @@
-import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sezapp/Screens/Patient/Home/otherInfoBox.dart';
-import 'package:sezapp/Screens/Patient/Home/pieChart/pieChartMood.dart';
-import 'package:sezapp/Screens/Patient/Home/reminderBox.dart';
-import 'package:sezapp/api/seizure_api_service.dart';
-import 'package:sezapp/constants.dart';
+import 'package:sezapp/Screens/Doctor/Home/calendar.dart';
+import 'package:sezapp/Screens/Doctor/Home/listOfPatients.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-import 'package:sezapp/model/Reminder.dart';
 
-import 'calendar.dart';
+import '../../../constants.dart';
 
-class PatientHomePage extends StatefulWidget {
+class DoctorHomePage extends StatefulWidget {
+  const DoctorHomePage({Key key}) : super(key: key);
+
   @override
-  _PatientHomePageState createState() => _PatientHomePageState();
+  _DoctorHomePageState createState() => _DoctorHomePageState();
 }
 
-class _PatientHomePageState extends State<PatientHomePage> {
-  @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
+class _DoctorHomePageState extends State<DoctorHomePage> {
   @override
   Widget build(BuildContext context) {
     final User activeUser = ModalRoute.of(context).settings.arguments;
@@ -70,16 +57,22 @@ class _PatientHomePageState extends State<PatientHomePage> {
               SizedBox(
                 height: 10,
               ),
-              CustomCalendar(),
-              ReminderBox(),
-              OtherInfoBox(),
+              CustomDoctorCalendar(),
+              // ReminderBox(),
+              // OtherInfoBox(),
               SizedBox(
                 height: 30,
               ),
+
+              SizedBox(
+                height: 300,
+                  child: ListOfPatientsHome()),
+
             ],
           ),
         ),
       ),
     );
   }
-}
+  }
+

@@ -9,7 +9,7 @@ import 'package:sezapp/Screens/Login/usersAction.dart';
 import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/conponents/buttonFull.dart';
 import 'package:sezapp/conponents/inputField.dart';
-import 'package:sezapp/model/register_model.dart';
+import 'package:sezapp/model/RegisterResponseModel.dart';
 
 import '../../constants.dart';
 
@@ -310,7 +310,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
       }
 
       var response = await registerUser(registerRequestModel);
-
+      print(response);
 
       if (response["id"] == null) {
         setState(() {

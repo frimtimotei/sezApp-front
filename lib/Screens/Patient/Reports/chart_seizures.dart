@@ -8,6 +8,14 @@ import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/constants.dart';
 
 class WeekSeizureFrequency extends StatefulWidget {
+  Future<List> weekFreqData;
+  Future<List> monthFreqData;
+  Future<List> yearFreqData;
+
+
+  WeekSeizureFrequency(
+  {Key key,this.weekFreqData, this.monthFreqData, this.yearFreqData}): super(key: key);
+
   @override
   State<StatefulWidget> createState() => WeekSeizureFrequencyState();
 }
@@ -19,9 +27,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
   int touchedIndex = -1;
 
   Future<List> freqData;
-  Future<List> weekFreqData;
-  Future<List> monthFreqData;
-  Future<List> yearFreqData;
+
 
   int barList=7;
 
@@ -37,11 +43,10 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
   @override
   void initState() {
     super.initState();
-    weekFreqData = getWeekSezData();
-    monthFreqData = getMonthSezData();
-    yearFreqData=getYearSezData();
 
-    freqData = weekFreqData;
+freqData=widget.weekFreqData;
+
+
   }
 
   @override
@@ -102,7 +107,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
                                     if (index == 1) {
                                       setState(() {
 
-                                      freqData = monthFreqData;
+                                      freqData = widget.monthFreqData;
                                       weekSelected = false;
                                       monthSelected = true;
                                       yearSelected = false;
@@ -115,7 +120,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
                                     } else if (index == 0) {
                                       setState(() {
 
-                                      freqData = weekFreqData;
+                                      freqData = widget.weekFreqData;
                                       weekSelected = true;
                                       monthSelected = false;
                                       yearSelected = false;
@@ -127,7 +132,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
                                     }else if (index == 2) {
                                       setState(() {
 
-                                          freqData = yearFreqData;
+                                          freqData = widget.yearFreqData;
                                           weekSelected = false;
                                           monthSelected = false;
                                           yearSelected = true;
@@ -581,39 +586,5 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
     );
   }
 
-  Future<List> getWeekSezData() async {
-    var response = await apiWeekSezFreq();
 
-    if (response.statusCode == 200) {
-      var convertDataJason = jsonDecode(response.body);
-
-      return convertDataJason;
-    } else {
-      throw Exception("Error to load data");
-    }
-  }
-
-  Future<List> getMonthSezData() async {
-    var response = await apiMonthSezFreq();
-
-    if (response.statusCode == 200) {
-      var convertDataJason = jsonDecode(response.body);
-
-      return convertDataJason;
-    } else {
-      throw Exception("Error to load data");
-    }
-  }
-
-  Future<List> getYearSezData() async {
-    var response = await apiYearSezFreq();
-
-    if (response.statusCode == 200) {
-      var convertDataJason = jsonDecode(response.body);
-
-      return convertDataJason;
-    } else {
-      throw Exception("Error to load data");
-    }
-  }
 }

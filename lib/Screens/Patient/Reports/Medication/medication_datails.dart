@@ -5,7 +5,7 @@ import 'package:sezapp/Screens/Patient/Reports/Seizures/seizure_details.dart';
 import 'package:sezapp/conponents/appBar.dart';
 import 'package:sezapp/conponents/detailsIconText.dart';
 import 'package:sezapp/model/Medication.dart';
-import 'package:sezapp/model/reminder_model.dart';
+import 'package:sezapp/model/Reminder.dart';
 
 import '../../../../constants.dart';
 

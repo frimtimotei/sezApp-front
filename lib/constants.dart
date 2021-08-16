@@ -54,5 +54,12 @@ const List<Color> kListTextColors=[
 // api web
 
 String baseUrl =
-    //'http://10.0.2.2:8080';
-'https://sezapp-backend.herokuapp.com';
+    'http://10.0.2.2:8080';
+//'https://sezapp-backend.herokuapp.com';
+
+String checkImagePath(String imagePath) {
+  if (imagePath == null)
+    return "https://sezapp-images.s3.eu-central-1.amazonaws.com/profilePicture.jpg";
+  else
+    return imagePath;
+}

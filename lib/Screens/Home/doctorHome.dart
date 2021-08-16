@@ -1,6 +1,8 @@
 import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:sezapp/Screens/Doctor/Home/doctorHome_page.dart';
+import 'package:sezapp/Screens/Patient/Chat/chatHome.dart';
 import 'package:sezapp/Screens/Patient/Profile/patientUser_page.dart';
 import 'package:sezapp/conponents/splashScreen.dart';
 
@@ -19,8 +21,8 @@ class _DoctorHomeState extends State<DoctorHome> {
 
   int selectedPage=0;
   final _pageOptions=[
-    SplashScreen(),
-    SplashScreen(),
+    DoctorHomePage(),
+    ChatHome(),
     SplashScreen(),
     SplashScreen(),
     PatientUser()

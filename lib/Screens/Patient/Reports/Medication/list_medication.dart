@@ -10,7 +10,8 @@ import 'package:sezapp/model/Medication.dart';
 import '../../../../constants.dart';
 
 class AllMedication extends StatefulWidget {
-  const AllMedication({Key key}) : super(key: key);
+  final Future<List<Medication>> apiMed;
+  const AllMedication({Key key,this.apiMed}) : super(key: key);
 
   @override
   _AllMedicationState createState() => _AllMedicationState();
@@ -22,7 +23,7 @@ class _AllMedicationState extends State<AllMedication> {
   @override
   void initState() {
     super.initState();
-    allMed = getMedications();
+
 
   }
   @override
