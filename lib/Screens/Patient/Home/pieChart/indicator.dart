@@ -27,14 +27,14 @@ class Indicator extends StatelessWidget {
              boxShadow: [
                BoxShadow(
                    color: Color.fromRGBO(143, 148, 251, 0.4),
-                   blurRadius: 50.0,
-                   offset: Offset(0, 15))
+                   blurRadius: 2.0,
+                   offset: Offset(0, 1))
              ]),
-         padding: EdgeInsets.symmetric(vertical: 4, horizontal: 5),
+         padding: EdgeInsets.symmetric(vertical: 6, horizontal: 10),
        margin: EdgeInsets.symmetric(vertical: 2,horizontal: 2),
 
 
 
-       child: Text(text,style: TextStyle(fontSize: size.width*0.026,color: textColor),),);
+       child: Text(text,style: TextStyle(fontSize: 16,color: textColor),),);
   }
 }

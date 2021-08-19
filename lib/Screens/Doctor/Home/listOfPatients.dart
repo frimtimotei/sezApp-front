@@ -39,8 +39,9 @@ class _ListOfPatientsHomeState extends State<ListOfPatientsHome> {
                       borderRadius: BorderRadius.circular(20.0)),
                   margin:
                       new EdgeInsets.symmetric(horizontal: 24.0, vertical: 7.0),
+
                   child: Container(
-                    height: 80,
+                    height: 90,
                     decoration: BoxDecoration(
                       color: Color.fromRGBO(255, 255, 255, 0.8),
                       borderRadius: BorderRadius.circular(13),
@@ -50,7 +51,9 @@ class _ListOfPatientsHomeState extends State<ListOfPatientsHome> {
                             blurRadius: 50.0,
                             offset: Offset(0, 8))
                       ],
+
                     ),
+                    padding: EdgeInsets.symmetric(horizontal: 10,vertical: 8),
                     child: InkWell(
                       onTap: () {
                         Navigator.push(
@@ -75,7 +78,19 @@ class _ListOfPatientsHomeState extends State<ListOfPatientsHome> {
                                 snapshot.data[index].lastName,
                             style: TextStyle(fontSize: 17),
                           ),
-                          subtitle: Text("age: " + snapshot.data[index].age),
+                          subtitle: Row(
+                            children: [
+                              Text("age: " + snapshot.data[index].age),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                "• your patient",
+                                style:
+                                TextStyle(color: Colors.orangeAccent),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

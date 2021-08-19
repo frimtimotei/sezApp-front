@@ -76,7 +76,7 @@ Future apiYearSezPatientFreq(patientId)async{
 }
 
 
-Future apiDaysFromLastSez(patientId)async{
+Future apiPatientDaysFromLastSez(patientId)async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
   String url = '$baseUrl/doctor/daysFromLastSez/$patientId';
@@ -137,7 +137,7 @@ Future getAllPatientMedications(patientId) async{
 
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/doctor/userMedication/$patientId';
+  String url = '$baseUrl/doctor/patientMedication/$patientId';
   final response = await http.get(Uri.parse(url),headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
 
 

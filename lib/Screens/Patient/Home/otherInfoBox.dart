@@ -2,12 +2,18 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:sezapp/Screens/Patient/Add/addDoctor.dart';
+import 'package:sezapp/Screens/Patient/Chat/messageRoom.dart';
 import 'package:sezapp/Screens/Patient/Home/pieChart/pieChartMood.dart';
 import 'package:sezapp/Screens/Patient/Home/pieChart/pieChartTrig.dart';
 import 'package:sezapp/Screens/Patient/Home/pieChart/pieChartType.dart';
 import 'package:sezapp/api/seizure_api_service.dart';
+import 'package:sezapp/api/user_api_service.dart';
 import 'package:sezapp/constants.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
+import 'package:sezapp/model/Doctor.dart';
+import 'package:sezapp/model/user/User.dart';
+import 'package:sezapp/model/user/userChatContact.dart';
 
 class OtherInfoBox extends StatefulWidget {
   const OtherInfoBox({Key key}) : super(key: key);
@@ -18,22 +24,24 @@ class OtherInfoBox extends StatefulWidget {
 
 class _OtherInfoBoxState extends State<OtherInfoBox> {
   Future daysFromLastSeizure;
+  Future doctor;
 
   @override
   void initState() {
     daysFromLastSeizure = getDaysFromLastSez();
+    doctor = getCurrentDoctor();
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
+    final User activeUser = ModalRoute.of(context).settings.arguments;
     Size size = MediaQuery.of(context).size;
-    return Row(
+    return Column(
       children: <Widget>[
         Container(
-          width: size.width * 0.42,
-          height: 260,
+          height: 80,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -44,18 +52,12 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
                     offset: Offset(0, 5))
               ]),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          margin:
-              EdgeInsets.fromLTRB(size.width * 0.06, 10, size.width * 0.04, 0),
+          margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
-              Icon(
-                LineAwesomeIcons.calendar_with_day_focus,
-                color: kPrimaryLightColor,
-                size: 30,
-              ),
               SizedBox(
-                height: 20,
+                height: 0,
               ),
               Row(
                 children: [
@@ -63,44 +65,51 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
                       future: daysFromLastSeizure,
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          return Text(
-                            snapshot.data.toString(),
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: kSecondaryColor,
-                                fontWeight: FontWeight.w800),
+                          return Expanded(
+                            child: ListTile(
+                              title: Row(
+                                children: [
+                                  Text(
+                                    snapshot.data.toString(),
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.w800),
+                                  ),
+                                  Text("  days from last seizure")
+                                ],
+                              ),
+                              leading: returnIcon(snapshot.data),
+                            ),
                           );
                         } else {
-                          return Text(
-                            "0",
-                            style: TextStyle(
-                                fontSize: 30,
-                                color: kRedTextColor,
-                                fontWeight: FontWeight.w800),
-                          );
+                          return Container();
                         }
                       }),
-                  SizedBox(
-                    width: 10,
-                  ),
-                  Text(" days")
                 ],
               ),
-              SizedBox(
-                height: 10,
-              ),
-              Text("from last Seizure "),
             ],
           ),
         ),
 
-
-
         //////////////////////////////////////////////////
         ///second
         Container(
-          width: size.width * 0.42,
-          height: 260,
+          margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+          child: Row(
+            children: [
+              SizedBox(
+                width: 5,
+              ),
+              Text(
+                "Your current doctor",
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+              )
+            ],
+          ),
+        ),
+        Container(
+          height: 85,
+          width: size.width,
           decoration: BoxDecoration(
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
@@ -110,113 +119,85 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
                     blurRadius: 20.0,
                     offset: Offset(0, 5))
               ]),
-          padding: EdgeInsets.fromLTRB(13, 10, 13, 0),
-          margin: EdgeInsets.fromLTRB(0, 5, 0, 0),
-          child: ContainedTabBarView(
-            tabs: [...[1, 2, 3].map((e) => Container(
-                        width: 12,
-                        height: 12,
-                        decoration: BoxDecoration(
-
-                            border: Border.all(color: Colors.grey[600]),
-                            borderRadius:
-                                BorderRadius.all(Radius.circular(8.0))),
-                      ))
-                  .toList()
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+          margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              FutureBuilder(
+                  future: doctor,
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != 0) {
+                      return Expanded(
+                        child: Column(
+                          children: [
+                            InkWell(
+                              onTap: () {
+                                sentToChat(snapshot.data, activeUser, context);
+                              },
+                              child: Ink(
+                                  child: ListTile(
+                                trailing: Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 18,
+                                  color: kPrimaryLightColor,
+                                ),
+                                leading: CircleAvatar(
+                                  backgroundImage: NetworkImage(
+                                      checkImagePath(snapshot.data.imageUrl)),
+                                ),
+                                title: Text(
+                                  snapshot.data.firstName +
+                                      " " +
+                                      snapshot.data.lastName,
+                                  style: TextStyle(fontSize: 17),
+                                ),
+                                subtitle: Row(
+                                  children: [
+                                    Text("age: " + snapshot.data.age),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      "• your Doctor",
+                                      style:
+                                          TextStyle(color: Colors.orangeAccent),
+                                    )
+                                  ],
+                                ),
+                              )),
+                            ),
+                          ],
+                        ),
+                      );
+                    } else {
+                      return Column(
+                        children: [
+                          InkWell(
+                            onTap:(){
+                              Navigator.push(
+                                  context,
+                                  new MaterialPageRoute(
+                                    builder: (context) => AddDoctorPage()
+                                  ));
+                            },
+                            child: ListTile(
+                              trailing: Icon(
+                                Icons.arrow_forward_ios_rounded,
+                                size: 18,
+                                color: kPrimaryLightColor,
+                              ),
+                              title: Text("No doctor selected"),
+                              subtitle: Text("Select your doctor"),
+                            ),
+                          )
+                        ],
+                      );
+                    }
+                  }),
             ],
-            tabBarProperties: TabBarProperties(
-              height: 32,
-              width: size.width*0.12,
-              position: TabBarPosition.bottom,
-              indicator: ContainerTabIndicator(
-                width: 12.0,
-                height: 12.0,
-                radius: BorderRadius.circular(9.0),
-                color: kPrimaryLightColor,
-              ),
-            ),
-            views: [buildColumnMood(size), 
-              buildColumnType(size),
-              buildColumnTrig(size),
-            ],
-            onChange: (index){},
           ),
-        )
-      ],
-    );
-  }
-
-  Column buildColumnMood(Size size) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              LineAwesomeIcons.smiling_face,
-              color: kPrimaryLightColor,
-              size: 30,
-            ),
-            SizedBox(
-              width: size.width * 0.02,
-            ),
-            Text("Seizure mood", style: TextStyle(fontSize: size.width*0.03),)
-          ],
         ),
-        SizedBox(
-          height: size.height * 0.01,
-        ),
-        Center(child: PieChartMood()),
-      ],
-    );
-  }
-
-  Column buildColumnType(Size size) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              LineAwesomeIcons.brain,
-              color: kPrimaryLightColor,
-              size: 30,
-            ),
-            SizedBox(
-              width: size.width * 0.02,
-            ),
-            Text("Seizure type",style: TextStyle(fontSize: size.width*0.03),)
-          ],
-        ),
-        SizedBox(
-          height: size.height * 0.01,
-        ),
-        Center(child: PieChartType()),
-      ],
-    );
-  }
-
-  Column buildColumnTrig(Size size) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(
-              LineAwesomeIcons.flag,
-              color: kPrimaryLightColor,
-              size: 30,
-            ),
-            SizedBox(
-              width: size.width * 0.01,
-            ),
-            Text("Trigger types",style: TextStyle(fontSize: size.width*0.03),)
-          ],
-        ),
-        SizedBox(
-          height: size.height * 0.01,
-        ),
-        Center(child: PieChartTrig()),
       ],
     );
   }
@@ -229,5 +210,49 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
       return convertDataJason;
     } else
       throw Exception("error to load");
+  }
+
+  Future getCurrentDoctor() async {
+    var response = await apiGetUserCurrentDoctorChat();
+    if (response.statusCode == 200) {
+      var convertDataJason = jsonDecode(response.body);
+      return Doctor.fromJson(convertDataJason);
+    } else {
+      var convertDataJason = jsonDecode(response.body);
+      print(convertDataJason['status'].toString());
+      return 0;
+    }
+  }
+
+  void sentToChat(data, activeUser, context) {
+    UserChatContact senderUser = new UserChatContact();
+    senderUser.id = data.id;
+    senderUser.firstName = data.firstName;
+    senderUser.lastName = data.lastName;
+    senderUser.imageUrl = data.imageUrl;
+    senderUser.role = "doctor";
+
+    Navigator.push(
+        context,
+        new MaterialPageRoute(
+          builder: (context) => MessageRoom(
+            senderUser: senderUser,
+            activeUser: activeUser,
+          ),
+        ));
+  }
+
+  returnIcon(data) {
+    if (data > 4) {
+      return Icon(
+        Icons.arrow_upward,
+        color: Colors.green,
+      );
+    } else {
+      return Icon(
+        Icons.arrow_downward_rounded,
+        color: Colors.red,
+      );
+    }
   }
 }

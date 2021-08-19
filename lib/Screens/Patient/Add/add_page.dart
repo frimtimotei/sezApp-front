@@ -2,6 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
+import 'package:sezapp/Screens/Patient/Add/addDoctor.dart';
 import 'package:sezapp/Screens/Patient/Add/addMedication.dart';
 import 'package:sezapp/Screens/Patient/Add/addSeizure.dart';
 import 'package:sezapp/conponents/addCard.dart';
@@ -108,24 +109,15 @@ class _PatientAddPageState extends State<PatientAddPage> {
                 height: 50,
               ),
               Container(
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(20),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(143, 148, 251, 0.1),
-                          blurRadius: 20.0,
-                          offset: Offset(0, 15))
-                    ]),
                 child: OpenContainer(
-                  openElevation: 0,
-                  closedElevation: 0,
-                  closedColor: Colors.transparent,
-                  transitionType: ContainerTransitionType.fade,
+                  closedElevation: 1,
+                  tappable: true,
+                  closedColor: Colors.white,
+                  transitionDuration: Duration(milliseconds: 350),
+                  closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   openBuilder: (BuildContext context, VoidCallback _) {
-                    return Center(
-                      child: Text("Asd"),
-                    );
+
+                    return AddDoctorPage();
                   },
                   closedBuilder:
                       (BuildContext context, VoidCallback openContainer) {
@@ -137,13 +129,14 @@ class _PatientAddPageState extends State<PatientAddPage> {
                       ),
 
                       text: Text(
-                        "Add Appointment",textAlign: TextAlign.center,
-                        style: TextStyle(fontSize: 16, color: kPrimaryColor,),
+                        "Add Doctor",
+                        style: TextStyle(fontSize: 16, color: kPrimaryColor),
                       ),
                     );
                   },
                 ),
               ),
+
 
             ],
           ),
@@ -151,4 +144,6 @@ class _PatientAddPageState extends State<PatientAddPage> {
       ),
     );
   }
+
+
 }

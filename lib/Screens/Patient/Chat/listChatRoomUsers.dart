@@ -133,10 +133,4 @@ print(response);
     return users;
   }
 
-  String checkImagePath(String imagePath) {
-    if (imagePath == null)
-      return "https://sezapp-images.s3.eu-central-1.amazonaws.com/profilePicture.jpg";
-    else
-      return imagePath;
-  }
 }

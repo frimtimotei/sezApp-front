@@ -141,6 +141,25 @@ Future apiGetAllUsersChat()async{
   return jsonDecode(response.body);
 
 }
+Future apiGetUserCurrentDoctorChat()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+
+  String url = '$baseUrl/users/currentDoctor';
+
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      "accept": "application/json",
+      'Authorization': "Bearer " + jwt
+    },
+  );
+
+  return response;
+
+}
+
 
 
 
@@ -162,6 +181,45 @@ Future apiGetAllRoomChat(String activeUserId)async{
   return jsonDecode(response.body);
 
 }
+
+Future apiGetAllDoctors()async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+
+  String url = '$baseUrl/users/allDoctors';
+
+  final response = await http.get(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      "accept": "application/json",
+      'Authorization': "Bearer " + jwt
+    },
+  );
+
+  return jsonDecode(response.body);
+
+}
+
+Future apiAddDoctors(userId)async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+
+  String url = '$baseUrl/users/addDoctor/$userId';
+
+  final response = await http.post(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      "accept": "application/json",
+      'Authorization': "Bearer " + jwt
+    },
+  );
+
+  return jsonDecode(response.body);
+
+}
+
 
 
 

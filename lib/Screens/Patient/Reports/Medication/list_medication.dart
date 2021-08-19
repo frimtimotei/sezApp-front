@@ -22,6 +22,8 @@ class _AllMedicationState extends State<AllMedication> {
 
   @override
   void initState() {
+
+    allMed=widget.apiMed;
     super.initState();
 
 

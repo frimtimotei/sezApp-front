@@ -11,7 +11,7 @@ class AllMedicationDoctorPage extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(title: "All Seizures"),
+        child: CustomAAppBar(title: "All Medication"),
       ),
       body:  AllMedication(apiMed:getPatientMedications(patientId) ),
     );

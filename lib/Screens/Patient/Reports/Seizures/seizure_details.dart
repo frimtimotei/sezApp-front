@@ -279,7 +279,7 @@ class SeizureDetails extends StatelessWidget {
           child: Text(
             strings[i],
             style: TextStyle(
-                fontWeight: FontWeight.w500, color: textColor, fontSize: size.width*0.034),
+                fontWeight: FontWeight.w500, color: textColor, fontSize: 13),
           )));
     }
     return new Wrap(children: list);
@@ -301,7 +301,7 @@ Widget outlineChipFromList(List<String> strings, Color backColor, Color textColo
         child: Text(
           strings[i],
           style: TextStyle(
-              fontWeight: FontWeight.w500, color: textColor, fontSize: size.width*0.034),
+              fontWeight: FontWeight.w500, color: textColor, fontSize: 13),
         )));
   }
   return new Wrap(children: list);

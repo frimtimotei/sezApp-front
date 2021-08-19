@@ -111,7 +111,7 @@ class MedicationDetails extends StatelessWidget {
                       width: 15,
                     ),
                     SizedBox(
-                      width: size.width * 0.46,
+                      width: size.width * 0.43,
                       child: reminderInfo(
                           medication.reminders,
                           Color.fromRGBO(183, 155, 241, 0.6),

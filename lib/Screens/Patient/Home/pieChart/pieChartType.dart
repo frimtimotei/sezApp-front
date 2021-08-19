@@ -32,7 +32,6 @@ class _PieChartTypeState extends State<PieChartType> {
 
     return SizedBox(
 
-      width: 130,
       child: FutureBuilder(
           future: typeSezFrequency,
           builder: (context, snapshot) {
@@ -45,8 +44,8 @@ class _PieChartTypeState extends State<PieChartType> {
                 return Column(
                   children: [
                     SizedBox(
-                      height: 140,
-                      width: 140,
+                      height: 250,
+                      width: 250,
                       child: PieChart(
                         PieChartData(
                           pieTouchData:
@@ -80,21 +79,24 @@ class _PieChartTypeState extends State<PieChartType> {
                       ),
                     ),
                     SizedBox(
-                      height: 7,
+                      height: 15,
                     ),
-                    Row(
-                      children: [
-                        Text(
-                          "Most:",
-                          style: TextStyle(
-                              color: kPrimaryColor, fontSize: size.width * 0.03),
-                        ),
-                        Indicator(
-                          color: kPrimaryLightColor,
-                          text: snapshot.data[0]["biggest"],
-                          textColor: Colors.white,
-                        )
-                      ],
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Row(
+                        children: [
+                          Text(
+                            "Most:",
+                            style: TextStyle(
+                                color: kPrimaryColor, fontSize: 16),
+                          ),
+                          Indicator(
+                            color: kPrimaryLightColor,
+                            text: snapshot.data[0]["biggest"],
+                            textColor: Colors.white,
+                          )
+                        ],
+                      ),
                     )
                   ],
                 );
@@ -111,8 +113,8 @@ class _PieChartTypeState extends State<PieChartType> {
   List<PieChartSectionData> showingSections(AsyncSnapshot snapshot, Size size) {
     return List.generate(snapshot.data.length, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? size.width * 0.035 : size.width * 0.025;
-      final radius = isTouched ? 60.0 : 50.0;
+      final fontSize = isTouched ? 16.0 : 16.0;
+      final radius = isTouched ? 90.0 : 70.0;
       final text = isTouched ? "" : snapshot.data[i]["freq"].toString() + "%";
       final text2 = isTouched
           ? snapshot.data[i]["name"] +

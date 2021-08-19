@@ -24,7 +24,6 @@ class _DoctorHomeState extends State<DoctorHome> {
     DoctorHomePage(),
     ChatHome(),
     SplashScreen(),
-    SplashScreen(),
     PatientUser()
 
   ];
@@ -45,7 +44,6 @@ class _DoctorHomeState extends State<DoctorHome> {
           Icon(LineAwesomeIcons.home,size: 30,color: kPrimaryColor,),
           Icon(LineAwesomeIcons.envelope,size: 30,color: kPrimaryColor,),
           Icon(LineAwesomeIcons.plus,size: 30,color: kPrimaryColor,),
-          Icon(LineAwesomeIcons.bar_chart_1,size: 30,color: kPrimaryColor,),
           Icon(LineAwesomeIcons.user,size: 30,color: kPrimaryColor,),
         ],
 

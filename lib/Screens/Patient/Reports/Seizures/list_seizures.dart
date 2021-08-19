@@ -134,14 +134,14 @@ class _AllSeizuresState extends State<AllSeizures> {
                           Text(
                             snapshot.data[index].duration.inMinutes.toString() +
                                 " minutes ",
-                            style: TextStyle(fontSize: size.width * 0.03),
+                            style: TextStyle(fontSize: 12),
                           ),
                           SizedBox(
                             width: size.width * 0.01,
                           ),
                           //Wrap(children: <Widget>[
                           Text("mood: ",
-                              style: TextStyle(fontSize: size.width * 0.033)),
+                              style: TextStyle(fontSize: 12)),
                           moodStateIcon(snapshot.data[index].mood, size)
                           // ]),
                         ],
@@ -196,7 +196,7 @@ class _AllSeizuresState extends State<AllSeizures> {
         style: TextStyle(
             fontWeight: FontWeight.w500,
             color: textColor,
-            fontSize: size.width * 0.025),
+            fontSize: 13),
       ),
     );
   }

@@ -15,7 +15,8 @@ import 'package:sezapp/model/Reminder.dart';
 import '../../../constants.dart';
 
 class AddMedicationPage extends StatefulWidget {
-  const AddMedicationPage({Key key}) : super(key: key);
+  final response;
+  AddMedicationPage({Key key, this.response}) : super(key: key);
 
   @override
   _AddMedicationPageState createState() => _AddMedicationPageState();
@@ -76,6 +77,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         setState(() {
           _startDate = newDate;
         });
+
+
       }
     }
 
@@ -92,7 +95,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           _endDate = endDatePik;
         });
       }
-      print(_endDate);
+
     }
 
     return Scaffold(
@@ -435,6 +438,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         reminders.add(reminder);
       }
 
+      /// response from  api
       var response = await medicationRegister(
           medicationRegisterModel, reminders);
 

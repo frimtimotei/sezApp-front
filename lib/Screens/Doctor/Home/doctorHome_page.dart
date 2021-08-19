@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:sezapp/Screens/Doctor/Home/calendar.dart';
 import 'package:sezapp/Screens/Doctor/Home/listOfPatients.dart';
+import 'package:sezapp/Screens/Patient/Chat/messageRoom.dart';
 import 'package:sezapp/model/user/User.dart';
+import 'package:sezapp/model/user/userChatContact.dart';
 
 import '../../../constants.dart';
 
@@ -15,6 +17,7 @@ class DoctorHomePage extends StatefulWidget {
 class _DoctorHomePageState extends State<DoctorHomePage> {
   @override
   Widget build(BuildContext context) {
+
     final User activeUser = ModalRoute.of(context).settings.arguments;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
@@ -61,11 +64,26 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
               // ReminderBox(),
               // OtherInfoBox(),
               SizedBox(
-                height: 30,
+                height: 20,
+              ),
+
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
+                child: Row(
+                  children: [
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Text(
+                      "Your patients",
+                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    )
+                  ],
+                ),
               ),
 
               SizedBox(
-                height: 300,
+                height: 400,
                   child: ListOfPatientsHome()),
 
             ],
@@ -74,5 +92,6 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
       ),
     );
   }
+
   }
 

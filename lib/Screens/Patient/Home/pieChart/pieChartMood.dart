@@ -34,8 +34,8 @@ class _PieChartMoodState extends State<PieChartMood> {
     return Column(
       children: [
         SizedBox(
-          height: 130,
-          width: 130,
+          height: 250,
+          width: 250,
           child: FutureBuilder(
               future: moodSezFrequency,
               builder: (context, snapshot) {
@@ -120,8 +120,8 @@ class _PieChartMoodState extends State<PieChartMood> {
   List<PieChartSectionData> showingSections(AsyncSnapshot snapshot) {
     return List.generate(3, (i) {
       final isTouched = i == touchedIndex;
-      final fontSize = isTouched ? 20.0 : 13.0;
-      final radius = isTouched ? 60.0 : 50.0;
+      final fontSize = isTouched ? 20.0 : 16.0;
+      final radius = isTouched ? 90.0 : 70.0;
       switch (i) {
         case 0:
           return PieChartSectionData(

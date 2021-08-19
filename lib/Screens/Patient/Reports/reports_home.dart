@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sezapp/Screens/Patient/Reports/chart_seizures.dart';
 import 'package:sezapp/Screens/Patient/Reports/Medication/list_medication.dart';
 import 'package:sezapp/Screens/Patient/Reports/Seizures/list_seizures.dart';
+import 'package:sezapp/Screens/Patient/Reports/otherReports.dart';
 import 'package:sezapp/model/Seizure.dart';
 
 import '../../../constants.dart';
@@ -50,7 +51,7 @@ class _ReportsHomeState extends State<ReportsHome> {
 
       ),
         body: TabBarView(children: [
-          WeekSeizureFrequency(weekFreqData: getWeekSezData(),monthFreqData: getMonthSezData(),yearFreqData: getYearSezData(),),
+          GraphsPage(),
           AllSeizures(apiSez: getSeizures(),),
           AllMedication(apiMed:getMedications()),
 
@@ -60,5 +61,26 @@ class _ReportsHomeState extends State<ReportsHome> {
       ),
 
     );
+  }
+}
+
+class GraphsPage extends StatelessWidget {
+  const GraphsPage({
+    Key key,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: kLightColor,
+      child: SingleChildScrollView(
+        child: Column(children: [
+          WeekSeizureFrequency(weekFreqData: getWeekSezData(),monthFreqData: getMonthSezData(),yearFreqData: getYearSezData(),),
+          OtherReportsWidget(),
+          SizedBox(height: 20,)
+        ],),
+      ),
+    );
+
   }
 }
