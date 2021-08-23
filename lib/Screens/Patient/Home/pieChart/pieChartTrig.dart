@@ -10,7 +10,8 @@ import 'package:sezapp/constants.dart';
 import 'indicator.dart';
 
 class PieChartTrig extends StatefulWidget {
-  const PieChartTrig({Key key}) : super(key: key);
+  final userId;
+  const PieChartTrig({Key key,this.userId}) : super(key: key);
 
   @override
   _PieChartTrigState createState() => _PieChartTrigState();
@@ -23,7 +24,7 @@ class _PieChartTrigState extends State<PieChartTrig> {
 
   @override
   void initState() {
-    trigSezFrequency = getTypeSezFreq();
+    trigSezFrequency = getTypeSezFreq(widget.userId);
     biggest = "";
     // TODO: implement initState
     super.initState();
@@ -148,8 +149,8 @@ class _PieChartTrigState extends State<PieChartTrig> {
     });
   }
 
-  Future getTypeSezFreq() async {
-    var response = await apiTrigSezFreq();
+  Future getTypeSezFreq(userId) async {
+    var response = await apiTrigSezFreq(userId);
 
     if (response.statusCode == 200) {
       var convertDataJason = jsonDecode(response.body);

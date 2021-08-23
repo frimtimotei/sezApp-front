@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class ButtonFull extends StatelessWidget {
+class ButtonFullWidget extends StatelessWidget {
   final String name;
   final VoidCallback callback;
   final double width;
   final double height;
 
-  const ButtonFull({
+  const ButtonFullWidget({
     @required this.name,
     @required this.callback,
     @required this.width,

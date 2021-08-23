@@ -10,9 +10,9 @@ import 'package:sezapp/Screens/Patient/Add/addMedication.dart';
 import 'package:sezapp/Screens/Patient/Profile/patientUser_page.dart';
 import 'package:sezapp/Screens/Patient/Profile/profile_widget.dart';
 import 'package:sezapp/api/user_api_service.dart';
-import 'package:sezapp/conponents/appBar.dart';
-import 'package:sezapp/conponents/buttonFull.dart';
-import 'package:sezapp/conponents/inputField.dart';
+import 'package:sezapp/components/customAppBar.dart';
+import 'package:sezapp/components/buttonFullWidget.dart';
+import 'package:sezapp/components/customInputField.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
 import 'package:path/path.dart';
@@ -49,7 +49,7 @@ class _EditProfileState extends State<EditProfile> {
       backgroundColor: kLightColor,
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(
+        child: CustomAppBar(
           title: "Edit Profile",
         ),
       ),
@@ -154,7 +154,7 @@ class _EditProfileState extends State<EditProfile> {
                 const SizedBox(
                   height: 30,
                 ),
-                ButtonFull(
+                ButtonFullWidget(
                     name: "Update",
                     callback: () {
                       setState(() {

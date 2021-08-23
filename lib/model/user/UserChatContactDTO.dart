@@ -1,14 +1,14 @@
-class UserChatContact {
+class UserChatContactDTO {
   String id;
   String firstName;
   String lastName;
   String role;
   String imageUrl;
 
-  UserChatContact(
+  UserChatContactDTO(
       {this.id, this.firstName, this.lastName, this.role, this.imageUrl});
 
-  UserChatContact.fromJson(Map<String, dynamic> json) {
+  UserChatContactDTO.fromJson(Map<String, dynamic> json) {
     id = json['id'].toString();
     firstName = json['first_name'];
     lastName = json['last_name'];
@@ -17,7 +17,7 @@ class UserChatContact {
   }
 }
 
-class UserChatRoomContact extends UserChatContact {
+class UserChatRoomContact extends UserChatContactDTO {
   String lastMessage;
 
   UserChatRoomContact(

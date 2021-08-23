@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+// colors constants
 const kPrimaryColor= Color(0xFF35477D);
 const kPrimaryLightColor= Color(0xFF585ce5);
 const kSecondaryColor= Color(0xFF3dc0f6);
@@ -54,8 +54,8 @@ const List<Color> kListTextColors=[
 // api web
 
 String baseUrl =
-    'http://10.0.2.2:8080';
-//'https://sezapp-backend.herokuapp.com';
+    //'http://10.0.2.2:8080';
+'https://sezapp-backend.herokuapp.com';
 
 String checkImagePath(String imagePath) {
   if (imagePath == null)

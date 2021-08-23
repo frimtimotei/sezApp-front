@@ -1,30 +1,38 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sezapp/Screens/Doctor/Reports/allMedication.dart';
-import 'package:sezapp/Screens/Doctor/Reports/allSeizures.dart';
-import 'package:sezapp/Screens/Doctor/Reports/seizuresAction.dart';
+import 'package:sezapp/Screens/doctor/Reports/allMedication.dart';
+import 'package:sezapp/Screens/doctor/Reports/allSeizures.dart';
+import 'package:sezapp/Screens/doctor/Reports/seizuresAction.dart';
+import 'package:sezapp/Screens/Patient/Add/addMedication.dart';
 import 'package:sezapp/Screens/Patient/Chat/messageRoom.dart';
 import 'package:sezapp/Screens/Patient/Reports/chart_seizures.dart';
-import 'package:sezapp/conponents/appBar.dart';
+import 'package:sezapp/Screens/Patient/Reports/pie_chart.dart';
+import 'package:sezapp/components/customAppBar.dart';
 import 'package:sezapp/model/Patient.dart';
+
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userChatContact.dart';
+import 'package:sezapp/model/user/UserChatContactDTO.dart';
 
 import '../../../constants.dart';
 
-class PatientProfilePage extends StatelessWidget {
+class PatientProfilePage extends StatefulWidget {
+
+  final User activeUser;
   final Patient patient;
+  const PatientProfilePage({Key key, this.patient,this.activeUser}) : super(key: key);
 
-  const PatientProfilePage({Key key, @required this.patient}) : super(key: key);
+  @override
+  _PatientProfilePageState createState() => _PatientProfilePageState();
+}
 
+class _PatientProfilePageState extends State<PatientProfilePage> {
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    final User activeUser = ModalRoute.of(context).settings.arguments;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(title: "Patient Details"),
+        child: CustomAppBar(title: "Patient Details"),
       ),
       body: Container(
         height: size.height,
@@ -51,35 +59,47 @@ class PatientProfilePage extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: EdgeInsets.symmetric(vertical: 2, horizontal: 5),
-                      child: buildImage(patient.imageUrl),
+                      child: buildImage(widget.patient.imageUrl),
                     ),
                     SizedBox(
                       width: 30,
                     ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Text(
-                          "Name: " + patient.firstName,
-                          style: TextStyle(fontSize: 17),
-                        ),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("Last Name:" + patient.lastName,
-                            style: TextStyle(fontSize: 17)),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("Age:" + patient.age,
-                            style: TextStyle(fontSize: 17)),
-                        SizedBox(
-                          height: 5,
-                        ),
-                        Text("Sex: " + patient.sex,
-                            style: TextStyle(fontSize: 17))
-                      ],
+                    Expanded(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Text(
+                            "Name: " + widget.patient.firstName,
+                            style: TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Last Name: " + widget.patient.lastName,
+                            style: TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Age:" + widget.patient.age,
+                            style: TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Sex: " + widget.patient.sex,
+                            style: TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
+                          )
+                        ],
+                      ),
                     )
                   ],
                 ),
@@ -100,9 +120,9 @@ class PatientProfilePage extends StatelessWidget {
                 ),
                 child: InkWell(
                   onTap: () {
-                    sentToChat(patient, activeUser, context);
+                    sentToChat(widget.patient, widget.activeUser, context);
+                    print(widget.activeUser.firstName);
                   },
-
                   child: ListTile(
                     trailing: Icon(
                       Icons.arrow_forward_ios_rounded,
@@ -141,17 +161,16 @@ class PatientProfilePage extends StatelessWidget {
                             context,
                             new MaterialPageRoute(
                                 builder: (context) => AllSeizuresDoctorPage(
-                                      patientId: patient.id,
+                                      patientId: widget.patient.id,
                                     )));
                       },
-
                       child: ListTile(
                         trailing: Icon(
                           Icons.arrow_forward_ios_rounded,
                           size: 18,
                           color: kPrimaryLightColor,
                         ),
-                        title: Text("All seizures"),
+                        title: Text("All seizures", style: TextStyle(fontSize: 14),),
                       ),
                     ),
                   ),
@@ -161,14 +180,14 @@ class PatientProfilePage extends StatelessWidget {
                           context,
                           new MaterialPageRoute(
                               builder: (context) => AllMedicationDoctorPage(
-                                    patientId: patient.id,
+                                    patientId: widget.patient.id,
                                   )));
                     },
                     child: Container(
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(8),
                       margin: EdgeInsets.fromLTRB(0, 0, 20, 10),
                       height: 80,
-                      width: size.width * 0.43,
+                      width: size.width * 0.44,
                       decoration: BoxDecoration(
                         color: Color.fromRGBO(255, 255, 255, 0.8),
                         borderRadius: BorderRadius.circular(13),
@@ -185,7 +204,7 @@ class PatientProfilePage extends StatelessWidget {
                           size: 18,
                           color: kPrimaryLightColor,
                         ),
-                        title: Text("Medication history "),
+                        title: Text("Medication history", style: TextStyle(fontSize: 14)),
                       ),
                     ),
                   ),
@@ -213,11 +232,11 @@ class PatientProfilePage extends StatelessWidget {
                     Navigator.push(
                         context,
                         new MaterialPageRoute(
-                            builder: (context) => AllSeizuresDoctorPage(
-                                  patientId: patient.id,
+                            builder: (context) => AddMedicationPage(
+                                  userId: widget.patient.id,doctorName: widget.activeUser.firstName,
+                              userName: widget.patient.firstName,
                                 )));
                   },
-
                   child: ListTile(
                     trailing: Icon(
                       Icons.arrow_forward_ios_rounded,
@@ -231,10 +250,14 @@ class PatientProfilePage extends StatelessWidget {
                 ),
               ),
               WeekSeizureFrequency(
-                weekFreqData: getPatientWeekSezData(patient.id),
-                monthFreqData: getPatientMonthSezData(patient.id),
-                yearFreqData: getPatientYearSezData(patient.id),
+                weekFreqData: getPatientWeekSezData(widget.patient.id),
+                monthFreqData: getPatientMonthSezData(widget.patient.id),
+                yearFreqData: getPatientYearSezData(widget.patient.id),
               ),
+
+              PieChartWidget(userId: widget.patient.id,),
+
+              SizedBox(height: 20,)
             ],
           ),
         ),
@@ -256,13 +279,14 @@ class PatientProfilePage extends StatelessWidget {
     );
   }
 
-  void sentToChat(data, activeUser, context) {
-    UserChatContact senderUser = new UserChatContact();
-    senderUser.id = data.id;
-    senderUser.firstName = data.firstName;
-    senderUser.lastName = data.lastName;
-    senderUser.imageUrl = data.imageUrl;
+  void sentToChat(patient, activeUser, context) {
+    UserChatContactDTO senderUser = new UserChatContactDTO();
+    senderUser.id = patient.id;
+    senderUser.firstName = patient.firstName;
+    senderUser.lastName = patient.lastName;
+    senderUser.imageUrl = patient.imageUrl;
     senderUser.role = "patient";
+    print(activeUser.id);
 
     Navigator.push(
         context,

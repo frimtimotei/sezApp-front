@@ -1,9 +1,9 @@
 import 'package:sezapp/api/medication_api_service.dart';
 import 'package:sezapp/model/Medication.dart';
 
-Future<List<Medication>> getMedications() async{
+Future<List<Medication>> getMedications(userId) async{
 
-  var data= await getAllMedications();
+  var data= await getAllMedications(userId);
   List<Medication> medications=[];
   for(var i in data)
   {

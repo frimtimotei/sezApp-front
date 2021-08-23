@@ -71,7 +71,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
                     offset: Offset(0, 15))
               ]),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          margin: EdgeInsets.symmetric(horizontal: size.width*0.06,vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: 25,vertical: 10),
           child: TableCalendar(
 
             focusedDay: _focusedDay,

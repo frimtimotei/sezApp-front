@@ -3,8 +3,8 @@ import 'dart:convert';
 import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/model/Seizure.dart';
 
-Future<List<Seizure>> getSeizures() async {
-  var data = await apiGetAllSeizures();
+Future<List<Seizure>> getSeizures(userId) async {
+  var data = await apiGetAllSeizures(userId);
   List<Seizure> seizures = [];
   for (var i in data) {
     Seizure seizure = Seizure.fromJson(i);

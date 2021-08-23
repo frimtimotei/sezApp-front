@@ -6,9 +6,9 @@ import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
 import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:duration_picker/duration_picker.dart';
-import 'package:sezapp/conponents/appBar.dart';
-import 'package:sezapp/conponents/buttonFull.dart';
-import 'package:sezapp/conponents/whiteIconButton.dart';
+import 'package:sezapp/components/customAppBar.dart';
+import 'package:sezapp/components/buttonFullWidget.dart';
+import 'package:sezapp/components/whiteIconButton.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/SeizureRegisterModel.dart';
 import 'package:cool_alert/cool_alert.dart';
@@ -172,7 +172,7 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
     return Scaffold(
       appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
-          child: CustomAAppBar(
+          child: CustomAppBar(
             title: "Add Seizure",
           )),
       body: Container(
@@ -526,7 +526,7 @@ class _AddSeizurePageState extends State<AddSeizurePage> {
                       SizedBox(
                         height: 10,
                       ),
-                      ButtonFull(
+                      ButtonFullWidget(
                           name: "Save",
                           callback: _seizureSubmit,
                           width: 320,

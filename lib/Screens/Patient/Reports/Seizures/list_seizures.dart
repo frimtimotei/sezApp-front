@@ -12,8 +12,8 @@ import 'package:intl/date_symbol_data_local.dart';
 import 'package:focused_menu/focused_menu.dart';
 
 class AllSeizures extends StatefulWidget {
-  final Future<List<Seizure>> apiSez;
-  const AllSeizures({Key key,this.apiSez}) : super(key: key);
+  final userId;
+  const AllSeizures({Key key,this.userId}) : super(key: key);
 
   @override
   _AllSeizuresState createState() => _AllSeizuresState();
@@ -25,7 +25,7 @@ class _AllSeizuresState extends State<AllSeizures> {
   @override
   void initState() {
     super.initState();
-    allSez = widget.apiSez;
+    allSez = getSeizures(widget.userId);
   }
 
   @override
@@ -49,6 +49,17 @@ class _AllSeizuresState extends State<AllSeizures> {
 
   Widget _listView(AsyncSnapshot snapshot, String languageCode, Size size) {
     if (snapshot.hasData) {
+      if(snapshot.data.length==0)
+      {
+        return Container(
+          width: size.width,
+          height: size.height,
+          color: kLightColor,
+          child: Padding(
+              padding: EdgeInsets.all(20),
+              child: Text("No data available!",style: TextStyle(fontSize: 18,fontStyle: FontStyle.italic),),),
+        );
+      } else
       return ListView.builder(
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
@@ -204,7 +215,7 @@ class _AllSeizuresState extends State<AllSeizures> {
   Future<void> refreshSeizureList() async {
     if (mounted)
       setState(() {
-        allSez = getSeizures();
+        allSez = getSeizures(widget.userId);
       });
 
     await Future.delayed(Duration(seconds: 2));

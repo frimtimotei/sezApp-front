@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 import '../constants.dart';
 
 Future medicationRegister(MedicationRegisterModel medicationRegisterModel,
-    List<Reminder> reminders) async {
+    List<Reminder> reminders, userId, userName, doctorName) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
 
@@ -23,33 +23,69 @@ Future medicationRegister(MedicationRegisterModel medicationRegisterModel,
     remindersData.add(reminderData);
   }
 
-  final Map<String, dynamic> seizureData = {
-    'name': medicationRegisterModel.name,
-    'dose_gram': medicationRegisterModel.dose,
-    'start_date': medicationRegisterModel.startDate,
-    'end_date': medicationRegisterModel.endDate,
-    'set_reminder': medicationRegisterModel.setReminder,
-    'howOften': medicationRegisterModel.howOften,
-    'reminders': remindersData
-  };
+  if(userId==null|| doctorName==null) {
 
-  String url = '$baseUrl/medication/create';
-  final response = await http.post(Uri.parse(url),
-      headers: {
-        'Content-Type': 'application/json',
-        "accept": "application/json",
-        'Authorization': "Bearer " + jwt
-      },
-      body: json.encode(seizureData));
+    final Map<String, dynamic> seizureData = {
+      'name': medicationRegisterModel.name,
+      'dose_gram': medicationRegisterModel.dose,
+      'start_date': medicationRegisterModel.startDate,
+      'end_date': medicationRegisterModel.endDate,
+      'set_reminder': medicationRegisterModel.setReminder,
+      "addedBy": userName.toString(),
+      'howOften': medicationRegisterModel.howOften,
+      'reminders': remindersData
+    };
 
-  var convertDataJason = jsonDecode(response.body);
-  return convertDataJason;
+    String url = '$baseUrl/medication/create';
+    final response = await http.post(Uri.parse(url),
+        headers: {
+          'Content-Type': 'application/json',
+          "accept": "application/json",
+          'Authorization': "Bearer " + jwt
+        },
+        body: json.encode(seizureData));
+
+    var convertDataJason = jsonDecode(response.body);
+    return convertDataJason;
+  }else
+    {
+      final Map<String, dynamic> seizureData = {
+        'name': medicationRegisterModel.name,
+        'dose_gram': medicationRegisterModel.dose,
+        'start_date': medicationRegisterModel.startDate,
+        'end_date': medicationRegisterModel.endDate,
+        'set_reminder': medicationRegisterModel.setReminder,
+        "addedBy": doctorName,
+        'howOften': medicationRegisterModel.howOften,
+        'reminders': remindersData
+      };
+      String url = '$baseUrl/doctor/addMedication/$userId';
+      final response = await http.post(Uri.parse(url),
+          headers: {
+            'Content-Type': 'application/json',
+            "accept": "application/json",
+            'Authorization': "Bearer " + jwt
+          },
+          body: json.encode(seizureData));
+
+      var convertDataJason = jsonDecode(response.body);
+      return convertDataJason;
+    }
 }
 
-Future getAllMedications() async {
+Future getAllMedications(userId) async {
+  String url;
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/medication/userMedication';
+  if(userId==null) {
+    url = '$baseUrl/medication/userMedication';
+  }else{
+
+     url = '$baseUrl/doctor/patientMedication/$userId';
+
+
+  }
+
   final response = await http.get(
     Uri.parse(url),
     headers: {
@@ -63,10 +99,10 @@ Future getAllMedications() async {
   return convertDataJason;
 }
 
-Future deleteMedication(int seizureId) async {
+Future deleteMedication(int medicationId) async {
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/medication/delete/$seizureId';
+  String url = '$baseUrl/medication/delete/$medicationId';
 
   final response = await http.delete(
     Uri.parse(url),
@@ -100,3 +136,43 @@ Future apiGetAllRemindersMedications() async {
   var convertDataJason = jsonDecode(response.body);
   return convertDataJason;
 }
+
+
+// Future medicationDoctorRegister(MedicationRegisterModel medicationRegisterModel,
+//     List<Reminder> reminders, userID) async {
+//   SharedPreferences prefs = await SharedPreferences.getInstance();
+//   String jwt = prefs.getString("jwt");
+//
+//   final List<Map<String, dynamic>> remindersData = [];
+//
+//   for (int i = 0; i < reminders.length; i++) {
+//     final Map<String, dynamic> reminderData = {
+//       "alarmTime": reminders[i].time,
+//       "howOften": reminders[i].howOften
+//     };
+//
+//     remindersData.add(reminderData);
+//   }
+//
+//   final Map<String, dynamic> seizureData = {
+//     'name': medicationRegisterModel.name,
+//     'dose_gram': medicationRegisterModel.dose,
+//     'start_date': medicationRegisterModel.startDate,
+//     'end_date': medicationRegisterModel.endDate,
+//     'set_reminder': medicationRegisterModel.setReminder,
+//     'howOften': medicationRegisterModel.howOften,
+//     'reminders': remindersData
+//   };
+//
+//   String url = '$baseUrl/doctor/addMedication/$userID';
+//   final response = await http.post(Uri.parse(url),
+//       headers: {
+//         'Content-Type': 'application/json',
+//         "accept": "application/json",
+//         'Authorization': "Bearer " + jwt
+//       },
+//       body: json.encode(seizureData));
+//
+//   var convertDataJason = jsonDecode(response.body);
+//   return convertDataJason;
+// }

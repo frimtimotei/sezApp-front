@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-class CustomAAppBar extends StatelessWidget {
+class CustomAppBar extends StatelessWidget {
   final String title;
-  const CustomAAppBar({
+  const CustomAppBar({
     Key key,
     @required this.title
   }) : super(key: key);

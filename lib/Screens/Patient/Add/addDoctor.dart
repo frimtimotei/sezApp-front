@@ -1,7 +1,7 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:sezapp/api/user_api_service.dart';
-import 'package:sezapp/conponents/appBar.dart';
+import 'package:sezapp/components/customAppBar.dart';
 import 'package:sezapp/model/Doctor.dart';
 
 import '../../../constants.dart';
@@ -22,7 +22,7 @@ class _AddDoctorPageState extends State<AddDoctorPage> {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(
+        child: CustomAppBar(
           title: "Add Doctor",
         ),
       ),

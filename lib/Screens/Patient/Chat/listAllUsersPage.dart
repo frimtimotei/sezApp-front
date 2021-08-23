@@ -7,7 +7,7 @@ import 'package:sezapp/api/user_api_service.dart';
 
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userChatContact.dart';
+import 'package:sezapp/model/user/UserChatContactDTO.dart';
 
 class ListAllUsersPage extends StatefulWidget {
   const ListAllUsersPage({Key key}) : super(key: key);
@@ -117,9 +117,9 @@ class _ListAllUsersPageState extends State<ListAllUsersPage> {
 
   _getAllUsersApi() async {
     var response = await apiGetAllUsersChat();
-    List<UserChatContact> users = [];
+    List<UserChatContactDTO> users = [];
     for (var u in response) {
-      final UserChatContact userChatContact = UserChatContact.fromJson(u);
+      final UserChatContactDTO userChatContact = UserChatContactDTO.fromJson(u);
       users.add(userChatContact);
     }
 

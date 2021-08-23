@@ -1,13 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/Screens/Home/doctorHome.dart';
 
-import 'package:sezapp/Screens/Login/login_screen.dart';
+
+import 'package:sezapp/Screens/menu/doctorMenu.dart';
 import 'package:sezapp/Screens/SingUp/singUp_screen.dart';
 
 import 'package:sezapp/constants.dart';
 
-import 'Screens/Login/Landing.dart';
-import 'Screens/Home/patientHome.dart';
+
+
+
+import 'Screens/menu/patientMenu.dart';
+import 'Screens/login/Landing.dart';
+import 'Screens/login/loginScreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -51,8 +55,8 @@ class MyApp extends StatelessWidget {
         ),
         routes: {
           '/':(context)=> Landing(),
-          '/patientHome': (context)=> PatientHome(),
-          '/doctorHome': (context)=> DoctorHome(),
+          '/patientHome': (context)=> PatientMenu(),
+          '/doctorHome': (context)=> DoctorMenu(),
           '/login': (context)=> LoginScreen(),
           '/singUp': (context)=> SingUpScreen()
           

@@ -2,13 +2,10 @@ import 'dart:io';
 
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:path_provider/path_provider.dart';
-import 'package:sezapp/Screens/Login/usersAction.dart';
 import 'package:sezapp/api/user_api_service.dart';
-import 'package:sezapp/conponents/buttonFull.dart';
-import 'package:sezapp/conponents/inputField.dart';
+import 'package:sezapp/components/buttonFullWidget.dart';
+import 'package:sezapp/components/customInputField.dart';
 import 'package:sezapp/model/RegisterResponseModel.dart';
 
 import '../../constants.dart';
@@ -62,7 +59,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.025,
                   ),
-                  InputFiled(
+                  CustomInputFiled(
                     hintText: "FirstName",
                     validator: emptyValidator,
                     obscuredText: false,
@@ -71,7 +68,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.025,
                   ),
-                  InputFiled(
+                  CustomInputFiled(
                     hintText: "Last Name",
                     validator: emptyValidator,
                     obscuredText: false,
@@ -80,7 +77,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.025,
                   ),
-                  InputFiled(
+                  CustomInputFiled(
                     hintText: "Email",
                     validator: emptyValidator,
                     obscuredText: false,
@@ -89,7 +86,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.025,
                   ),
-                  InputFiled(
+                  CustomInputFiled(
                     hintText: "Password",
                     validator: (value) {
                       if (value.isEmpty) {
@@ -107,7 +104,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.025,
                   ),
-                  InputFiled(
+                  CustomInputFiled(
                     hintText: "Confirm password",
                     validator: emptyValidator,
                     obscuredText: true,
@@ -116,7 +113,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.025,
                   ),
-                  InputFiled(
+                  CustomInputFiled(
                     validator: emptyValidator,
                     hintText: "Age ex: 25",
                     obscuredText: false,
@@ -234,7 +231,7 @@ class _SingUpScreenState extends State<SingUpScreen> {
                   SizedBox(
                     height: size.height * 0.03,
                   ),
-                  ButtonFull(
+                  ButtonFullWidget(
                     width: 320,
                     height: 60,
                     name: "Register",

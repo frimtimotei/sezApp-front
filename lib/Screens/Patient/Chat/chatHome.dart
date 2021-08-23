@@ -1,9 +1,8 @@
 
 import 'package:flutter/material.dart';
-import 'package:sezapp/Screens/Patient/Chat/chatTest.dart';
 import 'package:sezapp/Screens/Patient/Chat/listAllUsersPage.dart';
 import 'package:sezapp/Screens/Patient/Chat/listChatRoomUsers.dart';
-import 'package:sezapp/conponents/splashScreen.dart';
+import 'package:sezapp/components/splashScreen.dart';
 
 import '../../../constants.dart';
 

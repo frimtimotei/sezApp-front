@@ -17,18 +17,6 @@ Future apiGetAllPatients() async{
 
 }
 
-Future apiGetAllPatientSeizures(patientId) async{
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/doctor/patientSeizures/$patientId';
-  final response = await http.get(Uri.parse(url),headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
-
-
-  var convertDataJason= jsonDecode(response.body);
-  return convertDataJason;
-
-}
 
 
 
@@ -107,7 +95,7 @@ Future apiMoodSezFreq(patientId)async{
 Future apiTypeSezFreq(patientId)async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/seizure/typeSezFrequency';
+  String url = '$baseUrl/doctor/typeSezFrequency/$patientId';
 
   final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
@@ -130,18 +118,4 @@ Future apiTrigSezFreq(patientId)async{
   },);
 
   return response;
-}
-
-
-Future getAllPatientMedications(patientId) async{
-
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/doctor/patientMedication/$patientId';
-  final response = await http.get(Uri.parse(url),headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
-
-
-  var convertDataJason= jsonDecode(response.body);
-  return convertDataJason;
-
 }

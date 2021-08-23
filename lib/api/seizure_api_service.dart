@@ -40,11 +40,18 @@ import '../constants.dart';
     return convertDataJason;
   }
 
-  Future apiGetAllSeizures() async{
+  Future apiGetAllSeizures(userId) async{
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String jwt = prefs.getString("jwt");
-    String url = '$baseUrl/seizure/userSeizures';
+    String url;
+
+    if(userId==null){
+      url = '$baseUrl/seizure/userSeizures';
+    }else{
+      url = '$baseUrl/doctor/patientSeizures/$userId';
+    }
+
     final response = await http.get(Uri.parse(url),headers: {'Content-Type': 'application/json',"accept" : "application/json", 'Authorization': "Bearer "+ jwt},);
 
 
@@ -129,10 +136,35 @@ Future apiDaysFromLastSez()async{
   return response;
 }
 
-Future apiMoodSezFreq()async{
+Future apiMoodSezFreq(userId)async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/seizure/moodSezFrequency';
+  String url;
+
+  if(userId==null)
+    url = '$baseUrl/seizure/moodSezFrequency';
+  else{
+    url = '$baseUrl/doctor/moodSezFrequency/$userId';
+  }
+  final response = await http.get(Uri.parse(url), headers: {
+    'Content-Type': 'application/json',
+    "accept": "application/json",
+    'Authorization': "Bearer " + jwt
+  },);
+
+  return response;
+}
+
+Future apiTypeSezFreq(userId)async{
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url;
+
+  if(userId==null)
+    url = '$baseUrl/seizure/typeSezFrequency';
+  else{
+    url = '$baseUrl/doctor/typeSezFrequency/$userId';
+  }
 
   final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
@@ -143,25 +175,16 @@ Future apiMoodSezFreq()async{
   return response;
 }
 
-Future apiTypeSezFreq()async{
+Future apiTrigSezFreq(userId)async{
   SharedPreferences prefs = await SharedPreferences.getInstance();
   String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/seizure/typeSezFrequency';
+  String url ;
 
-  final response = await http.get(Uri.parse(url), headers: {
-    'Content-Type': 'application/json',
-    "accept": "application/json",
-    'Authorization': "Bearer " + jwt
-  },);
-
-  return response;
-}
-
-Future apiTrigSezFreq()async{
-  SharedPreferences prefs = await SharedPreferences.getInstance();
-  String jwt = prefs.getString("jwt");
-  String url = '$baseUrl/seizure/trigSezFrequency';
-
+  if(userId==null)
+    url = '$baseUrl/seizure/trigSezFrequency';
+  else{
+    url = '$baseUrl/doctor/trigSezFrequency/$userId';
+  }
   final response = await http.get(Uri.parse(url), headers: {
     'Content-Type': 'application/json',
     "accept": "application/json",

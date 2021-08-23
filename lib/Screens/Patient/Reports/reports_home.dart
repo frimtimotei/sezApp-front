@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:sezapp/Screens/Patient/Reports/chart_seizures.dart';
 import 'package:sezapp/Screens/Patient/Reports/Medication/list_medication.dart';
 import 'package:sezapp/Screens/Patient/Reports/Seizures/list_seizures.dart';
-import 'package:sezapp/Screens/Patient/Reports/otherReports.dart';
-import 'package:sezapp/model/Seizure.dart';
+import 'package:sezapp/Screens/Patient/Reports/pie_chart.dart';
 
 import '../../../constants.dart';
 import 'Medication/medicationActions.dart';
@@ -52,8 +51,8 @@ class _ReportsHomeState extends State<ReportsHome> {
       ),
         body: TabBarView(children: [
           GraphsPage(),
-          AllSeizures(apiSez: getSeizures(),),
-          AllMedication(apiMed:getMedications()),
+          AllSeizures(),
+          AllMedication(),
 
         ],
 
@@ -76,7 +75,7 @@ class GraphsPage extends StatelessWidget {
       child: SingleChildScrollView(
         child: Column(children: [
           WeekSeizureFrequency(weekFreqData: getWeekSezData(),monthFreqData: getMonthSezData(),yearFreqData: getYearSezData(),),
-          OtherReportsWidget(),
+          PieChartWidget(),
           SizedBox(height: 20,)
         ],),
       ),

@@ -4,12 +4,11 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
-import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/api/chat_api_service.dart';
-import 'package:sezapp/conponents/inputField.dart';
+import 'package:sezapp/components/customInputField.dart';
 import 'package:sezapp/model/message/ChatMessage.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userChatContact.dart';
+import 'package:sezapp/model/user/UserChatContactDTO.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
@@ -20,8 +19,9 @@ import '../../../constants.dart';
 final socketUrl = 'http://10.0.2.2:8080/ws';
 
 class MessageRoom extends StatefulWidget {
-  final UserChatContact senderUser;
+  final UserChatContactDTO senderUser;
   final User activeUser;
+
 
   const MessageRoom({Key key, this.senderUser,this.activeUser}) : super(key: key);
 
@@ -36,6 +36,7 @@ class _MessageRoomState extends State<MessageRoom> {
   List<ChatMessage> messageList=[];
   final _controller = ScrollController();
 
+  String status="connecting..";
 
 
   @override
@@ -107,7 +108,7 @@ class _MessageRoomState extends State<MessageRoom> {
                           height: 2,
                         ),
                         Text(
-                          "Offline",
+                          status,
                           style:
                               TextStyle(color: kGreyTextColor, fontSize: 12),
                         )
@@ -150,10 +151,11 @@ class _MessageRoomState extends State<MessageRoom> {
                   children: <Widget>[
                     Expanded(
                         child: Container(
-                      height: 43,
+
                       decoration: BoxDecoration(
                           color: kPrimaryLightColor.withOpacity(0.08),
-                          borderRadius: BorderRadius.circular(40)),
+                          borderRadius: BorderRadius.circular(20)),
+                      padding: EdgeInsets.symmetric(vertical: 1,horizontal: 5),
                       child: Row(
                         children: [
                           SizedBox(
@@ -161,6 +163,8 @@ class _MessageRoomState extends State<MessageRoom> {
                           ),
                           Expanded(
                             child: TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
                               controller: textMessage,
                               decoration: InputDecoration(
                                 hintText: "Type a message...",
@@ -205,7 +209,12 @@ class _MessageRoomState extends State<MessageRoom> {
         onConnect: onConnect,
         beforeConnect: () async {
           print('waiting to connect...');
+
           await Future.delayed(Duration(milliseconds: 200));
+
+          setState(() {
+            status="connecting..";
+          });
           print('connecting...');
         },
         onWebSocketError: (dynamic error) => print(error.toString()),
@@ -233,6 +242,9 @@ class _MessageRoomState extends State<MessageRoom> {
       },
     );
 
+    setState(() {
+      status="connected";
+    });
     print("connected");
   }
 
@@ -314,7 +326,7 @@ class Message extends StatelessWidget {
       : super(key: key);
 
   final ChatMessage message;
-  final UserChatContact recipientUser;
+  final UserChatContactDTO recipientUser;
 
   @override
   Widget build(BuildContext context) {
@@ -331,19 +343,51 @@ class Message extends StatelessWidget {
           ),
           SizedBox(width: 10,)
         ],
-        Container(
-          margin: EdgeInsets.only(top: 15),
-          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-          decoration: BoxDecoration(
-              color: kPrimaryLightColor.withOpacity(
-                  (message.senderId == recipientUser.id) ? 0.1 : 1),
-              borderRadius: BorderRadius.circular(30)),
-          child: Text(
-            message.content,
-            style: TextStyle(
-                color: (message.senderId == recipientUser.id)
+        Align(
+        alignment: (message.senderId==recipientUser.id)? Alignment.centerLeft:Alignment.centerRight,
+
+          child: Container(
+            constraints: BoxConstraints(minWidth: 90, maxWidth: 200),
+            margin: EdgeInsets.only(top: 15),
+            padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+            decoration: BoxDecoration(
+                color: kPrimaryLightColor.withOpacity(
+                    (message.senderId == recipientUser.id) ? 0.1 : 1),
+                borderRadius: BorderRadius.only(
+                  topRight: Radius.circular(15),
+                  topLeft: Radius.circular(15),
+                  bottomRight: (message.senderId == recipientUser.id)? Radius.circular(15):Radius.circular(7),
+                  bottomLeft: (message.senderId == recipientUser.id)? Radius.circular(7):Radius.circular(15)
+                )),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+               crossAxisAlignment: (message.senderId == recipientUser.id)? CrossAxisAlignment.start: CrossAxisAlignment.end,
+              children: [
+                Text(
+                  message.content,
+
+                  style: TextStyle(
+                      color: (message.senderId == recipientUser.id)
+                          ? kPrimaryColor
+                          : Colors.white, fontSize: 17),
+                ),
+
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Text(message.timestamp,
+                  style: TextStyle(color: (message.senderId == recipientUser.id)
+                      ? kPrimaryColor
+                      : Colors.white,fontSize: 10 ),
+                ),
+                ...[const SizedBox(width: 2),
+                Icon(Icons.done_rounded, size: 11,color: (message.senderId == recipientUser.id)
                     ? kPrimaryColor
-                    : Colors.white),
+                    : Colors.white,),]
+
+                ],)
+              ],
+            ),
           ),
         ),
       ],

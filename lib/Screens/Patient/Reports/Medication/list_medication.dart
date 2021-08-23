@@ -10,8 +10,8 @@ import 'package:sezapp/model/Medication.dart';
 import '../../../../constants.dart';
 
 class AllMedication extends StatefulWidget {
-  final Future<List<Medication>> apiMed;
-  const AllMedication({Key key,this.apiMed}) : super(key: key);
+  final userId;
+  const AllMedication({Key key,this.userId}) : super(key: key);
 
   @override
   _AllMedicationState createState() => _AllMedicationState();
@@ -23,13 +23,14 @@ class _AllMedicationState extends State<AllMedication> {
   @override
   void initState() {
 
-    allMed=widget.apiMed;
+    allMed= getMedications(widget.userId);
     super.initState();
 
 
   }
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     String languageCode = Localizations.localeOf(context).languageCode;
     return Container(
       color: kLightColor,
@@ -39,7 +40,7 @@ class _AllMedicationState extends State<AllMedication> {
             return RefreshIndicator(
               // ignore: missing_return
               onRefresh: refreshMedicationList,
-              child: _listView(snapshot, languageCode),
+              child: _listView(snapshot, languageCode,size),
             );
           }),
     );
@@ -47,8 +48,19 @@ class _AllMedicationState extends State<AllMedication> {
 
 
 
-  Widget _listView(AsyncSnapshot snapshot, String languageCode) {
+  Widget _listView(AsyncSnapshot snapshot, String languageCode,size) {
     if (snapshot.hasData) {
+      if(snapshot.data.length==0)
+      {
+        return Container(
+          width: size.width,
+          height: size.height,
+          color: kLightColor,
+          child: Padding(
+            padding: EdgeInsets.all(20),
+            child: Text("No data available!",style: TextStyle(fontSize: 18,fontStyle: FontStyle.italic),),),
+        );
+      }
       return ListView.builder(
         itemCount: snapshot.data.length,
         itemBuilder: (context, index) {
@@ -159,7 +171,7 @@ class _AllMedicationState extends State<AllMedication> {
   Future<void> refreshMedicationList() async {
     if (mounted)
       setState(() {
-        allMed = getMedications();
+        allMed = getMedications(widget.userId);
       });
 
     await Future.delayed(Duration(seconds: 2));

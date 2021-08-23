@@ -10,7 +10,8 @@ import 'package:sezapp/constants.dart';
 import 'indicator.dart';
 
 class PieChartMood extends StatefulWidget {
-  const PieChartMood({Key key}) : super(key: key);
+  final userId;
+  const PieChartMood({Key key,this.userId}) : super(key: key);
 
   @override
   _PieChartMoodState createState() => _PieChartMoodState();
@@ -23,7 +24,7 @@ class _PieChartMoodState extends State<PieChartMood> {
 
   @override
   void initState() {
-    moodSezFrequency = getMoodSezFreq();
+    moodSezFrequency = getMoodSezFreq(widget.userId);
     // TODO: implement initState
     super.initState();
   }
@@ -164,8 +165,8 @@ class _PieChartMoodState extends State<PieChartMood> {
     });
   }
 
-  Future getMoodSezFreq() async {
-    var response = await apiMoodSezFreq();
+  Future getMoodSezFreq(userId) async {
+    var response = await apiMoodSezFreq(userId);
 
     if (response.statusCode == 200) {
       var convertDataJason = jsonDecode(response.body);

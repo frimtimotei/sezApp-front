@@ -9,7 +9,8 @@ import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/constants.dart';
 
 class PieChartType extends StatefulWidget {
-  const PieChartType({Key key}) : super(key: key);
+  final userId;
+  const PieChartType({Key key,this.userId}) : super(key: key);
 
   @override
   _PieChartTypeState createState() => _PieChartTypeState();
@@ -21,7 +22,7 @@ class _PieChartTypeState extends State<PieChartType> {
 
   @override
   void initState() {
-    typeSezFrequency = getTypeSezFreq();
+    typeSezFrequency = getTypeSezFreq(widget.userId);
     // TODO: implement initState
     super.initState();
   }
@@ -122,17 +123,17 @@ class _PieChartTypeState extends State<PieChartType> {
               snapshot.data[i]["freq"].toString() +
               "%"
           : " ";
-      final textColor = kListTextColors[i];
+      final textColor = kListTextColors[i%10];
 
       return PieChartSectionData(
-        color: kListBackColors[i],
+        color: kListBackColors[i%10],
         value: snapshot.data[i]["freq"],
         title: text,
         radius: radius,
         titleStyle: TextStyle(
             fontSize: fontSize,
             fontWeight: FontWeight.bold,
-            color: kListTextColors[i]),
+            color: kListTextColors[i%10]),
         badgeWidget: Text(
           text2,
           style: TextStyle(
@@ -144,8 +145,8 @@ class _PieChartTypeState extends State<PieChartType> {
     });
   }
 
-  Future getTypeSezFreq() async {
-    var response = await apiTypeSezFreq();
+  Future getTypeSezFreq(userId) async {
+    var response = await apiTypeSezFreq(userId);
 
     if (response.statusCode == 200) {
       var convertDataJason = jsonDecode(response.body);

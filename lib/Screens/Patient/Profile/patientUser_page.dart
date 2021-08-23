@@ -1,13 +1,14 @@
 import 'dart:convert';
 
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/Screens/Patient/Profile/edit_profile_page.dart';
 import 'package:sezapp/Screens/Patient/Profile/profile_widget.dart';
 import 'package:sezapp/api/user_api_service.dart';
-import 'package:sezapp/conponents/buttonFull.dart';
-import 'package:sezapp/conponents/detailsIconText.dart';
+import 'package:sezapp/components/buttonFullWidget.dart';
+import 'package:sezapp/components/detailsIconTextWidget.dart';
 
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
@@ -36,16 +37,15 @@ class _PatientUserState extends State<PatientUser> {
     }
     return User.fromJson(response);
   }
+
   @override
   void initState() {
-
     // TODO: implement initState
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -126,7 +126,7 @@ class _PatientUserState extends State<PatientUser> {
                   ),
                   Column(
                     children: <Widget>[
-                      DetailsIconText(
+                      DetailsIconTextWidget(
                         mainText: userSexText(activeUser.sex),
                         prefix: "sex: ",
                         icon: sexIcon(activeUser.sex),
@@ -134,7 +134,7 @@ class _PatientUserState extends State<PatientUser> {
                       const SizedBox(
                         height: 5,
                       ),
-                      DetailsIconText(
+                      DetailsIconTextWidget(
                         mainText: activeUser.age,
                         prefix: "age: ",
                         icon: Icon(
@@ -145,7 +145,7 @@ class _PatientUserState extends State<PatientUser> {
                       const SizedBox(
                         height: 5,
                       ),
-                      DetailsIconText(
+                      DetailsIconTextWidget(
                         mainText: getStringRole(activeUser.roleId),
                         prefix: "role: ",
                         icon: Icon(
@@ -169,7 +169,21 @@ class _PatientUserState extends State<PatientUser> {
                                 height: 10,
                               ),
                               ElevatedButton(
-                                onPressed: _handleLogout,
+                                onPressed: () {
+                                  CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.confirm,
+                                    confirmBtnColor: kPrimaryColor,
+                                    confirmBtnText: "Yes",
+                                    cancelBtnText: "No",
+                                    onConfirmBtnTap: () {
+                                      _handleLogout();
+                                    },
+                                    title: "Sing out ",
+                                    text: "Are you sure you want to sing out?",
+                                    backgroundColor: kPrimaryColor,
+                                  );
+                                },
                                 child: Text("Sing Out"),
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0.3,
@@ -199,7 +213,31 @@ class _PatientUserState extends State<PatientUser> {
                                 height: 5,
                               ),
                               ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.confirm,
+                                    confirmBtnColor: kPrimaryColor,
+                                    confirmBtnText: "Yes",
+                                    onConfirmBtnTap: () {
+                                      apiDeleteUser();
+                                      CoolAlert.show(
+                                          context: context,
+                                          type: CoolAlertType.success,
+                                          confirmBtnColor: kPrimaryColor,
+                                          title:
+                                              "Your account has been deleted",
+                                          onConfirmBtnTap: () {
+                                            _handleLogout();
+                                          });
+                                    },
+                                    cancelBtnText: "No",
+                                    title: "Delete ",
+                                    text:
+                                        "Are you sure you want to delete your account?",
+                                    backgroundColor: kPrimaryColor,
+                                  );
+                                },
                                 child: Text("Delete Account"),
                                 style: ElevatedButton.styleFrom(
                                   elevation: 0.3,
@@ -260,10 +298,9 @@ class _PatientUserState extends State<PatientUser> {
   }
 
   String getStringRole(String roleId) {
-    if(roleId=='2')
+    if (roleId == '2')
       return "doctor";
     else
-      return
-          "patient";
+      return "patient";
   }
 }

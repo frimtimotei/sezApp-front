@@ -3,8 +3,8 @@ import 'package:flutter/widgets.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 
-import 'package:sezapp/conponents/appBar.dart';
-import 'package:sezapp/conponents/detailsIconText.dart';
+import 'package:sezapp/components/customAppBar.dart';
+import 'package:sezapp/components/detailsIconTextWidget.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/Seizure.dart';
 
@@ -24,7 +24,7 @@ class SeizureDetails extends StatelessWidget {
     return Scaffold(
         appBar: PreferredSize(
           preferredSize: Size.fromHeight(60.0),
-          child: CustomAAppBar(title: "Seizure Details"),
+          child: CustomAppBar(title: "Seizure Details"),
         ),
         body: Container(
           height: size.height,
@@ -33,7 +33,7 @@ class SeizureDetails extends StatelessWidget {
             child: Column(
               children: <Widget>[
                 SizedBox(height: 20,),
-                DetailsIconText(
+                DetailsIconTextWidget(
                   prefix: 'Date: ',
                   mainText: DateFormat("MMMM, dd, yyyy", languageCode)
                       .format(seizure.date),
@@ -43,7 +43,7 @@ class SeizureDetails extends StatelessWidget {
                     color: kPrimaryColor,
                   ),
                 ),
-                DetailsIconText(
+                DetailsIconTextWidget(
                   mainText: seizure.startAt.format(context),
                   prefix: "Start at: ",
                   icon: Icon(
@@ -52,7 +52,7 @@ class SeizureDetails extends StatelessWidget {
                     color: kPrimaryColor,
                   ),
                 ),
-                DetailsIconText(
+                DetailsIconTextWidget(
                   mainText: format(seizure.duration),
                   prefix: "Duration: ",
                   icon: Icon(
@@ -230,7 +230,7 @@ class SeizureDetails extends StatelessWidget {
 
                 /////////////////////////////////////////////////////////////
                 ///Location
-                DetailsIconText(
+                DetailsIconTextWidget(
                   mainText: seizure.location,
                   prefix: "Location: ",
                   icon: Icon(
@@ -242,7 +242,7 @@ class SeizureDetails extends StatelessWidget {
 
 
                 ////Note
-                DetailsIconText(
+                DetailsIconTextWidget(
                   mainText: seizure.notes,
                   prefix: "Notes: ",
                   icon: Icon(

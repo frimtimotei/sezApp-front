@@ -1,14 +1,11 @@
 import 'package:http/http.dart' as http;
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userLoginResponseModel.dart';
+import 'package:sezapp/model/user/userLoginResponseModelDTO.dart';
 import 'dart:convert';
 
 import 'package:sezapp/model/RegisterResponseModel.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stomp_dart_client/stomp.dart';
-import 'package:stomp_dart_client/stomp_config.dart';
-import 'package:stomp_dart_client/stomp_frame.dart';
 
 import '../constants.dart';
 
@@ -32,6 +29,29 @@ Future loginUser(LoginRequestModel loginRequestModel) async {
 
   return jsonDecode(response.body);
 }
+
+Future apiDeleteUser() async {
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  String jwt = prefs.getString("jwt");
+  String url = '$baseUrl/user/delete';
+
+  final response = await http.delete(
+    Uri.parse(url),
+    headers: {
+      'Content-Type': 'application/json',
+      "accept": "application/json",
+      'Authorization': "Bearer " + jwt
+    },
+  );
+
+  if (response.statusCode == 200) {
+    return true;
+  } else {
+    return false;
+  }
+}
+
+
 
 Future registerUser(RegisterRequestModel registerRequestModel) async {
   final Map<String, dynamic> loginData = {

@@ -5,8 +5,9 @@ import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/Screens/Patient/Add/addDoctor.dart';
 import 'package:sezapp/Screens/Patient/Add/addMedication.dart';
 import 'package:sezapp/Screens/Patient/Add/addSeizure.dart';
-import 'package:sezapp/conponents/addCard.dart';
+import 'package:sezapp/components/addCardWidget.dart';
 import 'package:sezapp/constants.dart';
+import 'package:sezapp/model/user/User.dart';
 
 class PatientAddPage extends StatefulWidget {
   @override
@@ -14,9 +15,10 @@ class PatientAddPage extends StatefulWidget {
 }
 
 class _PatientAddPageState extends State<PatientAddPage> {
-  
+
   @override
   Widget build(BuildContext context) {
+    final User activeUser = ModalRoute.of(context).settings.arguments;
     return Container(
       color: kLightColor,
       child: Center(
@@ -85,7 +87,7 @@ class _PatientAddPageState extends State<PatientAddPage> {
                   closedShape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                   openBuilder: (BuildContext context, VoidCallback _) {
 
-                    return AddMedicationPage();
+                    return AddMedicationPage(userName: activeUser.firstName,);
                   },
                   closedBuilder:
                       (BuildContext context, VoidCallback openContainer) {

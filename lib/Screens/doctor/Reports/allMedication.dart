@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/Screens/Doctor/Reports/medicationAction.dart';
+
 import 'package:sezapp/Screens/Patient/Reports/Medication/list_medication.dart';
-import 'package:sezapp/conponents/appBar.dart';
+import 'package:sezapp/components/customAppBar.dart';
 class AllMedicationDoctorPage extends StatelessWidget {
   final patientId;
   const AllMedicationDoctorPage({Key key,this.patientId}) : super(key: key);
@@ -11,9 +11,9 @@ class AllMedicationDoctorPage extends StatelessWidget {
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(title: "All Medication"),
+        child: CustomAppBar(title: "All Medication"),
       ),
-      body:  AllMedication(apiMed:getPatientMedications(patientId) ),
+      body:  AllMedication(userId: patientId),
     );
   }
 }

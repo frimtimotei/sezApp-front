@@ -13,7 +13,7 @@ import 'package:sezapp/constants.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:sezapp/model/Doctor.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userChatContact.dart';
+import 'package:sezapp/model/user/UserChatContactDTO.dart';
 
 class OtherInfoBox extends StatefulWidget {
   const OtherInfoBox({Key key}) : super(key: key);
@@ -40,6 +40,7 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
     Size size = MediaQuery.of(context).size;
     return Column(
       children: <Widget>[
+        SizedBox(height: 5,),
         Container(
           height: 80,
           decoration: BoxDecoration(
@@ -52,7 +53,7 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
                     offset: Offset(0, 5))
               ]),
           padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
-          margin: EdgeInsets.symmetric(horizontal: 25, vertical: 10),
+          margin: EdgeInsets.symmetric(horizontal: 25, vertical: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: <Widget>[
@@ -225,7 +226,7 @@ class _OtherInfoBoxState extends State<OtherInfoBox> {
   }
 
   void sentToChat(data, activeUser, context) {
-    UserChatContact senderUser = new UserChatContact();
+    UserChatContactDTO senderUser = new UserChatContactDTO();
     senderUser.id = data.id;
     senderUser.firstName = data.firstName;
     senderUser.lastName = data.lastName;

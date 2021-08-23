@@ -5,18 +5,22 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/api/medication_api_service.dart';
-import 'package:sezapp/conponents/appBar.dart';
-import 'package:sezapp/conponents/buttonFull.dart';
-import 'package:sezapp/conponents/inputField.dart';
-import 'package:sezapp/conponents/whiteIconButton.dart';
+import 'package:sezapp/components/customAppBar.dart';
+import 'package:sezapp/components/buttonFullWidget.dart';
+import 'package:sezapp/components/customInputField.dart';
+import 'package:sezapp/components/whiteIconButton.dart';
 import 'package:sezapp/model/MedicationRegisterModel.dart';
 import 'package:sezapp/model/Reminder.dart';
 
 import '../../../constants.dart';
 
 class AddMedicationPage extends StatefulWidget {
-  final response;
-  AddMedicationPage({Key key, this.response}) : super(key: key);
+  final userId;
+  final userName;
+  final doctorName;
+
+
+  AddMedicationPage({Key key, this.userId, this.doctorName, this.userName}) : super(key: key);
 
   @override
   _AddMedicationPageState createState() => _AddMedicationPageState();
@@ -34,12 +38,17 @@ List<Widget> chipsTimeList;
 TimeOfDay _initialTime = TimeOfDay(hour: 9, minute: 00);
 
 
-String message="";
+String message = "";
 
 GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>(); //form key
 
 
-format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
+format(Duration d) =>
+    d
+        .toString()
+        .split('.')
+        .first
+        .padLeft(8, "0");
 
 List _howOften = [
   "Every Day",
@@ -55,7 +64,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   void initState() {
     chipsTimeList = [];
     remindersTimes = [];
-    message="";
+    message = "";
     super.initState();
   }
 
@@ -77,8 +86,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         setState(() {
           _startDate = newDate;
         });
-
-
       }
     }
 
@@ -95,13 +102,12 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
           _endDate = endDatePik;
         });
       }
-
     }
 
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(
+        child: CustomAppBar(
           title: "Add Medication",
         ),
       ),
@@ -132,7 +138,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        InputFiled(
+                        CustomInputFiled(
                             hintText: "Name...",
                             obscuredText: false,
                             controller: nameController,
@@ -154,7 +160,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                         SizedBox(
                           height: 10,
                         ),
-                        InputFiled(
+                        CustomInputFiled(
                             hintText: "(i.e. 20 mg)",
                             obscuredText: false,
                             controller: doseController,
@@ -332,7 +338,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                         child: Wrap(
                           spacing: 6.0,
                           runSpacing: 6.0,
-                          children: List.generate(remindersTimes.length, (index) {
+                          children: List.generate(
+                              remindersTimes.length, (index) {
                             return RawChip(
                               avatar:
                               Container(
@@ -376,8 +383,10 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                       height: 10,
                     ),
 
-                    ButtonFull(name: "Add Medication",
-                        callback: _medicationSubmit,
+                    ButtonFullWidget(name: "Add Medication",
+                        callback: () {
+                          _medicationSubmit(widget.userId);
+                        },
                         width: 320,
                         height: 50),
 
@@ -394,7 +403,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   }
 
   Function emptyValidator = (value) {
-
     if (value.isEmpty) {
       return 'cannot be empty';
     }
@@ -403,17 +411,14 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
   };
 
 
-  void _medicationSubmit() async {
-
-    message="";
+  void _medicationSubmit(userId) async {
+    message = "";
 
     if (!globalFormKey.currentState.validate()) {
-
       setState(() {
-        message="Please fix the errors in red before submitting.";
+        message = "Please fix the errors in red before submitting.";
       });
-
-    }else {
+    } else {
       var formatter = new DateFormat('yyyy-MM-dd');
       MedicationRegisterModel medicationRegisterModel = new MedicationRegisterModel();
       List <Reminder> reminders = [];
@@ -421,7 +426,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       medicationRegisterModel.dose = doseController.text;
       medicationRegisterModel.startDate = formatter.format(_startDate);
       medicationRegisterModel.endDate = formatter.format(_endDate);
-      medicationRegisterModel.howOften=oftenDropdown;
+      medicationRegisterModel.howOften = oftenDropdown;
       if (remindersTimes.isEmpty) {
         medicationRegisterModel.setReminder = false;
       }
@@ -434,14 +439,14 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
 
         reminder.time = remindersTimes[i].format(context);
         reminder.howOften = oftenDropdown;
-
         reminders.add(reminder);
       }
 
       /// response from  api
       var response = await medicationRegister(
-          medicationRegisterModel, reminders);
+          medicationRegisterModel, reminders, userId,widget.userName,widget.doctorName);
 
+      print(widget.userName);
 
       if (response['id'] != null) {
         CoolAlert.show(
@@ -452,18 +457,15 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
             backgroundColor: kPrimaryColor,
             onConfirmBtnTap: () {
               Navigator.pop(context);
-              nameController.text="";
-              doseController.text="";
-              remindersTimes=[];
-
+              nameController.text = "";
+              doseController.text = "";
+              remindersTimes = [];
             });
       } else {
-    setState(() {
-    message = "error";
-    });
+        setState(() {
+          message = "error";
+        });
+      }
     }
-
-    }
-
   }
 }

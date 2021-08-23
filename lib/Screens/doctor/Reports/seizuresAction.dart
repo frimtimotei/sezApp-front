@@ -38,14 +38,3 @@ Future<List> getPatientYearSezData(userId) async {
     throw Exception("Error to load data");
   }
 }
-
-Future<List<Seizure>> getPatientSeizures(patientId) async {
-  var data = await apiGetAllPatientSeizures(patientId);
-  List<Seizure> seizures = [];
-  for (var i in data) {
-    Seizure seizure = Seizure.fromJson(i);
-    seizures.add(seizure);
-  }
-
-  return seizures.reversed.toList();
-}

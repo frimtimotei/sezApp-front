@@ -11,14 +11,15 @@ import 'package:sezapp/api/seizure_api_service.dart';
 
 import '../../../constants.dart';
 
-class OtherReportsWidget extends StatefulWidget {
-  const OtherReportsWidget({Key key}) : super(key: key);
+class PieChartWidget extends StatefulWidget {
+  final userId;
+  const PieChartWidget({Key key,this.userId}) : super(key: key);
 
   @override
-  _OtherReportsWidgetState createState() => _OtherReportsWidgetState();
+  _PieChartWidgetState createState() => _PieChartWidgetState();
 }
 
-class _OtherReportsWidgetState extends State<OtherReportsWidget> {
+class _PieChartWidgetState extends State<PieChartWidget> {
 
   @override
   Widget build(BuildContext context) {
@@ -61,16 +62,16 @@ class _OtherReportsWidgetState extends State<OtherReportsWidget> {
             color: kPrimaryLightColor,
           ),
         ),
-        views: [buildColumnMood(size),
-          buildColumnType(size),
-          buildColumnTrig(size),
+        views: [buildColumnMood(size,widget.userId),
+          buildColumnType(size,widget.userId),
+          buildColumnTrig(size,widget.userId),
         ],
         onChange: (index){},
       ),
     );
   }
 
-  Column buildColumnMood(Size size) {
+  Column buildColumnMood(Size size, userId) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -93,12 +94,12 @@ class _OtherReportsWidgetState extends State<OtherReportsWidget> {
         SizedBox(
           height: size.height * 0.01,
         ),
-        Center(child: PieChartMood()),
+        Center(child: PieChartMood(userId: userId,)),
       ],
     );
   }
 
-  Column buildColumnType(Size size) {
+  Column buildColumnType(Size size,userId) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -121,12 +122,12 @@ class _OtherReportsWidgetState extends State<OtherReportsWidget> {
         SizedBox(
           height: size.height * 0.01,
         ),
-        Center(child: PieChartType()),
+        Center(child: PieChartType(userId: userId,)),
       ],
     );
   }
 
-  Column buildColumnTrig(Size size) {
+  Column buildColumnTrig(Size size,userId) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
@@ -149,7 +150,7 @@ class _OtherReportsWidgetState extends State<OtherReportsWidget> {
         SizedBox(
           height: size.height * 0.01,
         ),
-        Center(child: PieChartTrig()),
+        Center(child: PieChartTrig(userId: userId,)),
       ],
     );
   }

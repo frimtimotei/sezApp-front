@@ -7,7 +7,7 @@ import 'package:sezapp/api/user_api_service.dart';
 
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userChatContact.dart';
+import 'package:sezapp/model/user/UserChatContactDTO.dart';
 
 class ListAllUsersRoomPage extends StatefulWidget {
   const ListAllUsersRoomPage({Key key}) : super(key: key);
@@ -99,7 +99,8 @@ class _ListAllUsersRoomPageState extends State<ListAllUsersRoomPage> {
                                                   snapshot
                                                       .data[index].lastName),
                                               subtitle: Text(
-                                                  snapshot.data[index].lastMessage),
+                                                  snapshot.data[index].lastMessage,
+                                                  overflow: TextOverflow.ellipsis),
                                             ),
                                           ),
                                         )

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
 import '../constants.dart';
-class DetailsIconText extends StatelessWidget {
+class DetailsIconTextWidget extends StatelessWidget {
   final String prefix;
   final String mainText;
   final Icon icon;
 
-  const DetailsIconText(
+  const DetailsIconTextWidget(
       {Key key,
         @required this.mainText,
         @required this.prefix,

@@ -3,12 +3,14 @@ import 'dart:ui';
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sezapp/Screens/Login/usersAction.dart';
+import 'package:sezapp/Screens/login/usersAction.dart';
+
 import 'package:sezapp/api/user_api_service.dart';
-import 'package:sezapp/conponents/loading.dart';
+import 'package:sezapp/components/loading.dart';
+import 'package:sezapp/components/loading.dart';
 import 'package:sezapp/constants.dart';
 
-import 'package:sezapp/model/user/userLoginResponseModel.dart';
+import 'package:sezapp/model/user/userLoginResponseModelDTO.dart';
 
 class LoginScreen extends StatefulWidget {
   @override

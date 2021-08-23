@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/Screens/Doctor/Home/calendar.dart';
-import 'package:sezapp/Screens/Doctor/Home/listOfPatients.dart';
+import 'package:sezapp/Screens/doctor/home/calendar.dart';
+import 'package:sezapp/Screens/doctor/home/listOfPatients.dart';
 import 'package:sezapp/Screens/Patient/Chat/messageRoom.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/model/user/userChatContact.dart';
+import 'package:sezapp/model/user/UserChatContactDTO.dart';
 
 import '../../../constants.dart';
 
@@ -38,12 +38,13 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                     fontWeight: FontWeight.w600),
               ),
               Text(
-                "how are you feeling today?",
+                "how are you today?",
                 style: TextStyle(
                     fontSize: 12 ,
                     color: Colors.blueGrey,
                     fontWeight: FontWeight.normal),
               ),
+              SizedBox(height: 10,)
             ],
           ),
         ),
@@ -67,23 +68,9 @@ class _DoctorHomePageState extends State<DoctorHomePage> {
                 height: 20,
               ),
 
-              Container(
-                margin: EdgeInsets.symmetric(horizontal: 25, vertical: 5),
-                child: Row(
-                  children: [
-                    SizedBox(
-                      width: 5,
-                    ),
-                    Text(
-                      "Your patients",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-                    )
-                  ],
-                ),
-              ),
 
               SizedBox(
-                height: 400,
+                height: 500,
                   child: ListOfPatientsHome()),
 
             ],

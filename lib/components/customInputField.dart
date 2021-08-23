@@ -2,13 +2,13 @@
 
 import 'package:flutter/material.dart';
 
-class InputFiled extends StatelessWidget {
+class CustomInputFiled extends StatelessWidget {
   final String hintText;
   final bool obscuredText;
   final TextEditingController controller;
   final Function validator;
 
-  const InputFiled({
+  const CustomInputFiled({
     @required this.hintText,
 
     @required this.obscuredText,

@@ -1,4 +1,4 @@
-class UserLoginResponseModel{
+class UserLoginResponseModelDTO{
 
 }
 

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/Screens/Patient/Reports/Seizures/seizure_details.dart';
-import 'package:sezapp/conponents/appBar.dart';
-import 'package:sezapp/conponents/detailsIconText.dart';
+import 'package:sezapp/components/customAppBar.dart';
+import 'package:sezapp/components/detailsIconTextWidget.dart';
 import 'package:sezapp/model/Medication.dart';
 import 'package:sezapp/model/Reminder.dart';
 
@@ -16,12 +17,13 @@ class MedicationDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    initializeDateFormatting();
     String languageCode = Localizations.localeOf(context).languageCode;
     Size size = MediaQuery.of(context).size;
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(60.0),
-        child: CustomAAppBar(title: "Medication Details"),
+        child: CustomAppBar(title: "Medication Details"),
       ),
       body: Container(
         height: size.height,
@@ -32,7 +34,7 @@ class MedicationDetails extends StatelessWidget {
               SizedBox(
                 height: 20,
               ),
-              DetailsIconText(
+              DetailsIconTextWidget(
                 prefix: 'Name: ',
                 mainText: medication.name,
                 icon: Icon(
@@ -41,7 +43,7 @@ class MedicationDetails extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
               ),
-              DetailsIconText(
+              DetailsIconTextWidget(
                 prefix: "Dose: ",
                 mainText: medication.dose,
                 icon: Icon(
@@ -50,7 +52,7 @@ class MedicationDetails extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
               ),
-              DetailsIconText(
+              DetailsIconTextWidget(
                 prefix: "Start at: ",
                 mainText: DateFormat("MMMM, dd, yyyy", languageCode)
                     .format(medication.startDate),
@@ -60,7 +62,7 @@ class MedicationDetails extends StatelessWidget {
                   color: kPrimaryColor,
                 ),
               ),
-              DetailsIconText(
+              DetailsIconTextWidget(
                 prefix: "End at: ",
                 mainText: DateFormat("MMMM, dd, yyyy", languageCode)
                     .format(medication.startDate),
@@ -74,7 +76,20 @@ class MedicationDetails extends StatelessWidget {
                 width: 20,
               ),
 
-              DetailsIconText(
+              DetailsIconTextWidget(
+                prefix: "Added by: ",
+                mainText: medication.addedBy,
+                icon: Icon(
+                  LineAwesomeIcons.user_1,
+                  size: 36,
+                  color: kPrimaryColor,
+                ),
+              ),
+              SizedBox(
+                width: 20,
+              ),
+
+              DetailsIconTextWidget(
                 prefix: "How often: ",
                 mainText: medication.howOften,
 
@@ -110,8 +125,8 @@ class MedicationDetails extends StatelessWidget {
                     SizedBox(
                       width: 15,
                     ),
-                    SizedBox(
-                      width: size.width * 0.43,
+                    Expanded(
+
                       child: reminderInfo(
                           medication.reminders,
                           Color.fromRGBO(183, 155, 241, 0.6),
