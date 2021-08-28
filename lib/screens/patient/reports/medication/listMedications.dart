@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sezapp/api/medication_api_service.dart';
+import 'package:sezapp/api/medicationApiService.dart';
 import 'package:sezapp/model/Medication.dart';
 import 'package:sezapp/screens/patient/reports/medication/medicationActions.dart';
 import 'package:sezapp/screens/patient/reports/medication/medicationDetails.dart';

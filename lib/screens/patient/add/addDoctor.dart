@@ -1,6 +1,6 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/components/customAppBar.dart';
 import 'package:sezapp/model/Doctor.dart';
 

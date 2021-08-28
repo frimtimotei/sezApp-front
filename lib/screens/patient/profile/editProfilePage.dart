@@ -6,7 +6,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/components/customAppBar.dart';
 import 'package:sezapp/components/buttonFullWidget.dart';
 import 'package:sezapp/constants.dart';

@@ -1,7 +1,6 @@
 import 'dart:convert';
 
-import 'package:sezapp/api/doctor_api_service.dart';
-import 'package:sezapp/model/Seizure.dart';
+import 'package:sezapp/api/doctorApiService.dart';
 
 Future<List> getPatientWeekSezData(userId) async {
   var response = await apiWeekSezPatientFreq(userId);
@@ -14,6 +13,7 @@ Future<List> getPatientWeekSezData(userId) async {
     throw Exception("Error to load data");
   }
 }
+
 Future<List> getPatientMonthSezData(userId) async {
   var response = await apiMonthSezPatientFreq(userId);
 
@@ -25,7 +25,6 @@ Future<List> getPatientMonthSezData(userId) async {
     throw Exception("Error to load data");
   }
 }
-
 
 Future<List> getPatientYearSezData(userId) async {
   var response = await apiYearSezPatientFreq(userId);

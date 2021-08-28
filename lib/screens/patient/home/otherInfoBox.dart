@@ -1,8 +1,8 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/seizure_api_service.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/seizureApiService.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/Doctor.dart';
 import 'package:sezapp/model/user/User.dart';

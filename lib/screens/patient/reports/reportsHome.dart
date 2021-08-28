@@ -5,7 +5,7 @@ import 'package:sezapp/screens/patient/reports/pieChart.dart';
 import 'package:sezapp/screens/patient/reports/seizures/listSeizures.dart';
 
 import '../../../constants.dart';
-import 'seizures/seziuresActions.dart';
+import 'seizures/seizuresActions.dart';
 
 class ReportsHome extends StatefulWidget {
   const ReportsHome({Key key}) : super(key: key);

@@ -1,4 +1,4 @@
-import 'package:sezapp/api/medication_api_service.dart';
+import 'package:sezapp/api/medicationApiService.dart';
 import 'package:sezapp/model/Medication.dart';
 
 Future<List<Medication>> getMedications(userId) async{

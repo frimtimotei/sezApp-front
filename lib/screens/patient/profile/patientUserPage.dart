@@ -4,7 +4,7 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/components/detailsIconTextWidget.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
@@ -44,7 +44,7 @@ class _PatientUserState extends State<PatientUser> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
 
     return Scaffold(
       backgroundColor: kLightColor,

@@ -4,7 +4,7 @@ import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/seizure_api_service.dart';
+import 'package:sezapp/api/seizureApiService.dart';
 import 'package:sezapp/constants.dart';
 
 import 'indicator.dart';
@@ -31,7 +31,7 @@ class _PieChartMoodState extends State<PieChartMood> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
     return Column(
       children: [
         SizedBox(

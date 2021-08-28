@@ -1,9 +1,7 @@
-import 'dart:io';
-
 import 'package:another_flushbar/flushbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/components/buttonFullWidget.dart';
 import 'package:sezapp/components/customInputField.dart';
 import 'package:sezapp/model/RegisterResponseModel.dart';
@@ -36,8 +34,8 @@ class _SingUpScreenState extends State<SingUpScreen> {
       color: kLightColor,
       height: size.height,
       child: SingleChildScrollView(
-        child: Column(mainAxisAlignment: MainAxisAlignment.center, children:
-        <Widget>[
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: <
+            Widget>[
           Form(
             key: globalFormKey,
             child: Padding(
@@ -296,7 +294,6 @@ class _SingUpScreenState extends State<SingUpScreen> {
       registerRequestModel.age = int.parse(ageController.text);
       if (sexDropdownValue == "Masculine") {
         registerRequestModel.sex = 'M';
-
       } else {
         registerRequestModel.sex = 'F';
       }

@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:focused_menu/focused_menu.dart';
 import 'package:focused_menu/modals.dart';
+import 'package:intl/date_symbol_data_local.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sezapp/screens/patient/reports/seizures/seizureDetails.dart';
-import 'package:sezapp/screens/patient/reports/seizures/seziuresActions.dart';
-import 'package:sezapp/api/seizure_api_service.dart';
+import 'package:sezapp/api/seizureApiService.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/Seizure.dart';
-import 'package:intl/date_symbol_data_local.dart';
-import 'package:focused_menu/focused_menu.dart';
+import 'package:sezapp/screens/patient/reports/seizures/seizureDetails.dart';
+import 'package:sezapp/screens/patient/reports/seizures/seizuresActions.dart';
 
 class AllSeizures extends StatefulWidget {
   final userId;
-  const AllSeizures({Key key,this.userId}) : super(key: key);
+
+  const AllSeizures({Key key, this.userId}) : super(key: key);
 
   @override
   _AllSeizuresState createState() => _AllSeizuresState();
@@ -49,124 +50,127 @@ class _AllSeizuresState extends State<AllSeizures> {
 
   Widget _listView(AsyncSnapshot snapshot, String languageCode, Size size) {
     if (snapshot.hasData) {
-      if(snapshot.data.length==0)
-      {
+      if (snapshot.data.length == 0) {
         return Container(
           width: size.width,
           height: size.height,
           color: kLightColor,
           child: Padding(
-              padding: EdgeInsets.all(20),
-              child: Text("No data available!",style: TextStyle(fontSize: 18,fontStyle: FontStyle.italic),),),
+            padding: EdgeInsets.all(20),
+            child: Text(
+              "No data available!",
+              style: TextStyle(fontSize: 18, fontStyle: FontStyle.italic),
+            ),
+          ),
         );
       } else
-      return ListView.builder(
-        itemCount: snapshot.data.length,
-        itemBuilder: (context, index) {
-          return Card(
-            color: Colors.transparent,
-            elevation: 0,
-            shape: BeveledRectangleBorder(
-                borderRadius: BorderRadius.circular(20.0)),
-            margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 7.0),
-            child: FocusedMenuHolder(
-              menuBoxDecoration: BoxDecoration(
-                  color: Color.fromRGBO(158, 152, 152, 0.6),
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
-              duration: Duration(milliseconds: 50),
-              animateMenuItems: true,
-              menuOffset: 10.0,
-              blurBackgroundColor: Color.fromRGBO(158, 152, 152, 0.6),
-              blurSize: 5.0,
-              menuItems: [
-                FocusedMenuItem(
-                    title: Text("Favorite"),
-                    trailingIcon: Icon(Icons.favorite_border),
-                    onPressed: () {}),
-                FocusedMenuItem(
-                  title: Text(
-                    "Delete",
-                    style: TextStyle(color: Colors.redAccent),
+        return ListView.builder(
+          itemCount: snapshot.data.length,
+          itemBuilder: (context, index) {
+            return Card(
+              color: Colors.transparent,
+              elevation: 0,
+              shape: BeveledRectangleBorder(
+                  borderRadius: BorderRadius.circular(20.0)),
+              margin: new EdgeInsets.symmetric(horizontal: 16.0, vertical: 7.0),
+              child: FocusedMenuHolder(
+                menuBoxDecoration: BoxDecoration(
+                    color: Color.fromRGBO(158, 152, 152, 0.6),
+                    borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                duration: Duration(milliseconds: 50),
+                animateMenuItems: true,
+                menuOffset: 10.0,
+                blurBackgroundColor: Color.fromRGBO(158, 152, 152, 0.6),
+                blurSize: 5.0,
+                menuItems: [
+                  FocusedMenuItem(
+                      title: Text("Favorite"),
+                      trailingIcon: Icon(Icons.favorite_border),
+                      onPressed: () {}),
+                  FocusedMenuItem(
+                    title: Text(
+                      "Delete",
+                      style: TextStyle(color: Colors.redAccent),
+                    ),
+                    trailingIcon: Icon(
+                      Icons.delete,
+                      color: Colors.redAccent,
+                    ),
+                    onPressed: () => showDialogAndDeleteSez(
+                        snapshot.data[index].id, context),
                   ),
-                  trailingIcon: Icon(
-                    Icons.delete,
-                    color: Colors.redAccent,
+                ],
+                onPressed: () {
+                  Navigator.push(
+                      context,
+                      new MaterialPageRoute(
+                          builder: (context) =>
+                              SeizureDetails(snapshot.data[index])));
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      color: Color.fromRGBO(255, 255, 255, 0.8),
+                      borderRadius: BorderRadius.circular(13),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Color.fromRGBO(143, 148, 251, 0.05),
+                            blurRadius: 50.0,
+                            offset: Offset(0, 8))
+                      ]),
+                  child: ListTile(
+                    contentPadding:
+                        EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
+                    leading: Icon(
+                      LineAwesomeIcons.brain,
+                      color: kPrimaryColor,
+                      size: 35,
+                    ),
+                    title: Text(
+                      DateFormat("MMMM, dd, yyyy", languageCode)
+                              .format(snapshot.data[index].date) +
+                          "  " +
+                          snapshot.data[index].startAt.format(context),
+                      style: TextStyle(color: kPrimaryColor),
+                    ),
+                    subtitle: Column(
+                      children: <Widget>[
+                        SizedBox(
+                          height: 8,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            Container(
+                                margin: EdgeInsets.fromLTRB(0, 3, 8, 3),
+                                child: Icon(
+                                  Icons.access_time,
+                                  color: kPrimaryLightColor,
+                                  size: 17,
+                                )),
+                            Text(
+                              snapshot.data[index].duration.inMinutes
+                                      .toString() +
+                                  " minutes ",
+                              style: TextStyle(fontSize: 12),
+                            ),
+                            SizedBox(
+                              width: size.width * 0.01,
+                            ),
+                            //Wrap(children: <Widget>[
+                            Text("mood: ", style: TextStyle(fontSize: 12)),
+                            moodStateIcon(snapshot.data[index].mood, size)
+                            // ]),
+                          ],
+                        ),
+                      ],
+                    ),
+                    trailing: Icon(Icons.keyboard_arrow_right,
+                        color: kPrimaryColor, size: 25.0),
                   ),
-                  onPressed: () =>
-                      showDialogAndDeleteSez(snapshot.data[index].id, context),
-                ),
-              ],
-              onPressed: () {
-                Navigator.push(
-                    context,
-                    new MaterialPageRoute(
-                        builder: (context) =>
-                            SeizureDetails(snapshot.data[index])));
-              },
-              child: Container(
-                decoration: BoxDecoration(
-                    color: Color.fromRGBO(255, 255, 255, 0.8),
-                    borderRadius: BorderRadius.circular(13),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Color.fromRGBO(143, 148, 251, 0.05),
-                          blurRadius: 50.0,
-                          offset: Offset(0, 8))
-                    ]),
-                child: ListTile(
-                  contentPadding:
-                      EdgeInsets.symmetric(horizontal: 20.0, vertical: 8.0),
-                  leading: Icon(
-                    LineAwesomeIcons.brain,
-                    color: kPrimaryColor,
-                    size: 35,
-                  ),
-                  title: Text(
-                    DateFormat("MMMM, dd, yyyy", languageCode)
-                            .format(snapshot.data[index].date) +
-                        "  " +
-                        snapshot.data[index].startAt.format(context),
-                    style: TextStyle(color: kPrimaryColor),
-                  ),
-                  subtitle: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        height: 8,
-                      ),
-                      Row(
-                        children: <Widget>[
-                          Container(
-                              margin: EdgeInsets.fromLTRB(0, 3, 8, 3),
-                              child: Icon(
-                                Icons.access_time,
-                                color: kPrimaryLightColor,
-                                size: 17,
-                              )),
-                          Text(
-                            snapshot.data[index].duration.inMinutes.toString() +
-                                " minutes ",
-                            style: TextStyle(fontSize: 12),
-                          ),
-                          SizedBox(
-                            width: size.width * 0.01,
-                          ),
-                          //Wrap(children: <Widget>[
-                          Text("mood: ",
-                              style: TextStyle(fontSize: 12)),
-                          moodStateIcon(snapshot.data[index].mood, size)
-                          // ]),
-                        ],
-                      ),
-                    ],
-                  ),
-                  trailing: Icon(Icons.keyboard_arrow_right,
-                      color: kPrimaryColor, size: 25.0),
                 ),
               ),
-            ),
-          );
-        },
-      );
+            );
+          },
+        );
     } else {
       return Container(
         child: Center(
@@ -205,9 +209,7 @@ class _AllSeizuresState extends State<AllSeizures> {
       child: Text(
         moodText,
         style: TextStyle(
-            fontWeight: FontWeight.w500,
-            color: textColor,
-            fontSize: 13),
+            fontWeight: FontWeight.w500, color: textColor, fontSize: 13),
       ),
     );
   }

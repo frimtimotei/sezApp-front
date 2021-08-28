@@ -4,8 +4,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
 import 'package:intl/intl.dart';
-import 'package:sezapp/api/chat_api_service.dart';
-import 'package:sezapp/components/customInputField.dart';
+import 'package:sezapp/api/chatApiService.dart';
 import 'package:sezapp/model/message/ChatMessage.dart';
 import 'package:sezapp/model/user/User.dart';
 import 'package:sezapp/model/user/UserChatContactDTO.dart';
@@ -22,8 +21,8 @@ class MessageRoom extends StatefulWidget {
   final UserChatContactDTO senderUser;
   final User activeUser;
 
-
-  const MessageRoom({Key key, this.senderUser,this.activeUser}) : super(key: key);
+  const MessageRoom({Key key, this.senderUser, this.activeUser})
+      : super(key: key);
 
   @override
   _MessageRoomState createState() => _MessageRoomState();
@@ -33,19 +32,17 @@ class _MessageRoomState extends State<MessageRoom> {
   StompClient stompClient;
   String message = '';
   final textMessage = TextEditingController();
-  List<ChatMessage> messageList=[];
+  List<ChatMessage> messageList = [];
   final _controller = ScrollController();
 
-  String status="connecting..";
-
+  String status = "connecting..";
 
   @override
-   initState() {
+  initState() {
     connectStompClient();
     waitAllMessages();
 
     super.initState();
-
   }
 
   @override
@@ -57,10 +54,9 @@ class _MessageRoomState extends State<MessageRoom> {
 
   @override
   Widget build(BuildContext context) {
-
     Timer(
       Duration(milliseconds: 30),
-          () => _controller.jumpTo(_controller.position.maxScrollExtent),
+      () => _controller.jumpTo(_controller.position.maxScrollExtent),
     );
     return Scaffold(
       appBar: PreferredSize(
@@ -109,8 +105,7 @@ class _MessageRoomState extends State<MessageRoom> {
                         ),
                         Text(
                           status,
-                          style:
-                              TextStyle(color: kGreyTextColor, fontSize: 12),
+                          style: TextStyle(color: kGreyTextColor, fontSize: 12),
                         )
                       ],
                     ),
@@ -151,11 +146,10 @@ class _MessageRoomState extends State<MessageRoom> {
                   children: <Widget>[
                     Expanded(
                         child: Container(
-
                       decoration: BoxDecoration(
                           color: kPrimaryLightColor.withOpacity(0.08),
                           borderRadius: BorderRadius.circular(20)),
-                      padding: EdgeInsets.symmetric(vertical: 1,horizontal: 5),
+                      padding: EdgeInsets.symmetric(vertical: 1, horizontal: 5),
                       child: Row(
                         children: [
                           SizedBox(
@@ -213,7 +207,7 @@ class _MessageRoomState extends State<MessageRoom> {
           await Future.delayed(Duration(milliseconds: 200));
 
           setState(() {
-            status="connecting..";
+            status = "connecting..";
           });
           print('connecting...');
         },
@@ -237,13 +231,13 @@ class _MessageRoomState extends State<MessageRoom> {
 
         print(message);
         setState(() {
-            messageList.add(chatMessage);
+          messageList.add(chatMessage);
         });
       },
     );
 
     setState(() {
-      status="connected";
+      status = "connected";
     });
     print("connected");
   }
@@ -255,21 +249,20 @@ class _MessageRoomState extends State<MessageRoom> {
     }
   }
 
-
   findChatMessage(id) async {
     var response = await apiFindChatMessage(id);
     var decResponse = jsonDecode(response.body);
     return decResponse;
   }
-  void waitAllMessages()async {
-    messageList=await findAllChatMessage();
-    setState(() {
 
-    });
+  void waitAllMessages() async {
+    messageList = await findAllChatMessage();
+    setState(() {});
   }
 
   findAllChatMessage() async {
-    var response = await apiFindAllChatMessage(widget.activeUser.id,widget.senderUser.id);
+    var response =
+        await apiFindAllChatMessage(widget.activeUser.id, widget.senderUser.id);
     var decResponse = jsonDecode(response.body);
 
     List<ChatMessage> chatMessages = (decResponse as List)
@@ -291,34 +284,28 @@ class _MessageRoomState extends State<MessageRoom> {
       'timestamp': formattedDate
     };
 
-
-
     stompClient.send(
       destination: '/app/chat',
       body: json.encode(messageData),
     );
 
-   setState(() {
-    messageList.add(ChatMessage(
-        id: "",
-        chatId: widget.activeUser.id+"_"+widget.senderUser.id,
-        senderId: widget.activeUser.id,
-        recipientId: widget.senderUser.id,
-        recipientName: widget.activeUser.firstName,
-        senderName: widget.senderUser.firstName,
-        content: textMessage.text,
-        timestamp: formattedDate,
-        status: "RECIVED"),
-    );
+    setState(() {
+      messageList.add(
+        ChatMessage(
+            id: "",
+            chatId: widget.activeUser.id + "_" + widget.senderUser.id,
+            senderId: widget.activeUser.id,
+            recipientId: widget.senderUser.id,
+            recipientName: widget.activeUser.firstName,
+            senderName: widget.senderUser.firstName,
+            content: textMessage.text,
+            timestamp: formattedDate,
+            status: "RECIVED"),
+      );
 
-    textMessage.text="";
-   });
-
-
-
+      textMessage.text = "";
+    });
   }
-
-
 }
 
 class Message extends StatelessWidget {
@@ -341,11 +328,14 @@ class Message extends StatelessWidget {
             backgroundImage:
                 NetworkImage(checkImagePath(recipientUser.imageUrl)),
           ),
-          SizedBox(width: 10,)
+          SizedBox(
+            width: 10,
+          )
         ],
         Align(
-        alignment: (message.senderId==recipientUser.id)? Alignment.centerLeft:Alignment.centerRight,
-
+          alignment: (message.senderId == recipientUser.id)
+              ? Alignment.centerLeft
+              : Alignment.centerRight,
           child: Container(
             constraints: BoxConstraints(minWidth: 90, maxWidth: 200),
             margin: EdgeInsets.only(top: 15),
@@ -354,38 +344,51 @@ class Message extends StatelessWidget {
                 color: kPrimaryLightColor.withOpacity(
                     (message.senderId == recipientUser.id) ? 0.1 : 1),
                 borderRadius: BorderRadius.only(
-                  topRight: Radius.circular(15),
-                  topLeft: Radius.circular(15),
-                  bottomRight: (message.senderId == recipientUser.id)? Radius.circular(15):Radius.circular(7),
-                  bottomLeft: (message.senderId == recipientUser.id)? Radius.circular(7):Radius.circular(15)
-                )),
+                    topRight: Radius.circular(15),
+                    topLeft: Radius.circular(15),
+                    bottomRight: (message.senderId == recipientUser.id)
+                        ? Radius.circular(15)
+                        : Radius.circular(7),
+                    bottomLeft: (message.senderId == recipientUser.id)
+                        ? Radius.circular(7)
+                        : Radius.circular(15))),
             child: Column(
               mainAxisSize: MainAxisSize.min,
-               crossAxisAlignment: (message.senderId == recipientUser.id)? CrossAxisAlignment.start: CrossAxisAlignment.end,
+              crossAxisAlignment: (message.senderId == recipientUser.id)
+                  ? CrossAxisAlignment.start
+                  : CrossAxisAlignment.end,
               children: [
                 Text(
                   message.content,
-
                   style: TextStyle(
                       color: (message.senderId == recipientUser.id)
                           ? kPrimaryColor
-                          : Colors.white, fontSize: 17),
+                          : Colors.white,
+                      fontSize: 17),
                 ),
-
-            Row(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Text(message.timestamp,
-                  style: TextStyle(color: (message.senderId == recipientUser.id)
-                      ? kPrimaryColor
-                      : Colors.white,fontSize: 10 ),
-                ),
-                ...[const SizedBox(width: 2),
-                Icon(Icons.done_rounded, size: 11,color: (message.senderId == recipientUser.id)
-                    ? kPrimaryColor
-                    : Colors.white,),]
-
-                ],)
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Text(
+                      message.timestamp,
+                      style: TextStyle(
+                          color: (message.senderId == recipientUser.id)
+                              ? kPrimaryColor
+                              : Colors.white,
+                          fontSize: 10),
+                    ),
+                    ...[
+                      const SizedBox(width: 2),
+                      Icon(
+                        Icons.done_rounded,
+                        size: 11,
+                        color: (message.senderId == recipientUser.id)
+                            ? kPrimaryColor
+                            : Colors.white,
+                      ),
+                    ]
+                  ],
+                )
               ],
             ),
           ),

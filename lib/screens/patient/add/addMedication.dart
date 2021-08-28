@@ -1,12 +1,11 @@
 import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
-import 'package:sezapp/api/medication_api_service.dart';
-import 'package:sezapp/components/customAppBar.dart';
+import 'package:sezapp/api/medicationApiService.dart';
 import 'package:sezapp/components/buttonFullWidget.dart';
+import 'package:sezapp/components/customAppBar.dart';
 import 'package:sezapp/components/customInputField.dart';
 import 'package:sezapp/components/whiteIconButton.dart';
 import 'package:sezapp/model/MedicationRegisterModel.dart';
@@ -19,8 +18,8 @@ class AddMedicationPage extends StatefulWidget {
   final userName;
   final doctorName;
 
-
-  AddMedicationPage({Key key, this.userId, this.doctorName, this.userName}) : super(key: key);
+  AddMedicationPage({Key key, this.userId, this.doctorName, this.userName})
+      : super(key: key);
 
   @override
   _AddMedicationPageState createState() => _AddMedicationPageState();
@@ -37,18 +36,11 @@ TimeOfDay newTimeSet;
 List<Widget> chipsTimeList;
 TimeOfDay _initialTime = TimeOfDay(hour: 9, minute: 00);
 
-
 String message = "";
 
 GlobalKey<FormState> globalFormKey = new GlobalKey<FormState>(); //form key
 
-
-format(Duration d) =>
-    d
-        .toString()
-        .split('.')
-        .first
-        .padLeft(8, "0");
+format(Duration d) => d.toString().split('.').first.padLeft(8, "0");
 
 List _howOften = [
   "Every Day",
@@ -70,9 +62,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
 
     void _selectDate() async {
       final DateTime newDate = await showDatePicker(
@@ -289,90 +279,89 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                     ////////////////////////////////////////////////////////////
                     //////Add Reminder
 
-                    Column(children: [
-                      Text(
-                        "Reminders",
-                        style: TextStyle(color: kPrimaryColor),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      OutlinedButton.icon(
-                          icon: Icon(
-                            Icons.add,
-                            size: 17,
-                          ),
-                          label: Text("New reminder", style: TextStyle(
-                              fontSize: 17),),
-                          style: OutlinedButton.styleFrom(
-                            primary: kPrimaryColor,
-                            padding: EdgeInsets.symmetric(horizontal: 14,
-                                vertical: 12),
-                            side: BorderSide(
-                              width: 1.5,
-                              color: kPrimaryColor,
-                            ),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-
-                            ),
-                          ),
-                          onPressed: () async {
-                            final TimeOfDay newTime = await showTimePicker(
-                              context: context,
-                              initialTime: _initialTime,
-                              initialEntryMode: TimePickerEntryMode.input,
-                            );
-                            if (newTime != null) {
-                              setState(() {
-                                _initialTime = newTime;
-                                remindersTimes.add(_initialTime);
-                              });
-                            }
-                          }),
-                      SizedBox(
-                        height: 20,
-                      ),
-                      SizedBox(
-                        width: 320,
-                        child: Wrap(
-                          spacing: 6.0,
-                          runSpacing: 6.0,
-                          children: List.generate(
-                              remindersTimes.length, (index) {
-                            return RawChip(
-                              avatar:
-                              Container(
-                                child: Icon(
-                                    FontAwesomeIcons.bell,
-                                    color: kGreenTextColor
-
-
-                                ),
-                              ),
-                              labelPadding: EdgeInsets.symmetric(
-                                  vertical: 5, horizontal: 2),
-                              backgroundColor: kGreenBackColor,
-                              label: Text(
-                                remindersTimes[index].format(context),
-                                style: TextStyle(
-                                    fontSize: 18, color: kGreenTextColor),
-                              ),
-
-                              deleteIconColor: Color.fromRGBO(
-                                  66, 60, 60, 0.7),
-                              onDeleted: () {
-                                setState(() {
-                                  remindersTimes.removeAt(index);
-                                });
-                              },
-                            );
-                          }),
+                    Column(
+                      children: [
+                        Text(
+                          "Reminders",
+                          style: TextStyle(color: kPrimaryColor),
                         ),
-                      ),
-                    ],),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        OutlinedButton.icon(
+                            icon: Icon(
+                              Icons.add,
+                              size: 17,
+                            ),
+                            label: Text(
+                              "New reminder",
+                              style: TextStyle(fontSize: 17),
+                            ),
+                            style: OutlinedButton.styleFrom(
+                              primary: kPrimaryColor,
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 14, vertical: 12),
+                              side: BorderSide(
+                                width: 1.5,
+                                color: kPrimaryColor,
+                              ),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            onPressed: () async {
+                              final TimeOfDay newTime = await showTimePicker(
+                                context: context,
+                                initialTime: _initialTime,
+                                initialEntryMode: TimePickerEntryMode.input,
+                              );
+                              if (newTime != null) {
+                                setState(() {
+                                  _initialTime = newTime;
+                                  remindersTimes.add(_initialTime);
+                                });
+                              }
+                            }),
+                        SizedBox(
+                          height: 20,
+                        ),
+                        SizedBox(
+                          width: 320,
+                          child: Wrap(
+                            spacing: 6.0,
+                            runSpacing: 6.0,
+                            children:
+                                List.generate(remindersTimes.length, (index) {
+                              return RawChip(
+                                avatar: Container(
+                                  child: Icon(FontAwesomeIcons.bell,
+                                      color: kGreenTextColor),
+                                ),
+                                labelPadding: EdgeInsets.symmetric(
+                                    vertical: 5, horizontal: 2),
+                                backgroundColor: kGreenBackColor,
+                                label: Text(
+                                  remindersTimes[index].format(context),
+                                  style: TextStyle(
+                                      fontSize: 18, color: kGreenTextColor),
+                                ),
+                                deleteIconColor:
+                                    Color.fromRGBO(66, 60, 60, 0.7),
+                                onDeleted: () {
+                                  setState(() {
+                                    remindersTimes.removeAt(index);
+                                  });
+                                },
+                              );
+                            }),
+                          ),
+                        ),
+                      ],
+                    ),
 
-                    SizedBox(height: 20,),
+                    SizedBox(
+                      height: 20,
+                    ),
                     Align(
                         alignment: Alignment.centerLeft,
                         child: Text(
@@ -383,15 +372,17 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
                       height: 10,
                     ),
 
-                    ButtonFullWidget(name: "Add Medication",
+                    ButtonFullWidget(
+                        name: "Add Medication",
                         callback: () {
                           _medicationSubmit(widget.userId);
                         },
                         width: 320,
                         height: 50),
 
-                    SizedBox(height: 50,),
-
+                    SizedBox(
+                      height: 50,
+                    ),
                   ],
                 ),
               ),
@@ -410,7 +401,6 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
     return null;
   };
 
-
   void _medicationSubmit(userId) async {
     message = "";
 
@@ -420,8 +410,9 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       });
     } else {
       var formatter = new DateFormat('yyyy-MM-dd');
-      MedicationRegisterModel medicationRegisterModel = new MedicationRegisterModel();
-      List <Reminder> reminders = [];
+      MedicationRegisterModel medicationRegisterModel =
+          new MedicationRegisterModel();
+      List<Reminder> reminders = [];
       medicationRegisterModel.name = nameController.text;
       medicationRegisterModel.dose = doseController.text;
       medicationRegisterModel.startDate = formatter.format(_startDate);
@@ -429,8 +420,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       medicationRegisterModel.howOften = oftenDropdown;
       if (remindersTimes.isEmpty) {
         medicationRegisterModel.setReminder = false;
-      }
-      else {
+      } else {
         medicationRegisterModel.setReminder = true;
       }
 
@@ -443,8 +433,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       }
 
       /// response from  api
-      var response = await medicationRegister(
-          medicationRegisterModel, reminders, userId,widget.userName,widget.doctorName);
+      var response = await medicationRegister(medicationRegisterModel,
+          reminders, userId, widget.userName, widget.doctorName);
 
       print(widget.userName);
 

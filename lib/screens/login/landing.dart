@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/model/user/User.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -34,7 +34,6 @@ class _LandingState extends State<Landing> {
 
     _role = (prefs.getInt("roleId"));
 
-    int timeout = 5;
     if (_id == -1) {
       Navigator.pushNamedAndRemoveUntil(
           context, '/login', ModalRoute.withName('/login'));

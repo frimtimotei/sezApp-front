@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:multi_select_flutter/dialog/multi_select_dialog_field.dart';
 import 'package:multi_select_flutter/util/multi_select_item.dart';
-import 'package:sezapp/api/seizure_api_service.dart';
+import 'package:sezapp/api/seizureApiService.dart';
 import 'package:duration_picker/duration_picker.dart';
 import 'package:sezapp/components/customAppBar.dart';
 import 'package:sezapp/components/buttonFullWidget.dart';

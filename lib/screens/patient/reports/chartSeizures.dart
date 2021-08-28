@@ -1,10 +1,6 @@
-import 'dart:convert';
-import 'dart:io';
-
-import 'package:flutter/gestures.dart';
 import 'package:fl_chart/fl_chart.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/seizure_api_service.dart';
 import 'package:sezapp/constants.dart';
 
 class WeekSeizureFrequency extends StatefulWidget {
@@ -12,9 +8,9 @@ class WeekSeizureFrequency extends StatefulWidget {
   Future<List> monthFreqData;
   Future<List> yearFreqData;
 
-
   WeekSeizureFrequency(
-  {Key key,this.weekFreqData, this.monthFreqData, this.yearFreqData}): super(key: key);
+      {Key key, this.weekFreqData, this.monthFreqData, this.yearFreqData})
+      : super(key: key);
 
   @override
   State<StatefulWidget> createState() => WeekSeizureFrequencyState();
@@ -28,15 +24,14 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
 
   Future<List> freqData;
 
-
-  int barList=7;
+  int barList = 7;
 
   bool weekSelected = true;
   bool monthSelected = false;
   bool yearSelected = false;
 
   String titleFreq = "Last Week";
-  double maxY=6;
+  double maxY = 6;
   double widthBar = 25;
   List<bool> isSelected;
 
@@ -44,9 +39,7 @@ class WeekSeizureFrequencyState extends State<WeekSeizureFrequency> {
   void initState() {
     super.initState();
 
-freqData=widget.weekFreqData;
-
-
+    freqData = widget.weekFreqData;
   }
 
   @override
@@ -61,7 +54,6 @@ freqData=widget.weekFreqData;
           children: [
             SizedBox(
               height: 400,
-
               child: Card(
                 margin: EdgeInsets.all(15),
                 elevation: 0,
@@ -103,48 +95,40 @@ freqData=widget.weekFreqData;
                                 onPressed: (index) {
                                   // Respond to button selection
 
-
-                                    if (index == 1) {
-                                      setState(() {
-
+                                  if (index == 1) {
+                                    setState(() {
                                       freqData = widget.monthFreqData;
                                       weekSelected = false;
                                       monthSelected = true;
                                       yearSelected = false;
-                                      maxY=10;
+                                      maxY = 10;
                                       titleFreq = "This Month";
                                       widthBar = 25;
-                                      barList=7;
-                                      });
-
-                                    } else if (index == 0) {
-                                      setState(() {
-
+                                      barList = 7;
+                                    });
+                                  } else if (index == 0) {
+                                    setState(() {
                                       freqData = widget.weekFreqData;
                                       weekSelected = true;
                                       monthSelected = false;
                                       yearSelected = false;
-                                      maxY=6;
+                                      maxY = 6;
                                       titleFreq = "Last Week";
                                       widthBar = 25;
-                                      barList=7;
-                                      });
-                                    }else if (index == 2) {
-                                      setState(() {
-
-                                          freqData = widget.yearFreqData;
-                                          weekSelected = false;
-                                          monthSelected = false;
-                                          yearSelected = true;
-                                          maxY = 20;
-                                          titleFreq = "This Year";
-                                          widthBar = size.width*0.04;
-                                          barList = 12;
-                                      });
-                                    }
-
-
-
+                                      barList = 7;
+                                    });
+                                  } else if (index == 2) {
+                                    setState(() {
+                                      freqData = widget.yearFreqData;
+                                      weekSelected = false;
+                                      monthSelected = false;
+                                      yearSelected = true;
+                                      maxY = 20;
+                                      titleFreq = "This Year";
+                                      widthBar = size.width * 0.04;
+                                      barList = 12;
+                                    });
+                                  }
                                 },
                                 children: [
                                   Padding(
@@ -204,17 +188,22 @@ freqData=widget.weekFreqData;
                             ),
                             // ignore: missing_required_param
                             FutureBuilder<List>(
-
                                 future: freqData,
                                 builder: (context, snapshot) {
-                                  if ((yearSelected && snapshot.hasData && snapshot.data.length>=12) || (!yearSelected && snapshot.hasData && snapshot.data.length >=7)) {
+                                  if ((yearSelected &&
+                                          snapshot.hasData &&
+                                          snapshot.data.length >= 12) ||
+                                      (!yearSelected &&
+                                          snapshot.hasData &&
+                                          snapshot.data.length >= 7)) {
                                     return Expanded(
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 8.0),
                                         child: BarChart(
                                           mainBarData(snapshot),
-                                          swapAnimationDuration: Duration(milliseconds: 350),
+                                          swapAnimationDuration:
+                                              Duration(milliseconds: 350),
                                           swapAnimationCurve:
                                               Curves.linear, // Optional
                                         ),
@@ -271,56 +260,54 @@ freqData=widget.weekFreqData;
   }
 
   List<BarChartGroupData> showingGroups(AsyncSnapshot snapshot) {
+    return List.generate(barList, (i) {
+      switch (i) {
+        case 0:
+          return makeGroupData(0, snapshot.data[0]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 1:
+          return makeGroupData(1, snapshot.data[1]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 2:
+          return makeGroupData(2, snapshot.data[2]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 3:
+          return makeGroupData(3, snapshot.data[3]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 4:
+          return makeGroupData(4, snapshot.data[4]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 5:
+          return makeGroupData(5, snapshot.data[5]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 6:
+          return makeGroupData(6, snapshot.data[6]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 7:
+          return makeGroupData(7, snapshot.data[7]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 8:
+          return makeGroupData(8, snapshot.data[8]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 9:
+          return makeGroupData(9, snapshot.data[9]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 10:
+          return makeGroupData(10, snapshot.data[10]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
+        case 11:
+          return makeGroupData(11, snapshot.data[11]['freq'].toDouble(),
+              isTouched: i == touchedIndex);
 
-        return List.generate(barList, (i) {
-          switch (i) {
-            case 0:
-              return makeGroupData(0, snapshot.data[0]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 1:
-              return makeGroupData(1, snapshot.data[1]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 2:
-              return makeGroupData(2, snapshot.data[2]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 3:
-              return makeGroupData(3, snapshot.data[3]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 4:
-              return makeGroupData(4, snapshot.data[4]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 5:
-              return makeGroupData(5, snapshot.data[5]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 6:
-              return makeGroupData(6, snapshot.data[6]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 7:
-              return makeGroupData(7, snapshot.data[7]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 8:
-              return makeGroupData(8, snapshot.data[8]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 9:
-              return makeGroupData(9, snapshot.data[9]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 10:
-              return makeGroupData(10, snapshot.data[10]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-            case 11:
-              return makeGroupData(11, snapshot.data[11]['freq'].toDouble(),
-                  isTouched: i == touchedIndex);
-
-            default:
-              return throw Error();
-          }
-        });
+        default:
+          return throw Error();
       }
+    });
+  }
 
   BarChartData mainBarData(AsyncSnapshot snapshot) {
     return BarChartData(
       maxY: maxY,
-
       barTouchData: BarTouchData(
         touchTooltipData: BarTouchTooltipData(
             tooltipBgColor: Colors.blueGrey,
@@ -400,8 +387,6 @@ freqData=widget.weekFreqData;
                   default:
                     throw Error();
                 }
-
-
               }
               if (yearSelected) {
                 switch (group.x.toInt()) {
@@ -486,7 +471,6 @@ freqData=widget.weekFreqData;
           margin: 16,
           getTitles: (double value) {
             if (monthSelected) {
-
               switch (value.toInt()) {
                 case 0:
                   return '1-4';
@@ -507,7 +491,6 @@ freqData=widget.weekFreqData;
               }
             }
             if (yearSelected) {
-
               switch (value.toInt()) {
                 case 0:
                   return 'J';
@@ -536,8 +519,7 @@ freqData=widget.weekFreqData;
                 default:
                   return '';
               }
-            }
-            else{
+            } else {
               switch (value.toInt()) {
                 case 0:
                   return 'M';
@@ -559,7 +541,6 @@ freqData=widget.weekFreqData;
                   return '';
               }
             }
-
           },
         ),
         leftTitles: SideTitles(
@@ -571,7 +552,7 @@ freqData=widget.weekFreqData;
           margin: 20,
           reservedSize: 10,
           getTitles: (value) {
-            if(value%2==0)
+            if (value % 2 == 0)
               return value.toInt().toString();
             else {
               return '';
@@ -585,6 +566,4 @@ freqData=widget.weekFreqData;
       barGroups: showingGroups(snapshot),
     );
   }
-
-
 }

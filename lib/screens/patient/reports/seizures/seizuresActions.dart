@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:sezapp/api/seizure_api_service.dart';
+import 'package:sezapp/api/seizureApiService.dart';
 import 'package:sezapp/model/Seizure.dart';
 
 Future<List<Seizure>> getSeizures(userId) async {

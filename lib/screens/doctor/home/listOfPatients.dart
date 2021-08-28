@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/doctor_api_service.dart';
+import 'package:sezapp/api/doctorApiService.dart';
 import 'package:sezapp/model/Patient.dart';
 import 'package:sezapp/model/user/User.dart';
 import 'package:sezapp/screens/doctor/home/patientProfile.dart';
@@ -25,7 +25,7 @@ class _ListOfPatientsHomeState extends State<ListOfPatientsHome> {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+
     final User activeUser = ModalRoute.of(context).settings.arguments;
     return Container(
       color: kLightColor,

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
-import 'package:sezapp/api/user_api_service.dart';
+import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
 import 'package:sezapp/model/user/UserChatContactDTO.dart';
