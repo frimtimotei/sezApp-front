@@ -37,8 +37,6 @@ class _CustomDoctorCalendarState extends State<CustomDoctorCalendar> {
       setState(() {
         _selectedDay = selectedDay;
         _focusedDay = focusedDay;
-        _rangeStart = null; // Important to clean those
-        _rangeEnd = null;
         _rangeSelectionMode = RangeSelectionMode.toggledOff;
       });
 
@@ -46,10 +44,6 @@ class _CustomDoctorCalendarState extends State<CustomDoctorCalendar> {
     }
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +82,6 @@ class _CustomDoctorCalendarState extends State<CustomDoctorCalendar> {
               return isSameDay(_selectedDay, day);
             },
             onDaySelected:_onDaySelected,
-            eventLoader: _getEventsForDay,
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
             },

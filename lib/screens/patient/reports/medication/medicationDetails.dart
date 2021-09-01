@@ -64,7 +64,7 @@ class MedicationDetails extends StatelessWidget {
               DetailsIconTextWidget(
                 prefix: "End at: ",
                 mainText: DateFormat("MMMM, dd, yyyy", languageCode)
-                    .format(medication.startDate),
+                    .format(medication.endDate),
                 icon: Icon(
                   LineAwesomeIcons.calendar_with_week_focus,
                   size: 36,

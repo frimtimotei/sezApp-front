@@ -46,10 +46,7 @@ class _CustomCalendarState extends State<CustomCalendar> {
     }
   }
 
-  List<Event> _getEventsForDay(DateTime day) {
-    // Implementation example
-    return kEvents[day] ?? [];
-  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -89,7 +86,6 @@ class _CustomCalendarState extends State<CustomCalendar> {
               return isSameDay(_selectedDay, day);
             },
             onDaySelected:_onDaySelected,
-            eventLoader: _getEventsForDay,
             onPageChanged: (focusedDay) {
               _focusedDay = focusedDay;
             },

@@ -1,4 +1,5 @@
 import 'package:another_flushbar/flushbar.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sezapp/api/userApiService.dart';
@@ -319,8 +320,21 @@ class _SingUpScreenState extends State<SingUpScreen> {
           ).show(context);
         });
       } else
-        Navigator.pushNamedAndRemoveUntil(
-            context, '/login', ModalRoute.withName('/login'));
+        {
+          CoolAlert.show(
+              context: context,
+              type: CoolAlertType.success,
+              confirmBtnColor: kPrimaryColor,
+              text: "you have been successfully registered!",
+              backgroundColor: kPrimaryColor,
+              onConfirmBtnTap: () {
+                Navigator.pushNamedAndRemoveUntil(
+                    context, '/login', ModalRoute.withName('/login'));
+
+              });
+
+        }
+
     }
   }
 }

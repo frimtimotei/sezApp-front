@@ -2,7 +2,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/screens/chat/chatHome.dart';
-import 'package:sezapp/screens/patient/profile/patientUserPage.dart';
+import 'package:sezapp/screens//profile/patientUserPage.dart';
 import 'package:sezapp/screens/doctor/home/doctorHomePage.dart';
 
 import '../../constants.dart';

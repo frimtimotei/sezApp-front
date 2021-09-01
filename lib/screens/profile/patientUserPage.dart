@@ -8,8 +8,8 @@ import 'package:sezapp/api/userApiService.dart';
 import 'package:sezapp/components/detailsIconTextWidget.dart';
 import 'package:sezapp/constants.dart';
 import 'package:sezapp/model/user/User.dart';
-import 'package:sezapp/screens/patient/profile/editProfilePage.dart';
-import 'package:sezapp/screens/patient/profile/profileWidget.dart';
+import 'package:sezapp/screens/profile/editProfilePage.dart';
+import 'package:sezapp/screens/profile/profileWidget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PatientUser extends StatefulWidget {

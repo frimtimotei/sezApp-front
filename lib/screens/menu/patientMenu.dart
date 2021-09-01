@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:line_awesome_flutter/line_awesome_flutter.dart';
 import 'package:sezapp/screens/chat/chatHome.dart';
 import 'package:sezapp/screens/patient/home/patientHomePage.dart';
-import 'package:sezapp/screens/patient/profile/patientUserPage.dart';
+import 'package:sezapp/screens/profile/patientUserPage.dart';
 import 'package:sezapp/screens/patient/reports/reportsHome.dart';
 import 'package:sezapp/screens/patient/add/addHomePage.dart';
 import 'package:sezapp/constants.dart';
